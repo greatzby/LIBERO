@@ -82,6 +82,16 @@ class On(BinaryAtomic):
 class Up(BinaryAtomic):
     def __call__(self, arg1):
         return arg1.get_geom_state()["pos"][2] >= 1.0
+    
+class UpsideDown(UnaryAtomic):
+    def __call__(self, arg):
+        geom = arg.get_geom_state()
+        w, x, y, z = geom["quat"]
+        q_curr = np.array([x, y, z, w])
+        R_curr = transform_utils.quat2mat(q_curr)
+        z_curr = R_curr[:, 2]      # current up-axis in world coords
+        
+        return z_curr[2] < 0
 
 
 class Stack(BinaryAtomic):
