@@ -1,4 +1,7 @@
 from typing import List
+import numpy as np
+import robosuite.utils.transform_utils as transform_utils
+
 
 
 class Expression:
@@ -116,3 +119,15 @@ class TurnOn(UnaryAtomic):
 class TurnOff(UnaryAtomic):
     def __call__(self, arg):
         return arg.turn_off()
+
+
+class UpRight45(UnaryAtomic):
+    """Check if the object is upright within 45 degrees"""
+    def __call__(self, arg):
+        geom = arg.get_geom_state()
+        w, x, y, z = geom["quat"]
+        quat_for_rs = np.array([x, y, z, w])
+
+        R = transform_utils.quat2mat(quat_for_rs)
+        z_axis = R[:, 2]
+        return z_axis[2] >= 0.7071
