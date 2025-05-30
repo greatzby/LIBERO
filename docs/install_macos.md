@@ -42,8 +42,13 @@ python setup.py install
 
 # Go back to the LIBERO directory
 cd ../LIBERO
-
-# and then return to install the dependencies again
+```
+If you still encounter issues, you can try to modify the 38th line of `setup.py` file in `egl-probe` directory into one of the following:
+- `subprocess.check_call("cmake ..; make -j", cwd=build_dir, shell=True)`
+- `subprocess.check_call("make -j", cwd=build_dir, shell=True)`
+ 
+ and then return to install the dependencies again
+```bash
 pip install -r requirements.txt
 pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0
 ```

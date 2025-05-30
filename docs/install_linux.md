@@ -40,6 +40,27 @@ pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --index-url htt
 # and you may need to install the cuda toolkit and set the environment variable CUDA_HOME
 ```
 
+### If you encounter issues with `egl-probe`, you can install it separately:
+We provided a modified version of `egl-probe` that is compatible with current dependencies. What we did is to change minimum cmake requirements from 2.8.xx to 3.5 to eliminate conflicts. You can install it separately by running the following commands:
+```bash
+cd ..
+git clone https://github.com/adlsdztony/egl_probe.git
+cd egl-probe
+
+python setup.py build
+python setup.py install
+cd ../LIBERO
+```
+If you still encounter issues, you can try to modify the 38th line of `setup.py` file in `egl-probe` directory into one of the following:
+- `subprocess.check_call("cmake ..; make -j", cwd=build_dir, shell=True)`
+- `subprocess.check_call("make -j", cwd=build_dir, shell=True)`
+ 
+ and then return to install the dependencies again
+```bash
+pip install -r requirements.txt
+pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --index-url https://download.pytorch.org/whl/cpu
+```
+
 ## Install libero locally
 ```bash
 pip install -e .
