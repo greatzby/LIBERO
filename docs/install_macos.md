@@ -3,9 +3,9 @@
 ## Create a conda environment and clone the repository
 Make sure you have a virtual environment set up to manage dependencies. Here we use conda as an example
 ```bash
-conda create -n libero python=3.8.13
+conda create -n libero python=3.9
 conda activate libero
-git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+git clone https://github.com/adlsdztony/LIBERO.git
 cd LIBERO
 ```
 
