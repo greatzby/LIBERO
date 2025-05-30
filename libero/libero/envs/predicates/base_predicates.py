@@ -91,7 +91,7 @@ class UpsideDown(UnaryAtomic):
         R_curr = transform_utils.quat2mat(q_curr)
         z_curr = R_curr[:, 2]      # current up-axis in world coords
         
-        return z_curr[2] < 0
+        return z_curr[2] < -0.95
 
 
 class Stack(BinaryAtomic):
