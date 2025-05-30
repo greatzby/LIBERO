@@ -1,26 +1,22 @@
-# Installation Guide for LIBERO
+# Installation Guide for LIBERO for Linux (Ubuntu)
 ## Install miniconda
 According to the [official documentation](https://www.anaconda.com/docs/getting-started/miniconda/install#linux), you can choose a version corresponding to your system architecture.
 
 ## Create a conda environment and clone the repository
 ```bash
-conda create -n libero python=3.8.13
+conda create -n libero python=3.9
 conda activate libero
-git clone https://github.com/Lifelong-Robot-Learning/LIBERO.git
+git clone https://github.com/adlsdztony/LIBERO.git
 cd LIBERO
 ```
 
 ## Install C++ compiler
-### on Windows
-For Windows users, you can install the C++ compiler by downloading and installing [Visual Studio](https://visualstudio.microsoft.com/downloads/). During the installation, make sure to select the "Desktop development with C++" workload.
-
-### install with apt-get (Ubuntu)
 On Ubuntu, you can install the C++ compiler using the following command:
 ```bash
 sudo apt-get install build-essential
 ```
 ## Install CMake
-Choose one of the following methods to install CMake, which is required for building some of the dependencies:
+We recommend using pip to install cmake.
 ### install with pip
 You can install CMake using pip, which is a convenient way to manage Python packages. Run the following command:
 ```bash
@@ -29,7 +25,7 @@ pip install cmake
 ### install with installer
 To build some of the dependencies, you will need CMake. You can install it using your system's package manager or download it from the [CMake website](https://cmake.org/download/).
 
-### install with apt-get (Ubuntu)
+### install with apt-get
 On Ubuntu, you can install CMake using the following command:
 ```bash
 sudo apt-get install cmake
@@ -38,24 +34,20 @@ sudo apt-get install cmake
 ## Install dependencies
 ```bash
 pip install -r requirements.txt
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 --index-url https://download.pytorch.org/whl/cpu
+# we recommend installing cpu version of torch, if you want to use gpu version, please change the command to:
+# pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+# and you may need to install the cuda toolkit and set the environment variable CUDA_HOME
 ```
-### If you encounter issues with `egl-probe`, you can install it separately:
+
+## Install libero locally
 ```bash
-cd ..
-git clone https://github.com/adlsdztony/egl_probe.git
-cd egl-probe
-
-python setup.py build
-python setup.py install
-cd ../LIBERO
-
-# and then install the dependencies
-pip install -r requirements.txt
-pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
+pip install -e .
 ```
 
-## Teleoperation
+Congrats!🎉 You have successfully installed LIBERO.
+
+## Check task design through teleoperation
 To test the teleoperation functionality, you can run the following command:
 ```bash
 python ./scripts/collect_demonstration.py --bddl-file "./libero/libero/bddl_files/libero_90/KITCHEN_SCENE1_open_the_bottom_drawer_of_the_cabinet.bddl" --device keyboard --robots Panda
