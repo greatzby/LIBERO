@@ -577,6 +577,18 @@ class BDDLBaseDomain(SingleArmEnv):
         conditioned_initial_place_state_on_objects = []
         conditioned_initial_place_state_in_objects = []
 
+        # (Xinzhuang) this is to override the default initial rotation of the objects
+        initial_rotation_override = {}
+        for state in initial_state:
+            if state[0] == "override_rotate":
+                object_name = state[1]
+                rotation = {}
+                for i in range(2, len(state), 2):
+                    rotation_axis = state[i]
+                    rotation_value = float(state[i + 1]) / 180 * np.pi
+                    rotation[rotation_axis] = (rotation_value, rotation_value)
+                initial_rotation_override[object_name] = rotation
+
         for state in initial_state:
             if state[0] == "on" and state[2] in self.objects_dict:
                 conditioned_initial_place_state_on_objects.append(state)
@@ -616,6 +628,14 @@ class BDDLBaseDomain(SingleArmEnv):
                     self.placement_initializer.append_sampler(fixture_sampler)
                 else:
                     # This is to place movable objects.
+
+                    if object_name in initial_rotation_override:
+                        rotation = initial_rotation_override[object_name]
+                        rotation_axis = None
+                    else:
+                        rotation = self.objects_dict[object_name].rotation
+                        rotation_axis = self.objects_dict[object_name].rotation_axis
+
                     region_sampler = get_region_samplers(
                         problem_name, mapping_inv[target_name]
                     )(
@@ -623,8 +643,8 @@ class BDDLBaseDomain(SingleArmEnv):
                         self.objects_dict[object_name],
                         x_ranges=x_ranges,
                         y_ranges=y_ranges,
-                        rotation=self.objects_dict[object_name].rotation,
-                        rotation_axis=self.objects_dict[object_name].rotation_axis,
+                        rotation=rotation,
+                        rotation_axis=rotation_axis,
                         reference_pos=self.workspace_offset,
                     )
                     self.placement_initializer.append_sampler(region_sampler)
