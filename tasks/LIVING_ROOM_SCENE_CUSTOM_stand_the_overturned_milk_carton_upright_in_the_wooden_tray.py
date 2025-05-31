@@ -72,7 +72,8 @@ def main():
         objects_of_interest=["milk_1", "wooden_tray_1"],
         goal_states=[
             ("Upright", "milk_1"),
-            ("In", "milk_1", "wooden_tray_1_contain_region")
+            ("In", "milk_1", "wooden_tray_1_contain_region"),
+            ("Upright", "wooden_tray_1")
         ],
     )
 
