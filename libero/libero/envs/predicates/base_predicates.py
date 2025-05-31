@@ -78,6 +78,10 @@ class On(BinaryAtomic):
         #     else:
         #         return False
 
+class Under(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        return arg1.get_geom_state()["pos"][2] <= arg2.get_geom_state()["pos"][2]
+
 
 class Up(BinaryAtomic):
     def __call__(self, arg1):
@@ -92,6 +96,19 @@ class UpsideDown(UnaryAtomic):
         z_curr = R_curr[:, 2]      # current up-axis in world coords
         
         return z_curr[2] < -0.95
+
+# works only for objects with initial rotation {x: pi/2, z: pi/2}
+# y-axis Upright
+class Upright(UnaryAtomic):
+
+    def __call__(self, arg):
+        geom = arg.get_geom_state()
+        w, x, y, z = geom["quat"]              # MuJoCo: [w, x, y, z]
+        quat_for_rs = np.array([x, y, z, w])   # transform_utils: [x, y, z, w]
+
+        R = transform_utils.quat2mat(quat_for_rs)
+        z_axis_world = R[:, 1]
+        return z_axis_world[2] >= 0.95
 
 
 class Stack(BinaryAtomic):
