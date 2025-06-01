@@ -15,9 +15,9 @@ VALIDATE_PREDICATE_FN_DICT = {
     "close": Close(),
     "turnon": TurnOn(),
     "turnoff": TurnOff(),
-    "upright45": UpRight45(),
     "upsidedown": UpsideDown(),
     "upright": Upright(),
+    "axisalignedwithin": AxisAlignedWithin(),
     "under": Under(),
 }
 
