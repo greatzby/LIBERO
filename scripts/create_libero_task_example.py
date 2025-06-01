@@ -1,4 +1,4 @@
-"""This is a standalone file for create a task in libero."""
+"""This is an exmaple file for creating a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
