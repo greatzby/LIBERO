@@ -130,35 +130,6 @@ class Libero_Coffee_Table_Manipulation(BDDLBaseDomain):
         """Very simple implementation at the moment. Will need to upgrade for other relations later."""
         super()._add_placement_initializer()
 
-    def _check_success(self):
-        """
-        Check if the goal is achieved. Consider conjunction goals at the moment
-        """
-        goal_state = self.parsed_problem["goal_state"]
-        result = True
-        for state in goal_state:
-            result = self._eval_predicate(state) and result
-        return result
-
-    def _eval_predicate(self, state):
-        if len(state) == 3:
-            # Checking binary logical predicates
-            predicate_fn_name = state[0]
-            object_1_name = state[1]
-            object_2_name = state[2]
-            return eval_predicate_fn(
-                predicate_fn_name,
-                self.object_states_dict[object_1_name],
-                self.object_states_dict[object_2_name],
-            )
-        elif len(state) == 2:
-            # Checking unary logical predicates
-            predicate_fn_name = state[0]
-            object_name = state[1]
-            return eval_predicate_fn(
-                predicate_fn_name, self.object_states_dict[object_name]
-            )
-
     def _setup_references(self):
         super()._setup_references()
 
