@@ -1,7 +1,11 @@
 # VLA Tasks
 This repository aim to collect a set of tasks for the VLA (Vision-Language Agent) to learn from. The tasks are designed to be diverse, covering various aspects of vision and language understanding.
 
+Please follow the instructions below to set up the environment, bid on tasks, and contribute new tasks:
+
 ## Installation Instructions
+Berfore you can start working on the tasks, you need to set up the environment. The installation process may vary depending on your operating system.
+
 We prepare a set of installation instructions to help you set up the environment for running the tasks.
 - [Installation Guide for LIBERO on Windows](./docs/install_win.md)
 - [Installation Guide for LIBERO on Linux](./docs/install_linux.md)
@@ -9,6 +13,14 @@ We prepare a set of installation instructions to help you set up the environment
 
 > **Note:** We tried to install LIBERO on WSL and virtual machines, but neither of them worked well. 
 
+## Bid your tasks
+We have provided a list of tasks (task instructions) [here](https://docs.google.com/spreadsheets/d/1Rc0hrl-dRvqR7KBynvIWT6prMaqrL4c2YHFefM4qD2k/edit?gid=0#gid=0). You are going to bid on tasks you want to define first and begin your annotation. 
+
+To "bid" your task, you need to:
+1. **Check the task list**: Look at the [task list](https://docs.google.com/spreadsheets/d/1Rc0hrl-dRvqR7KBynvIWT6prMaqrL4c2YHFefM4qD2k/edit?gid=0#gid=0) to see if the task you want to define is already taken.
+2. **Add your name**: If the task is not taken, add your name to the "Designer" column of the task list.
+
+Once you have added your name, you can start working on the task definition and reward code.
 
 ## Task definition and Contribution
 #### Overview
