@@ -33,7 +33,7 @@ When designing tasks, feel free to use your imagination to extend or modify the 
 4. Validate via teleoperation
    - Run collect_demonstration.py to ensure your task works as intended. You may try to use the following format:
    ```bash
-   /path-to-your-collect_demonstration.py --bddl-file "/tmp/bddl/your-bddl-flie.bddl"--device keyboard --robots Panda
+   /path-to-your-collect_demonstration.py --bddl-file "/tmp/bddl/your-bddl-flie.bddl" --device keyboard --robots Panda
    ```
 
 ## A Concrete Example
