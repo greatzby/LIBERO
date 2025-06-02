@@ -242,3 +242,23 @@ class Above(BinaryAtomic):
             and abs(pos1[1] - pos2[1]) < xy_threshold
             and pos1[2] > pos2[2]
         )
+
+
+class MidBetween(MultiarayAtomic):
+    """Check if M is between L and R along axis A."""
+
+    def __call__(self, L, M, R, A):
+        assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
+        pos_L = L.get_geom_state()["pos"]
+        pos_M = M.get_geom_state()["pos"]
+        pos_R = R.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[A]
+        
+        return (
+            (
+                (pos_L[axis_index] < pos_M[axis_index] < pos_R[axis_index])
+                or (pos_R[axis_index] < pos_M[axis_index] < pos_L[axis_index])
+            )
+            and L.check_contact(M)
+            and M.check_contact(R)
+        )

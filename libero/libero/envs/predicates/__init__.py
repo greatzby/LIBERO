@@ -22,6 +22,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "axisalignedwithin": AxisAlignedWithin(),
     "under": Under(),
     "above": Above(),
+    "between": MidBetween(),
 }
 
 
