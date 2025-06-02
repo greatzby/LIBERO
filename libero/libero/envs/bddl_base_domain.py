@@ -19,7 +19,7 @@ from libero.libero.envs.object_states import *
 from libero.libero.envs.objects import *
 from libero.libero.envs.regions import *
 from libero.libero.envs.arenas import *
-from libero.libero.envs.predicates import eval_predicate_fn
+from libero.libero.envs.predicates import eval_predicate_fn, VALIDATE_PREDICATE_FN_DICT
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -574,6 +574,8 @@ class BDDLBaseDomain(SingleArmEnv):
         initial_state = self.parsed_problem["initial_state"]
         problem_name = self.parsed_problem["problem_name"]
 
+        # print(regions.keys())
+
         conditioned_initial_place_state_on_sites = []
         conditioned_initial_place_state_on_objects = []
         conditioned_initial_place_state_in_objects = []
@@ -802,45 +804,70 @@ class BDDLBaseDomain(SingleArmEnv):
         Check if the goal is achieved. Consider conjunction goals at the moment
         """
         goal_state = self.parsed_problem["goal_state"]
-        result = True
+        success = True
         for state in goal_state:
-            result = self._eval_predicate(state) and result
-        return result
+            result = self._eval_predicate(state)
+            success = success and result
+            # print(result)
+        return success
 
     def _eval_predicate(self, state):
-        # if you have more elegant solution for this, please let me know
+        
+        # print(state)
 
-        if state[0] == "axisalignedwithin":
-            # Checking axis aligned within predicate
-            object_name = state[1]
-            axis = state[2]
-            min_deg = float(state[3])
-            max_deg = float(state[4])
-            return eval_predicate_fn(
-                "axisalignedwithin",
-                self.object_states_dict[object_name],
-                axis,
-                min_deg,
-                max_deg,
-            )
+        if not isinstance(state, list):
+            if state in self.object_states_dict:      # an object
+                return self.object_states_dict[state]
+            else:                                     # a literal (string, float, int, etc.)
+                return state
+            
+        predicate_fn_name, *arg_exprs = state
+        if predicate_fn_name not in VALIDATE_PREDICATE_FN_DICT:
+            raise ValueError(f"Unknown predicate: {predicate_fn_name}")
+        
+        predicate_fn = VALIDATE_PREDICATE_FN_DICT[predicate_fn_name]
+        excepted_types = predicate_fn.expected_arg_types()
 
-        if len(state) == 3:
-            # Checking binary logical predicates
-            predicate_fn_name = state[0]
-            object_1_name = state[1]
-            object_2_name = state[2]
-            return eval_predicate_fn(
-                predicate_fn_name,
-                self.object_states_dict[object_1_name],
-                self.object_states_dict[object_2_name],
+        # print(predicate_fn_name, excepted_types, arg_exprs)
+
+        if len(arg_exprs) != len(excepted_types):
+            raise ValueError(
+                f"Predicate {predicate_fn_name} expects {len(excepted_types)} arguments, but got {len(arg_exprs)}"
             )
-        elif len(state) == 2:
-            # Checking unary logical predicates
-            predicate_fn_name = state[0]
-            object_name = state[1]
-            return eval_predicate_fn(
-                predicate_fn_name, self.object_states_dict[object_name]
-            )
+        
+        evaluated_args = []
+        for arg_expr, expected_type in zip(arg_exprs, excepted_types):
+            val = self._eval_predicate(arg_expr)
+
+            if not isinstance(val, expected_type):
+                try:
+                    val = expected_type(val)
+                except Exception:
+                    raise TypeError(f"Cannot convert '{val}' to {expected_type}")
+            evaluated_args.append(val)
+        
+        return predicate_fn(*evaluated_args)
+        
+
+        # if len(state) == 3:
+        #     # Checking binary logical predicates
+        #     predicate_fn_name = state[0]
+        #     object_1_name = state[1]
+        #     object_2_name = state[2]
+        #     return eval_predicate_fn(
+        #         predicate_fn_name,
+        #         self.object_states_dict[object_1_name],
+        #         self.object_states_dict[object_2_name],
+        #     )
+        # elif len(state) == 2:
+        #     # Checking unary logical predicates
+        #     predicate_fn_name = state[0]
+        #     object_name = state[1]
+        #     return eval_predicate_fn(
+        #         predicate_fn_name, self.object_states_dict[object_name]
+        #     )
+
+        
 
     def visualize(self, vis_settings):
         """
