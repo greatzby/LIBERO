@@ -192,7 +192,7 @@ Given a task: ``[living_room_scene_1] turn the basket upside down over the alpha
    DataCollectionWrapper: making folder at demonstration_data/tmp/libero_living_room_tabletop_manipulation_Ln_turn_the_basket_upside_down_over_the_alphabet_soup/...
    3181
    ['193648263_472938\\ep_37489_872893']
-   1 <-
+   1 <= pay attention to this number
    ```
 
    Record the video of you successfully finishing the task via teleoperation and you are ready to submit your implementation!
