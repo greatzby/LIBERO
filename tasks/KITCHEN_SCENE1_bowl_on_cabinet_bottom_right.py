@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene1"
-    language = "Put the black bowl on the wooden cabinet's bottom right corner"
+    language = "Put the black bowl on the wooden cabinet's corner that is closest to the robot arm base"
     # x-y center of cabinet is 0, -0.3 (from the init_state of the scene)
     # x-y half_size  is 0.12534 0.09438
     # target bowl height is about 1.12, known from teleoperation and printing out the current position
