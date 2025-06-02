@@ -141,7 +141,7 @@ class RelaxedOn(BinaryAtomic):
 
 
 class PositionWithin(UnaryAtomic):
-    def __call__(self, arg, position: tuple, threshold: tuple = (0.01, 0.01, 0.01)):
+    def __call__(self, arg, pos_x, pos_y, pos_z, t_x, t_y, t_z):
         """
         Check if the object's position is within a certain threshold of a specified position.
         
@@ -149,8 +149,8 @@ class PositionWithin(UnaryAtomic):
         
         Args:
             arg: The object to check.
-            position: A tuple of [x, y, z] coordinates to compare against.
-            threshold: A tuple of (x, y, z) thresholds for proximity. Default is (0.01, 0.01, 0.01).
+            position: three floats pos_x, pos_y, pos_z coordinates to compare against.
+            threshold: three floats t_x, t_y, t_z thresholds for proximity. Default is (0.01, 0.01, 0.01).
         
         Returns:
             bool: True if the object's position is within the threshold of the specified position, False otherwise.
@@ -158,14 +158,17 @@ class PositionWithin(UnaryAtomic):
         geom = arg.get_geom_state()
         pos = geom["pos"]
         # Check if the position is within the specified threshold
-        within_x = abs(pos[0] - position[0]) <= threshold[0]
-        within_y = abs(pos[1] - position[1]) <= threshold[1]
-        within_z = abs(pos[2] - position[2]) <= threshold[2]
+        within_x = abs(pos[0] - pos_x) <= t_x
+        within_y = abs(pos[1] - pos_y) <= t_y
+        within_z = abs(pos[2] - pos_z) <= t_z
         
         # print current position, target position, and threshold
         # print(f"Current Position: {pos}, Target Position: {position}, Threshold: {threshold}")
         # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
         return within_x and within_y and within_z
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, float, float, float, float, float, float]
 
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
