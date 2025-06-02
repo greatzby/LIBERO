@@ -808,6 +808,19 @@ class BDDLBaseDomain(SingleArmEnv):
 
     def _eval_predicate(self, state):
         # if you have more elegant solution for this, please let me know
+        
+        if state[0] == "posigreaterthan":
+            # Checking position greater than predicate
+            object_name = state[1]
+            axis = state[2]
+            threshold = float(state[3])
+            return eval_predicate_fn(
+                "posigreaterthan",
+                self.object_states_dict[object_name],
+                axis,
+                threshold,
+            )
+
 
         if state[0] == "axisalignedwithin":
             # Checking axis aligned within predicate
@@ -822,14 +835,32 @@ class BDDLBaseDomain(SingleArmEnv):
                 min_deg,
                 max_deg,
             )
-        if state[0] == "openratio":
+
+ 
+        if state[0] == "positionwithin":
+            # Checking position within predicate
+            object_name = state[1]
+            target_pos_x = float(state[2])
+            target_pos_y = float(state[3])
+            target_pos_z = float(state[4])
+            tolerance_x = float(state[5])
+            tolerance_y = float(state[6])
+            tolerance_z = float(state[7])
+            return eval_predicate_fn(
+                "positionwithin",
+                self.object_states_dict[object_name],
+                (target_pos_x, target_pos_y, target_pos_z),
+                (tolerance_x, tolerance_y, tolerance_z),
+            )
+            
+        if state[0] in ["openratio", "inair"]:
             predicate_fn_name = state[0]
             object_1_name = state[1]
-            ratio = state[2]
+            num = float(state[2])
             return eval_predicate_fn(
                 predicate_fn_name,
                 self.object_states_dict[object_1_name],
-                ratio,
+                num,
             )
 
         if len(state) == 3:
@@ -848,6 +879,17 @@ class BDDLBaseDomain(SingleArmEnv):
             object_name = state[1]
             return eval_predicate_fn(
                 predicate_fn_name, self.object_states_dict[object_name]
+            )
+        elif len(state) == 4:
+            predicate_fn_name = state[0]
+            object_1_name = state[1]
+            object_2_name = state[2]
+            object_3_name = state[3]
+            return eval_predicate_fn(
+                predicate_fn_name,
+                self.object_states_dict[object_1_name],
+                self.object_states_dict[object_2_name],
+                self.object_states_dict[object_3_name],
             )
 
     def visualize(self, vis_settings):
