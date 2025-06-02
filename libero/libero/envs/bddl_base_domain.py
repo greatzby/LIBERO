@@ -826,17 +826,17 @@ class BDDLBaseDomain(SingleArmEnv):
             raise ValueError(f"Unknown predicate: {predicate_fn_name}")
         
         predicate_fn = VALIDATE_PREDICATE_FN_DICT[predicate_fn_name]
-        excepted_types = predicate_fn.expected_arg_types()
+        expected_types = predicate_fn.expected_arg_types()
 
-        # print(predicate_fn_name, excepted_types, arg_exprs)
+        # print(predicate_fn_name, expected_types, arg_exprs)
 
-        if len(arg_exprs) != len(excepted_types):
+        if len(arg_exprs) != len(expected_types):
             raise ValueError(
-                f"Predicate {predicate_fn_name} expects {len(excepted_types)} arguments, but got {len(arg_exprs)}"
+                f"Predicate {predicate_fn_name} expects {len(expected_types)} arguments, but got {len(arg_exprs)}"
             )
         
         evaluated_args = []
-        for arg_expr, expected_type in zip(arg_exprs, excepted_types):
+        for arg_expr, expected_type in zip(arg_exprs, expected_types):
             val = self._eval_predicate(arg_expr)
 
             if not isinstance(val, expected_type):
