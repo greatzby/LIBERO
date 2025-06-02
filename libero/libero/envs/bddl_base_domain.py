@@ -809,7 +809,6 @@ class BDDLBaseDomain(SingleArmEnv):
 
     def _eval_predicate(self, state):
         # if you have more elegant solution for this, please let me know
-
         if state[0] == "axisalignedwithin":
             # Checking axis aligned within predicate
             object_name = state[1]
@@ -822,6 +821,22 @@ class BDDLBaseDomain(SingleArmEnv):
                 axis,
                 min_deg,
                 max_deg,
+            )
+            
+        if state[0] == "positionwithin":
+            # Checking position within predicate
+            object_name = state[1]
+            target_pos_x = float(state[2])
+            target_pos_y = float(state[3])
+            target_pos_z = float(state[4])
+            tolerance_x = float(state[5])
+            tolerance_y = float(state[6])
+            tolerance_z = float(state[7])
+            return eval_predicate_fn(
+                "positionwithin",
+                self.object_states_dict[object_name],
+                (target_pos_x, target_pos_y, target_pos_z),
+                (tolerance_x, tolerance_y, tolerance_z),
             )
 
         if len(state) == 3:
