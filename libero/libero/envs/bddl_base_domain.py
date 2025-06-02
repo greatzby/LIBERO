@@ -578,8 +578,6 @@ class BDDLBaseDomain(SingleArmEnv):
         conditioned_initial_place_state_on_objects = []
         conditioned_initial_place_state_in_objects = []
 
-        # print(regions.keys())
-
         # (Xinzhuang) this is to override the default initial rotation of the objects
         initial_rotation_override = {}
         for state in initial_state:

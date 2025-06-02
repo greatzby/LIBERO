@@ -98,16 +98,16 @@ class UpsideDown(UnaryAtomic):
         return z_curr[2] < -0.95
 
 class Upright(UnaryAtomic): 
-    """Check if the object is upright with respect to the y-axis."""
-    """Works for objects with initial rotation {x: pi/2, z: pi/2}"""
+    """Check if the object is upright with respect to the z-axis."""
+    """If this predicate fails, check the initial rotation of the object and use AxisAlignedWithin instead"""
     def __call__(self, arg):
         geom = arg.get_geom_state()
         w, x, y, z = geom["quat"]              # MuJoCo: [w, x, y, z]
         quat_for_rs = np.array([x, y, z, w])   # transform_utils: [x, y, z, w]
 
         R = transform_utils.quat2mat(quat_for_rs)
-        y_axis_world = R[:, 1]
-        return y_axis_world[2] >= 0.95
+        z_axis_world = R[:, 2]
+        return z_axis_world[2] >= 0.9
 
 class AxisAlignedWithin(UnaryAtomic):
     """
