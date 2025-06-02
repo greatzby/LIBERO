@@ -276,6 +276,17 @@ class Close(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState]
 
+class OpenRatio(UnaryAtomic):
+    def __call__(self, arg, exp_ratio):
+        tol = 0.2
+        if abs(arg.open_ratio() - float(exp_ratio)) < tol:
+            return True
+        else:
+            return False
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, float]
+
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):

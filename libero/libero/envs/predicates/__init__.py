@@ -20,6 +20,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "printjointstate": PrintJointState(),
     "open": Open(),
     "close": Close(),
+    "openratio": OpenRatio(),
     "turnon": TurnOn(),
     "turnoff": TurnOff(),
     "upsidedown": UpsideDown(),

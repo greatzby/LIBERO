@@ -1,5 +1,5 @@
 # VLA Tasks
-This repository aim to collect a set of tasks for the VLA (Vision-Language Agent) to learn from. The tasks are designed to be diverse, covering various aspects of vision and language understanding.
+This repository aim to collect a set of tasks for the VLA (Vision-Language-Action) model to learn from. The tasks are designed to be diverse, covering various aspects of vision and language understanding.
 
 Please follow the instructions below to set up the environment, bid on tasks, and contribute new tasks:
 
