@@ -118,7 +118,6 @@ class PosiGreaterThan(UnaryAtomic):
             raise ValueError("Axis must be one of 'x', 'y', or 'z'")
 
         pos = arg.get_geom_state()["pos"]
-        print(f"PosiGreaterThan: {pos}, axis: {axis}, value: {value}")
         axis_index = {"x": 0, "y": 1, "z": 2}[axis]
         return pos[axis_index] > value
 

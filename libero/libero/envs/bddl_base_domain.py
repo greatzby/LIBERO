@@ -811,7 +811,6 @@ class BDDLBaseDomain(SingleArmEnv):
         # if you have more elegant solution for this, please let me know
         
         if state[0] == "posigreaterthan":
-            print(state)
             # Checking position greater than predicate
             object_name = state[1]
             axis = state[2]
