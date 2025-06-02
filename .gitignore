@@ -18,3 +18,6 @@ libero.egg-info/
 .vscode/
 
 demonstration_data/
+
+# macOS specific
+.DS_Store 

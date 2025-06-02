@@ -155,6 +155,29 @@ class Stack(BinaryAtomic):
             and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
         )
 
+class StackBowl(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        pos1 = arg1.get_geom_state()["pos"]
+        pos2 = arg2.get_geom_state()["pos"]
+
+        xy_threshold = 0.02
+        z_min_gap = 0.001
+        z_max_gap = 0.5
+
+        horizontally_aligned = (
+            abs(pos1[0] - pos2[0]) < xy_threshold and
+            abs(pos1[1] - pos2[1]) < xy_threshold
+        )
+
+        vertical_stack = (
+            z_min_gap < abs(pos1[2] - pos2[2]) < z_max_gap
+        )
+        # print([abs(pos1[0] - pos2[0]),abs(pos1[1] - pos2[1]),(pos1[2] - pos2[2])])
+        return (
+            arg1.check_contact(arg2)
+            and horizontally_aligned
+            and vertical_stack
+        )
 
 class PrintJointState(UnaryAtomic):
     """This is a debug predicate to allow you print the joint values of the object you care"""

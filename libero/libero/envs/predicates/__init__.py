@@ -9,6 +9,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "on": On(),
     "up": Up(),
     # "stack":     Stack(),
+    "stackbowl": StackBowl(),
     # "temporal":  TemporalPredicate(),
     "printjointstate": PrintJointState(),
     "open": Open(),
