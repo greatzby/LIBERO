@@ -78,6 +78,33 @@ class On(BinaryAtomic):
         #     else:
         #         return False
 
+class PositionWithin(UnaryAtomic):
+    def __call__(self, arg, position: tuple, threshold: tuple = (0.01, 0.01, 0.01)):
+        """
+        Check if the object's position is within a certain threshold of a specified position.
+        
+        HINT: You may teleoperate and print out the current position and the target position to get a sense of the position
+        
+        Args:
+            arg: The object to check.
+            position: A tuple of [x, y, z] coordinates to compare against.
+            threshold: A tuple of (x, y, z) thresholds for proximity. Default is (0.01, 0.01, 0.01).
+        
+        Returns:
+            bool: True if the object's position is within the threshold of the specified position, False otherwise.
+        """
+        geom = arg.get_geom_state()
+        pos = geom["pos"]
+        # Check if the position is within the specified threshold
+        within_x = abs(pos[0] - position[0]) <= threshold[0]
+        within_y = abs(pos[1] - position[1]) <= threshold[1]
+        within_z = abs(pos[2] - position[2]) <= threshold[2]
+        
+        # print current position, target position, and threshold
+        # print(f"Current Position: {pos}, Target Position: {position}, Threshold: {threshold}")
+        # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
+        return within_x and within_y and within_z
+
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
         return arg1.get_geom_state()["pos"][2] <= arg2.get_geom_state()["pos"][2]
