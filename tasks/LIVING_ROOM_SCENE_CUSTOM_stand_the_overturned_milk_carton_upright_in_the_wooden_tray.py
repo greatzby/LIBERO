@@ -71,9 +71,9 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["milk_1", "wooden_tray_1"],
         goal_states=[
-            ("Upright", "milk_1"),
+            ("AxisAlignedWithin", "milk_1", "y", 0, 5),
             ("In", "milk_1", "wooden_tray_1_contain_region"),
-            ("Upright", "wooden_tray_1")
+            ("AxisAlignedWithin", "wooden_tray_1", "z", 0, 5)
         ],
     )
 

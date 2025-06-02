@@ -93,22 +93,58 @@ class UpsideDown(UnaryAtomic):
         w, x, y, z = geom["quat"]
         q_curr = np.array([x, y, z, w])
         R_curr = transform_utils.quat2mat(q_curr)
-        z_curr = R_curr[:, 2]      # current up-axis in world coords
+        z_curr = R_curr[:, 2]                  # current up-axis in world coords
         
         return z_curr[2] < -0.95
 
-# works only for objects with initial rotation {x: pi/2, z: pi/2}
-# y-axis Upright
-class Upright(UnaryAtomic):
-
+class Upright(UnaryAtomic): 
+    """Check if the object is upright with respect to the z-axis."""
+    """If this predicate fails, check the initial rotation of the object and use AxisAlignedWithin instead"""
     def __call__(self, arg):
         geom = arg.get_geom_state()
         w, x, y, z = geom["quat"]              # MuJoCo: [w, x, y, z]
         quat_for_rs = np.array([x, y, z, w])   # transform_utils: [x, y, z, w]
 
         R = transform_utils.quat2mat(quat_for_rs)
-        z_axis_world = R[:, 1]
-        return z_axis_world[2] >= 0.95
+        z_axis_world = R[:, 2]
+        return z_axis_world[2] >= 0.9
+
+class AxisAlignedWithin(UnaryAtomic):
+    """
+    Check if the object's specified axis is within a degree range [min_deg, max_deg]
+    from alignment with the world Z+ axis.
+    
+    Usage: Upright()(object, axis, min_deg, max_deg)
+    """
+    def __call__(self, *args):
+        if len(args) != 4:
+            raise ValueError("Upright expects 4 arguments: object, axis ('x', 'y', 'z'), min_degree, max_degree")
+
+        obj, axis, min_deg, max_deg = args
+
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+        if not (0 <= min_deg <= max_deg <= 180):
+            raise ValueError("Degrees must satisfy 0 <= min_deg <= max_deg <= 180")
+
+        min_rad = np.radians(min_deg)
+        max_rad = np.radians(max_deg)
+        cos_min = np.cos(min_rad)
+        cos_max = np.cos(max_rad)
+
+        # print(cos_min, cos_max)
+
+        geom = obj.get_geom_state()
+        w, x, y, z = geom["quat"]
+        quat_for_rs = np.array([x, y, z, w])  # Convert to [x, y, z, w] for robosuite
+        R = transform_utils.quat2mat(quat_for_rs)
+
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        object_axis_world = R[:, axis_index]
+        cos_angle = object_axis_world[2]
+
+        return cos_max <= cos_angle <= cos_min
+
 
 
 class Stack(BinaryAtomic):
@@ -171,13 +207,13 @@ class TurnOff(UnaryAtomic):
         return arg.turn_off()
 
 
-class UpRight45(UnaryAtomic):
-    """Check if the object is upright within 45 degrees"""
-    def __call__(self, arg):
-        geom = arg.get_geom_state()
-        w, x, y, z = geom["quat"]
-        quat_for_rs = np.array([x, y, z, w])
+# class UpRight45(UnaryAtomic):
+#     """Check if the object is upright within 45 degrees"""
+#     def __call__(self, arg):
+#         geom = arg.get_geom_state()
+#         w, x, y, z = geom["quat"]
+#         quat_for_rs = np.array([x, y, z, w])
 
-        R = transform_utils.quat2mat(quat_for_rs)
-        z_axis = R[:, 2]
-        return z_axis[2] >= 0.7071
+#         R = transform_utils.quat2mat(quat_for_rs)
+#         z_axis = R[:, 2]
+#         return z_axis[2] >= 0.7071

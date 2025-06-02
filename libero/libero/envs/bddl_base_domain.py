@@ -19,6 +19,7 @@ from libero.libero.envs.object_states import *
 from libero.libero.envs.objects import *
 from libero.libero.envs.regions import *
 from libero.libero.envs.arenas import *
+from libero.libero.envs.predicates import eval_predicate_fn
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -798,12 +799,48 @@ class BDDLBaseDomain(SingleArmEnv):
 
     def _check_success(self):
         """
-        This needs to match with the goal description from the bddl file
-
-        Returns:
-            bool: True if drawer has been opened
+        Check if the goal is achieved. Consider conjunction goals at the moment
         """
-        return False
+        goal_state = self.parsed_problem["goal_state"]
+        result = True
+        for state in goal_state:
+            result = self._eval_predicate(state) and result
+        return result
+
+    def _eval_predicate(self, state):
+        # if you have more elegant solution for this, please let me know
+
+        if state[0] == "axisalignedwithin":
+            # Checking axis aligned within predicate
+            object_name = state[1]
+            axis = state[2]
+            min_deg = float(state[3])
+            max_deg = float(state[4])
+            return eval_predicate_fn(
+                "axisalignedwithin",
+                self.object_states_dict[object_name],
+                axis,
+                min_deg,
+                max_deg,
+            )
+
+        if len(state) == 3:
+            # Checking binary logical predicates
+            predicate_fn_name = state[0]
+            object_1_name = state[1]
+            object_2_name = state[2]
+            return eval_predicate_fn(
+                predicate_fn_name,
+                self.object_states_dict[object_1_name],
+                self.object_states_dict[object_2_name],
+            )
+        elif len(state) == 2:
+            # Checking unary logical predicates
+            predicate_fn_name = state[0]
+            object_name = state[1]
+            return eval_predicate_fn(
+                predicate_fn_name, self.object_states_dict[object_name]
+            )
 
     def visualize(self, vis_settings):
         """

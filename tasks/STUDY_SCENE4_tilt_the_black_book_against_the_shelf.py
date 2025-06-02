@@ -100,7 +100,7 @@ def main():
         goal_states=[
             ("incontact", "black_book_1", "wooden_two_layer_shelf_1"),
             ("on", "black_book_1", "study_table_black_book_goal_region"),
-            ("upright45", "black_book_1"),
+            ("AxisAlignedWithin", "black_book_1", "z", 0, 60),
         ],
     )
 
