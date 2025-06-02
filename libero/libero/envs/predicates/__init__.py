@@ -14,6 +14,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "printjointstate": PrintJointState(),
     "open": Open(),
     "close": Close(),
+    "openratio": OpenRatio(),
     "turnon": TurnOn(),
     "turnoff": TurnOff(),
     "upsidedown": UpsideDown(),
@@ -21,6 +22,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "axisalignedwithin": AxisAlignedWithin(),
     "under": Under(),
     "posigreaterthan": PosiGreaterThan(),
+    "positionwithin": PositionWithin(),
 }
 
 
