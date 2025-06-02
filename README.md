@@ -25,7 +25,7 @@ Once you have added your name, you can start working on the task definition and 
 ## Task definition and Contribution
 #### Overview
 To contribute a new task, you need to
-- create a pull request with your task definition  and reward code 
+- create a pull request with your task definition and reward code 
 - and add your task with video demonstration in this [google sheet](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?gid=0#gid=0). 
 
 > Your task will be reviewed by the team and added to the repository if it meets the requirements.
