@@ -822,14 +822,14 @@ class BDDLBaseDomain(SingleArmEnv):
                 min_deg,
                 max_deg,
             )
-        if state[0] == "openratio":
+        if state[0] in ["openratio", "inair"]:
             predicate_fn_name = state[0]
             object_1_name = state[1]
-            ratio = state[2]
+            num = float(state[2])
             return eval_predicate_fn(
                 predicate_fn_name,
                 self.object_states_dict[object_1_name],
-                ratio,
+                num,
             )
 
         if len(state) == 3:
@@ -848,6 +848,17 @@ class BDDLBaseDomain(SingleArmEnv):
             object_name = state[1]
             return eval_predicate_fn(
                 predicate_fn_name, self.object_states_dict[object_name]
+            )
+        elif len(state) == 4:
+            predicate_fn_name = state[0]
+            object_1_name = state[1]
+            object_2_name = state[2]
+            object_3_name = state[3]
+            return eval_predicate_fn(
+                predicate_fn_name,
+                self.object_states_dict[object_1_name],
+                self.object_states_dict[object_2_name],
+                self.object_states_dict[object_3_name],
             )
 
     def visualize(self, vis_settings):
