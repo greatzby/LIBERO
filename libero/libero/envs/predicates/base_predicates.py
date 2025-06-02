@@ -223,6 +223,14 @@ class Close(UnaryAtomic):
     def __call__(self, arg):
         return arg.is_close()
 
+class OpenRatio(UnaryAtomic):
+    def __call__(self, arg, exp_ratio):
+        tol = 0.2
+        if abs(arg.open_ratio() - float(exp_ratio)) < tol:
+            return True
+        else:
+            return False
+
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):
