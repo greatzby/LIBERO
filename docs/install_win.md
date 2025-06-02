@@ -53,6 +53,9 @@ pip install -r requirements.txt
 pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0
 ```
 
+### If you encounter package missing issues, you can install them manually:
+**IMPORTANT: check whether the package exists in the requirements.txt file, if it does, align the version with the one in requirements.txt file.**
+
 ## Install libero locally
 ```bash
 pip install -e .

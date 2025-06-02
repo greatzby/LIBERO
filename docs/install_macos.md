@@ -56,6 +56,9 @@ pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0
 #### Issues with `tokenizers`:
 If you encounter an error related to `tokenizers` during the installation of dependencies, it is because the version problem of `transformers`. You can modify the requirements.txt file to change the version of `transformers` from `4.21.1` to `4.26` and install it again.
 
+### If you encounter package missing issues, you can install them manually:
+**IMPORTANT: check whether the package exists in the requirements.txt file, if it does, align the version with the one in requirements.txt file.**
+
 ## Install other dependencies
 ```bash
 pip install torch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0
