@@ -19,8 +19,7 @@ from libero.libero.envs.object_states import *
 from libero.libero.envs.objects import *
 from libero.libero.envs.regions import *
 from libero.libero.envs.arenas import *
-from libero.libero.envs.predicates import eval_predicate_fn
-
+from libero.libero.envs.predicates import *
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -822,6 +821,15 @@ class BDDLBaseDomain(SingleArmEnv):
                 axis,
                 min_deg,
                 max_deg,
+            )
+        if state[0] == "openratio":
+            predicate_fn_name = state[0]
+            object_1_name = state[1]
+            ratio = state[2]
+            return eval_predicate_fn(
+                predicate_fn_name,
+                self.object_states_dict[object_1_name],
+                ratio,
             )
 
         if len(state) == 3:
