@@ -3,7 +3,6 @@ import numpy as np
 import robosuite.utils.transform_utils as transform_utils
 
 
-
 class Expression:
     def __init__(self):
         raise NotImplementedError
@@ -135,6 +134,19 @@ class Upright(UnaryAtomic):
         R = transform_utils.quat2mat(quat_for_rs)
         z_axis_world = R[:, 2]
         return z_axis_world[2] >= 0.9
+
+class PosiGreaterThan(UnaryAtomic):
+    """Check if the object's position is greater than a specified value along a specified axis."""
+    def __call__(self, *args):
+        if len(args) != 3:
+            raise ValueError("PosiGreaterThan expects 3 arguments: object, axis ('x', 'y', 'z'), value")
+        arg, axis, value = args
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+
+        pos = arg.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        return pos[axis_index] > value
 
 class AxisAlignedWithin(UnaryAtomic):
     """

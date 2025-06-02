@@ -808,6 +808,20 @@ class BDDLBaseDomain(SingleArmEnv):
 
     def _eval_predicate(self, state):
         # if you have more elegant solution for this, please let me know
+        
+        if state[0] == "posigreaterthan":
+            # Checking position greater than predicate
+            object_name = state[1]
+            axis = state[2]
+            threshold = float(state[3])
+            return eval_predicate_fn(
+                "posigreaterthan",
+                self.object_states_dict[object_name],
+                axis,
+                threshold,
+            )
+
+
         if state[0] == "axisalignedwithin":
             # Checking axis aligned within predicate
             object_name = state[1]
