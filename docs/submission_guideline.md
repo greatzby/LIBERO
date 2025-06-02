@@ -3,10 +3,10 @@
 1. **Fork the repository**: Create a personal copy of the repository on your GitHub account.
 2. **Clone the repository**: Download your forked repository to your local machine using `git clone <your-fork-url>`.
 3. **Create a new branch**: Before making changes, create a new branch for your task using `git checkout -b <branch-name>`.
-4. **Add your task**: Implement your task in the `tasks` directory.
+4. **Add your task**: Follow the [annotation guideline](./docs/annotation_guideline.md) to implement your task in the `tasks` directory.
 5. **Check your task**: Record the video of you successfully finishing the task via teleoperation.
 6. **Update the task list**: Add your task to the [task list](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?gid=0#gid=0) with a link to the video demonstration.
-7. **Push your changes**: After completing your task, push your changes to your forked repository using `git push origin <branch-name>`.
+7. **Push your changes**: After completing your task, add and commit your changes to your branch using `git add .` and `git commit -m "Add task <task-name>"`. Then push your changes to your forked repository using `git push origin <branch-name>`.
 8. **Create a pull request**: Go to the original repository and create a pull request from your branch. Provide a clear description of your task and any relevant information.
 9. **Add the Link to pr on the task list**: After creating the pull request, add the link to your pull request in the [task list](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?gid=0#gid=0) under the "PR" column.
 10. **Wait for review**: The team will review your pull request. If any changes are needed, they will provide feedback. Make the necessary changes and push them to your branch.
