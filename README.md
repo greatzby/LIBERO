@@ -11,11 +11,19 @@ We prepare a set of installation instructions to help you set up the environment
 
 
 ## Task definition and Contribution
+#### Overview
 To contribute a new task, you need to
 - create a pull request with your task definition  and reward code 
 - and add your task with video demonstration in this [google sheet](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?gid=0#gid=0). 
 
 > Your task will be reviewed by the team and added to the repository if it meets the requirements.
 
-You can find the detailed task definition and reward code writing guidelines in our [google doc](https://docs.google.com/document/d/1wD4SgbKzvRKp96J4fzZQj6OASt9vDqbF67Xvw2tk-DI/edit?tab=t.0#heading=h.h0r925fcfx3f).
-Please read through the document carefully before contributing a new task. If you have any questions, feel free to contact us via slack or wechat.
+#### Annotation
+Please follow the [annotation guideline](./docs/annotation_guideline.md) to implement your task in the `tasks` directory. 
+
+The guideline provides detailed instructions on how to define a task and how to write the reward code for the task. Also, it provide examples of existing tasks to help you understand the structure and requirements.
+
+#### Submission
+Please follow the [submission guideline](./docs/submission_guideline.md) to submit your task. 
+
+The guideline provides step-by-step instructions on how to fork the repository, create a new branch, add your task, and create a pull request.
