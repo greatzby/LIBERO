@@ -14,10 +14,10 @@ We prepare a set of installation instructions to help you set up the environment
 > **Note:** We tried to install LIBERO on WSL and virtual machines, but neither of them worked well. 
 
 ## Bid your tasks
-We have provided a list of tasks (task instructions) [here](https://docs.google.com/spreadsheets/d/1Rc0hrl-dRvqR7KBynvIWT6prMaqrL4c2YHFefM4qD2k/edit?gid=0#gid=0). You are going to bid on tasks you want to define first and begin your annotation. 
+We have provided a list of tasks (task instructions) [here](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?usp=sharing). You are going to bid on tasks you want to define first and begin your annotation. 
 
 To "bid" your task, you need to:
-1. **Check the task list**: Look at the [task list](https://docs.google.com/spreadsheets/d/1Rc0hrl-dRvqR7KBynvIWT6prMaqrL4c2YHFefM4qD2k/edit?gid=0#gid=0) to see if the task you want to define is already taken.
+1. **Check the task list**: Look at the [task list](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?usp=sharing) to see if the task you want to define is already taken.
 2. **Add your name**: If the task is not taken, add your name to the "Designer" column of the task list.
 
 Once you have added your name, you can start working on the task definition and reward code.
@@ -26,7 +26,7 @@ Once you have added your name, you can start working on the task definition and 
 #### Overview
 To contribute a new task, you need to
 - create a pull request with your task definition and reward code 
-- and add your task with video demonstration in this [google sheet](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?gid=0#gid=0). 
+- and add your task with video demonstration in this [google sheet](https://docs.google.com/spreadsheets/d/1ElB9GhiSfXJpvrUI0Efa5lJglc_rO-LLGUUT_vosmoQ/edit?usp=sharing). 
 
 > Your task will be reviewed by the team and added to the repository if it meets the requirements.
 
