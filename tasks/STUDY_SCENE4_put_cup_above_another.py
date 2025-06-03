@@ -15,7 +15,7 @@ def main():
     register_task_info(
         language=language,
         scene_name=scene_name,
-        objects_of_interest=["red_coffee_mug_1", "white_yellow_mug_1"],
+        objects_of_interest=["red_coffee_mug_1", "porcelain_mug_1"],
         goal_states=[
             ("upsidedown", "porcelain_mug_1"),
             ("above", "porcelain_mug_1", "red_coffee_mug_1"),
