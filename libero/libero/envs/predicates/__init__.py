@@ -12,7 +12,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "in": In(),
     "equal": Equal(),
     "distance": Distance(),
-    "incontact": InContactPredicateFn(),
+    "incontact": InContact(),
     "on": On(),
     "relaxedon": RelaxedOn(),
     "up": Up(),
