@@ -279,7 +279,34 @@ class AxisAlignedWithin(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
-    
+
+class PrintGeomState(UnaryAtomic):
+    """
+    Print the geometry state of an object at specified intervals.
+    Usage: PrintGeomState()(object, interval)
+    Arguments:
+    - object: The object whose geometry state will be printed.
+    - interval: The number of calls after which the geometry state will be printed.
+    Returns:
+    - True: Always returns True, as this is a side-effect action.
+    """
+    def __init__(self):
+        super().__init__()
+        self.count = {}
+
+    def __call__(self, arg, interval):
+        if arg.object_name not in self.count:
+            self.count[arg.object_name] = 0
+
+        if self.count[arg.object_name] % interval == 0:
+            geom_state = arg.get_geom_state()
+            print(f"Geometry State of {arg.object_name}: {geom_state}")
+
+        self.count[arg.object_name] += 1
+        return True
+
+    def expected_arg_types(self):
+        return [BaseObjectState, int]
 
 class Stack(BinaryAtomic):
     def __call__(self, arg1, arg2):
