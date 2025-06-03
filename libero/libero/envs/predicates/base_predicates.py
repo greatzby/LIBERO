@@ -459,6 +459,9 @@ class Above(BinaryAtomic):
             and abs(pos1[1] - pos2[1]) < xy_threshold
             and pos1[2] > pos2[2]
         )
+        
+    def expected_arg_types(self) -> List[type]:
+        return [BaseObjectState, BaseObjectState]
 
 
 class MidBetween(MultiarayAtomic):
@@ -479,3 +482,6 @@ class MidBetween(MultiarayAtomic):
             and L.check_contact(M)
             and M.check_contact(R)
         )
+
+    def expected_arg_types(self) -> List[type]:
+        return [BaseObjectState, BaseObjectState, BaseObjectState, str]
