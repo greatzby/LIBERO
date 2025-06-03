@@ -20,6 +20,7 @@ from libero.libero.envs.objects import *
 from libero.libero.envs.regions import *
 from libero.libero.envs.arenas import *
 from libero.libero.envs.predicates import eval_predicate_fn, VALIDATE_PREDICATE_FN_DICT
+from libero.libero.envs.debug import print_states
 
 
 DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -804,12 +805,12 @@ class BDDLBaseDomain(SingleArmEnv):
         Check if the goal is achieved. Consider conjunction goals at the moment
         """
         goal_state = self.parsed_problem["goal_state"]
-        success = True
+        results = []
         for state in goal_state:
             result = self._eval_predicate(state)
-            success = success and result
-            # print(state[0], result)
-        return success
+            results.append(result)
+        print_states(goal_state, results, self.object_states_dict)  # debug print function
+        return all(results)
 
     def _eval_predicate(self, state):
         
