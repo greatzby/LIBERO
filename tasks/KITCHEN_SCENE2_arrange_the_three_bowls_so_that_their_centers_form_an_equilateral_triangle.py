@@ -11,7 +11,90 @@ from libero.libero.utils.task_generation_utils import (
     generate_bddl_from_task_info,
 )
 
-from libero.libero.benchmark.mu_creation import *
+
+@register_mu(scene_type="kitchen")
+class KitchenScene2(InitialSceneTemplates):
+    def __init__(self):
+
+        fixture_num_info = {
+            "kitchen_table": 1,
+            "wooden_cabinet": 1,
+        }
+
+        object_num_info = {
+            "akita_black_bowl": 3,
+        }
+
+        super().__init__(
+            workspace_name="kitchen_table",
+            fixture_num_info=fixture_num_info,
+            object_num_info=object_num_info,
+        )
+
+    def define_regions(self):
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.0, -0.30],
+                region_name="wooden_cabinet_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+                yaw_rotation=(np.pi, np.pi),
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.05, 0.20],
+                region_name="akita_black_bowl_middle_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.025,
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.10, 0.15],
+                region_name="akita_black_bowl_front_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.025,
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.15, 0.05],
+                region_name="akita_black_bowl_back_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.025,
+            )
+        )
+
+        self.xy_region_kwargs_list = get_xy_region_kwargs_list_from_regions_info(
+            self.regions
+        )
+
+    @property
+    def init_states(self):
+        states = [
+            (
+                "On",
+                "akita_black_bowl_1",
+                "kitchen_table_akita_black_bowl_front_init_region",
+            ),
+            (
+                "On",
+                "akita_black_bowl_2",
+                "kitchen_table_akita_black_bowl_middle_init_region",
+            ),
+            (
+                "On",
+                "akita_black_bowl_3",
+                "kitchen_table_akita_black_bowl_back_init_region",
+            ),
+            ("On", "wooden_cabinet_1", "kitchen_table_wooden_cabinet_init_region"),
+        ]
+        return states
+
 
 def main():
 
