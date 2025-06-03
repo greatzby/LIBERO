@@ -22,6 +22,8 @@ def main():
         goal_states=[
             ("InContact", "porcelain_mug_1", "red_coffee_mug_1"),
             ("SameHeight", "porcelain_mug_1", "red_coffee_mug_1"),
+            ("Upright", "porcelain_mug_1"),
+            ("Upright", "red_coffee_mug_1"),
         ],
     )
 
