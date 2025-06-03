@@ -31,6 +31,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "under": Under(),
     "posigreaterthan": PosiGreaterThan(),
     "positionwithin": PositionWithin(),
+    "above": Above(),
+    "between": MidBetween(),
 }
 
 
