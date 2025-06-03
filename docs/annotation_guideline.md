@@ -38,7 +38,7 @@ When designing tasks, feel free to use your imagination to extend or modify the 
 > **Note:** We provide a automated script to help you generate the BDDL file and validate your task via teleoperation. You can find it in `scripts/auto_tun.py`. This script will automatically generate the BDDL file and start the teleoperation process for you. You can run it with the following command:
 
 ```bash
-python scripts/auto_tun.py <path-to-your-task-file.py>
+python scripts/auto_run.py <path-to-your-task-file.py>
 ```
 
 ## A Concrete Example
