@@ -69,9 +69,8 @@ def main():
         goal_states=[
             ("relaxedon", "black_book_1", "yellow_book_1"),
             ("relaxedon", "black_book_1", "yellow_book_2"),
-            # ("incontact", "black_book_1", "yellow_book_1"),
-            # ("incontact", "black_book_1", "yellow_book_2"),
-            # ("axisalignedwithin", "black_book_1", "z", 0, 15),
+            ("upright", "yellow_book_1"),
+            ("upright", "yellow_book_2"),
         ],
     )
     bddl, _ = generate_bddl_from_task_info()
