@@ -35,7 +35,13 @@ When designing tasks, feel free to use your imagination to extend or modify the 
    ```bash
    /path-to-your-collect_demonstration.py --bddl-file "/tmp/bddl/your-bddl-flie.bddl" --device keyboard --robots Panda
    ```
+> **Note:** We provide a automated script to help you generate the BDDL file and validate your task via teleoperation. You can find it in `scripts/auto_tun.py`. This script will automatically generate the BDDL file and start the teleoperation process for you. You can run it with the following command:
 
+```bash
+python scripts/auto_run.py <path-to-your-task-file.py>
+```
+
+> **Note:** We provide a debug printing function in `libero/libero/envs/debug.py`. You can use it to print out the current state of the environment, which can be helpful for debugging your task. If you want to use it, simply set DEBUG flag to True in `libero/libero/envs/debug.py`.
 ## A Concrete Example
 
 Given a task: ``[living_room_scene_1] turn the basket upside down over the alphabet soup``
