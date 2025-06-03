@@ -337,3 +337,36 @@ class TurnOff(UnaryAtomic):
 #         R = transform_utils.quat2mat(quat_for_rs)
 #         z_axis = R[:, 2]
 #         return z_axis[2] >= 0.7071
+
+class CollinearEqualDistance(MultiarayAtomic):
+    """
+    Check if two of the objects are collinear with the target object, 
+    and their distances to the target object are equal.
+
+    Usage: CollinearEqualDistance()(target_object, object1, object2, object3, ...)
+    Arguments:
+    - target_object: The target object.
+    - object1: The first object.
+    - object2: The second object.
+    - object3: The third object.
+    - ...: The rest of the objects.
+
+    Returns:
+    - True if the following conditions are met:
+        1. The target object and any two other objects are collinear.
+        2. The distances between the target object and the other two objects are equal.
+        3. The other two objects are at the same height with the target object.
+    - False otherwise.
+    """
+    def __call__(self, *args):
+        assert len(args) > 2, "CollinearEqualDistance expects at least 3 arguments"
+        arg_num = len(args)
+        target_object = args[0]
+        for i in range(1, arg_num - 1):
+            for j in range(i + 1, arg_num):
+                collinear_ratio = target_object.check_collinear(args[i], args[j])
+                distance = abs(target_object.get_distance(args[i]) - target_object.get_distance(args[j]))
+                height_check = abs(target_object.get_height() - args[i].get_height()) < 0.01 and abs(target_object.get_height() - args[j].get_height()) < 0.01
+                if distance < 0.02 and collinear_ratio > 0.9 and height_check:
+                    return True
+        return False
