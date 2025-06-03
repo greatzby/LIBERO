@@ -172,6 +172,8 @@ class PositionWithin(UnaryAtomic):
         within_z = abs(pos[2] - pos_z) <= t_z
         
         # print current position, target position, and threshold
+        # position = (pos_x, pos_y, pos_z)
+        # threshold = (t_x, t_y, t_z)
         # print(f"Current Position: {pos}, Target Position: {position}, Threshold: {threshold}")
         # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
         return within_x and within_y and within_z
@@ -277,7 +279,7 @@ class AxisAlignedWithin(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
-
+    
 
 class Stack(BinaryAtomic):
     def __call__(self, arg1, arg2):
