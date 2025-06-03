@@ -110,6 +110,35 @@ class All(UnaryAtomic):
     def expected_arg_types(self):
         return [tuple]
 
+class Equal(BinaryAtomic):
+    def __call__(self, arg1, arg2, threshold):
+        return abs(arg1 - arg2) <= threshold
+
+    def expected_arg_types(self):
+        return [float, float, float]
+
+
+class Distance(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        pos1 = arg1.get_geom_state()["pos"]
+        pos2 = arg2.get_geom_state()["pos"]
+        return np.linalg.norm(np.array(pos1) - np.array(pos2))
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
+    
+
+class GetPosi(UnaryAtomic):
+    def __call__(self, arg, axis):
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+        
+        pos = arg.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        return pos[axis_index]
+
+    def expected_arg_types(self):
+        return [BaseObjectState, str]
 
 
 class InContact(BinaryAtomic):
@@ -279,18 +308,45 @@ class AxisAlignedWithin(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
-    
 
-class Stack(BinaryAtomic):
-    def __call__(self, arg1, arg2):
-        return (
-            arg1.check_contact(arg2)
-            and arg2.check_contain(arg1)
-            and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
-        )
+class PrintGeomState(UnaryAtomic):
+    """
+    Print the geometry state of an object at specified intervals.
+    Usage: PrintGeomState()(object, interval)
+    Arguments:
+    - object: The object whose geometry state will be printed.
+    - interval: The number of calls after which the geometry state will be printed.
+    Returns:
+    - True: Always returns True, as this is a side-effect action.
+    """
+    def __init__(self):
+        super().__init__()
+        self.count = {}
+
+    def __call__(self, arg, interval):
+        if arg.object_name not in self.count:
+            self.count[arg.object_name] = 0
+
+        if self.count[arg.object_name] % interval == 0:
+            geom_state = arg.get_geom_state()
+            print(f"Geometry State of {arg.object_name}: {geom_state}")
+
+        self.count[arg.object_name] += 1
+        return True
 
     def expected_arg_types(self):
-        return [BaseObjectState, BaseObjectState]
+        return [BaseObjectState, int]
+
+# class Stack(BinaryAtomic):
+#     def __call__(self, arg1, arg2):
+#         return (
+#             arg1.check_contact(arg2)
+#             and arg2.check_contain(arg1)
+#             and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
+#         )
+
+#     def expected_arg_types(self):
+#         return [BaseObjectState, BaseObjectState]
 
 
 class StackBowl(BinaryAtomic):
@@ -315,9 +371,9 @@ class StackBowl(BinaryAtomic):
         pos1 = arg1.get_geom_state()["pos"]
         pos2 = arg2.get_geom_state()["pos"]
 
-        xy_threshold = 0.02
+        xy_threshold = 0.05
         z_min_gap = 0.001
-        z_max_gap = 0.5
+        z_max_gap = 0.3
 
         horizontally_aligned = (
             abs(pos1[0] - pos2[0]) < xy_threshold
@@ -469,7 +525,7 @@ class Above(BinaryAtomic):
         return [BaseObjectState, BaseObjectState]
 
 class MidBetween(MultiarayAtomic):
-    """Check if M is between L and R along axis A."""
+    """Check if M is between L and R along axis A and in contact with both."""
 
     def __call__(self, L, M, R, A):
         assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
@@ -522,3 +578,24 @@ class CollinearEqualDistance(MultiarayAtomic):
                 if distance < 0.02 and collinear_ratio > 0.9 and height_check:
                     return True
         return False
+    
+class RelaxedMidBetween(MultiarayAtomic):
+    """Check if M is between L and R along axis A without contact requirement."""
+
+    def __call__(self, L, M, R, A):
+        assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
+        pos_L = L.get_geom_state()["pos"]
+        pos_M = M.get_geom_state()["pos"]
+        pos_R = R.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[A]
+        
+        # print current positions for debugging
+        # print(f"Position L: {pos_L}, Position M: {pos_M}, Position R: {pos_R}")
+        
+        return (
+            (pos_L[axis_index] < pos_M[axis_index] < pos_R[axis_index])
+            or (pos_R[axis_index] < pos_M[axis_index] < pos_L[axis_index])
+        )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, str]
