@@ -23,6 +23,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "openratio": OpenRatio(),
     "staircase": StairCase(),
     "inair": InAir(),
+    "sameheight": SameHeight(),
     "turnon": TurnOn(),
     "turnoff": TurnOff(),
     "upsidedown": UpsideDown(),

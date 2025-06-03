@@ -492,6 +492,13 @@ class InAir(UnaryAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, float]
+    
+class SameHeight(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        return abs(arg1.get_geom_state()["pos"][2] - arg2.get_geom_state()["pos"][2]) < 0.01
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):
