@@ -33,6 +33,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "positionwithin": PositionWithin(),
     "above": Above(),
     "between": MidBetween(),
+    "relaxedbetween": RelaxedMidBetween(),
 }
 
 
