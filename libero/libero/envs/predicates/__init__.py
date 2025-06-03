@@ -10,7 +10,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "any": Any(),
     "all": All(),
     "in": In(),
-    "incontact": InContactPredicateFn(),
+    "incontact": InContact(),
     "on": On(),
     "relaxedon": RelaxedOn(),
     "up": Up(),
@@ -31,6 +31,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "under": Under(),
     "posigreaterthan": PosiGreaterThan(),
     "positionwithin": PositionWithin(),
+    "above": Above(),
+    "between": MidBetween(),
 }
 
 

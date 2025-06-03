@@ -112,7 +112,7 @@ class All(UnaryAtomic):
 
 
 
-class InContactPredicateFn(BinaryAtomic):
+class InContact(BinaryAtomic):
     def __call__(self, arg1, arg2):
         return arg1.check_contact(arg2)
 
@@ -172,12 +172,15 @@ class PositionWithin(UnaryAtomic):
         within_z = abs(pos[2] - pos_z) <= t_z
         
         # print current position, target position, and threshold
+        # position = (pos_x, pos_y, pos_z)
+        # threshold = (t_x, t_y, t_z)
         # print(f"Current Position: {pos}, Target Position: {position}, Threshold: {threshold}")
         # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
         return within_x and within_y and within_z
     
     def expected_arg_types(self):
         return [BaseObjectState, float, float, float, float, float, float]
+
 
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
@@ -236,6 +239,13 @@ class PosiGreaterThan(UnaryAtomic):
         return [BaseObjectState, str, float]
 
 class AxisAlignedWithin(UnaryAtomic):
+    """
+    Check if the object's specified axis is within a degree range [min_deg, max_deg]
+    from alignment with the world Z+ axis.
+
+    Usage: Upright()(object, axis, min_deg, max_deg)
+    """
+
     def __call__(self, *args):
         if len(args) != 4:
             raise ValueError("Upright expects 4 arguments: object, axis ('x', 'y', 'z'), min_degree, max_degree")
@@ -258,12 +268,18 @@ class AxisAlignedWithin(UnaryAtomic):
         axis_index = {"x": 0, "y": 1, "z": 2}[axis]
         object_axis_world = R[:, axis_index]
         cos_angle = object_axis_world[2]
+        
+        # # this is used to print the current angle of the axis with respect to Z+ for debugging
+        # # calculate current angle in degrees
+        # angle_rad = np.arccos(cos_angle)
+        # angle_deg = np.degrees(angle_rad)
+        # print(f"Current angle of {axis} axis with Z+ is {angle_deg:.2f} degrees")
 
         return cos_max <= cos_angle <= cos_min
 
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
-
+    
 
 class Stack(BinaryAtomic):
     def __call__(self, arg1, arg2):
@@ -304,8 +320,8 @@ class StackBowl(BinaryAtomic):
         z_max_gap = 0.5
 
         horizontally_aligned = (
-            abs(pos1[0] - pos2[0]) < xy_threshold and
-            abs(pos1[1] - pos2[1]) < xy_threshold
+            abs(pos1[0] - pos2[0]) < xy_threshold
+            and abs(pos1[1] - pos2[1]) < xy_threshold
         )
 
         vertical_stack = (
@@ -436,3 +452,43 @@ class TurnOff(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState]
 
+
+
+
+class Above(BinaryAtomic):
+    """Check if arg1 is above arg2 in the z-axis, with a small xy threshold."""
+
+    def __call__(self, arg1, arg2):
+        pos1 = arg1.get_geom_state()["pos"]
+        pos2 = arg2.get_geom_state()["pos"]
+        xy_threshold = 0.02
+        return (
+            abs(pos1[0] - pos2[0]) < xy_threshold
+            and abs(pos1[1] - pos2[1]) < xy_threshold
+            and pos1[2] > pos2[2]
+        )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
+
+class MidBetween(MultiarayAtomic):
+    """Check if M is between L and R along axis A."""
+
+    def __call__(self, L, M, R, A):
+        assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
+        pos_L = L.get_geom_state()["pos"]
+        pos_M = M.get_geom_state()["pos"]
+        pos_R = R.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[A]
+        
+        return (
+            (
+                (pos_L[axis_index] < pos_M[axis_index] < pos_R[axis_index])
+                or (pos_R[axis_index] < pos_M[axis_index] < pos_L[axis_index])
+            )
+            and L.check_contact(M)
+            and M.check_contact(R)
+        )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, str]
