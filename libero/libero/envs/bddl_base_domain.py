@@ -813,8 +813,6 @@ class BDDLBaseDomain(SingleArmEnv):
 
     def _eval_predicate(self, state):
         
-        # print(state)
-
         if not isinstance(state, list):
             if state in self.object_states_dict:      # an object
                 return self.object_states_dict[state]

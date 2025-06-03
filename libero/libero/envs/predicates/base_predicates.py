@@ -18,6 +18,9 @@ class UnaryAtomic(Expression):
 
     def __call__(self, arg1):
         raise NotImplementedError
+    
+    def expected_arg_types(self) -> List[type]:
+        raise NotImplementedError
 
 
 class BinaryAtomic(Expression):
@@ -26,6 +29,9 @@ class BinaryAtomic(Expression):
 
     def __call__(self, arg1, arg2):
         raise NotImplementedError
+    
+    def expected_arg_types(self) -> List[type]:
+        raise NotImplementedError
 
 
 class MultiarayAtomic(Expression):
@@ -33,6 +39,9 @@ class MultiarayAtomic(Expression):
         pass
 
     def __call__(self, *args):
+        raise NotImplementedError
+    
+    def expected_arg_types(self) -> List[type]:
         raise NotImplementedError
 
 
@@ -215,8 +224,6 @@ class Upright(UnaryAtomic):
 class PosiGreaterThan(UnaryAtomic):
     """Check if the object's position is greater than a specified value along a specified axis."""
     def __call__(self, *args):
-        if len(args) != 3:
-            raise ValueError("PosiGreaterThan expects 3 arguments: object, axis ('x', 'y', 'z'), value")
         arg, axis, value = args
         if axis not in {"x", "y", "z"}:
             raise ValueError("Axis must be one of 'x', 'y', or 'z'")
@@ -224,6 +231,9 @@ class PosiGreaterThan(UnaryAtomic):
         pos = arg.get_geom_state()["pos"]
         axis_index = {"x": 0, "y": 1, "z": 2}[axis]
         return pos[axis_index] > value
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, str, float]
 
 class AxisAlignedWithin(UnaryAtomic):
     def __call__(self, *args):
@@ -355,6 +365,9 @@ class OpenRatio(UnaryAtomic):
             return True
         else:
             return False
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, float]
 
 
 class StairCase(UnaryAtomic):
@@ -382,6 +395,9 @@ class StairCase(UnaryAtomic):
         else:
             return False
     
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState]
+    
 class InAir(UnaryAtomic):
     """
     Check if an object is above a specified height threshold (i.e., in the air).
@@ -401,6 +417,9 @@ class InAir(UnaryAtomic):
             return True
         else:
             return False
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, float]
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):

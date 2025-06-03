@@ -17,7 +17,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
     # kitchen_scene_2
     scene_name = "kitchen_scene2"
-    language = "Create a staircase with the drawers: top drawer slightly open, middle drawer moderately open, bottom drawer fully open"
+    language = "Create a staircase with the drawers. Top drawer slightly open, middle drawer moderately open, bottom drawer fully open"
     register_task_info(
         language,
         scene_name=scene_name,
