@@ -267,11 +267,11 @@ class AxisAlignedWithin(UnaryAtomic):
         object_axis_world = R[:, axis_index]
         cos_angle = object_axis_world[2]
         
-        # # this is used to print the current angle of the axis with respect to Z+ for debugging
-        # # calculate current angle in degrees
-        # angle_rad = np.arccos(cos_angle)
-        # angle_deg = np.degrees(angle_rad)
-        # print(f"Current angle of {axis} axis with Z+ is {angle_deg:.2f} degrees")
+        # this is used to print the current angle of the axis with respect to Z+ for debugging
+        # calculate current angle in degrees
+        angle_rad = np.arccos(cos_angle)
+        angle_deg = np.degrees(angle_rad)
+        print(f"Current angle of {axis} axis with Z+ is {angle_deg:.2f} degrees")
 
         return cos_max <= cos_angle <= cos_min
 
