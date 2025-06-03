@@ -266,28 +266,6 @@ class AxisAlignedWithin(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
     
-class PosAligned(UnaryAtomic):
-    def __call__(self, *args):
-        if len(args) != 5:
-            raise ValueError("Upright expects 5 arguments: object1, object2, axis ('x', 'y', 'z'), object1_offset, object2_offset")
-        obj1, obj2, axis, obj1_offset, obj1_offset = args
-        if axis not in {"x", "y", "z"}:
-            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
-
-        pos1 = obj1.get_geom_state()["pos"]
-        pos2 = obj2.get_geom_state()["pos"]
-        axis_pos1 = pos1[0]
-
-        quat_for_rs = np.array([x, y, z, w])
-        R = transform_utils.quat2mat(quat_for_rs)
-
-        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
-        object_axis_world = R[:, axis_index]
-        cos_angle = object_axis_world[2]
-        return
-    
-    def expected_arg_types(self):
-        return [BaseObjectState, str, float, float]
 
 class Stack(BinaryAtomic):
     def __call__(self, arg1, arg2):
