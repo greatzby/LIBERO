@@ -4,9 +4,15 @@ from .base_predicates import *
 VALIDATE_PREDICATE_FN_DICT = {
     "true": TruePredicateFn(),
     "false": FalsePredicateFn(),
+    "not": Not(),
+    "and": And(),
+    "or": Or(),
+    "any": Any(),
+    "all": All(),
     "in": In(),
-    "incontact": InContactPredicateFn(),
+    "incontact": InContact(),
     "on": On(),
+    "relaxedon": RelaxedOn(),
     "up": Up(),
     # "stack":     Stack(),
     "stackbowl": StackBowl(),
@@ -25,6 +31,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "under": Under(),
     "posigreaterthan": PosiGreaterThan(),
     "positionwithin": PositionWithin(),
+    "above": Above(),
+    "between": MidBetween(),
     "collinearequaldistance": CollinearEqualDistance(),
 }
 
