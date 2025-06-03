@@ -110,6 +110,35 @@ class All(UnaryAtomic):
     def expected_arg_types(self):
         return [tuple]
 
+class Equal(BinaryAtomic):
+    def __call__(self, arg1, arg2, threshold):
+        return abs(arg1 - arg2) <= threshold
+
+    def expected_arg_types(self):
+        return [float, float, float]
+
+
+class Distance(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        pos1 = arg1.get_geom_state()["pos"]
+        pos2 = arg2.get_geom_state()["pos"]
+        return np.linalg.norm(np.array(pos1) - np.array(pos2))
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
+    
+
+class GetPosi(UnaryAtomic):
+    def __call__(self, arg, axis):
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+        
+        pos = arg.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        return pos[axis_index]
+
+    def expected_arg_types(self):
+        return [BaseObjectState, str]
 
 
 class InContactPredicateFn(BinaryAtomic):
@@ -265,16 +294,16 @@ class AxisAlignedWithin(UnaryAtomic):
         return [BaseObjectState, str, float, float]
 
 
-class Stack(BinaryAtomic):
-    def __call__(self, arg1, arg2):
-        return (
-            arg1.check_contact(arg2)
-            and arg2.check_contain(arg1)
-            and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
-        )
+# class Stack(BinaryAtomic):
+#     def __call__(self, arg1, arg2):
+#         return (
+#             arg1.check_contact(arg2)
+#             and arg2.check_contain(arg1)
+#             and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
+#         )
 
-    def expected_arg_types(self):
-        return [BaseObjectState, BaseObjectState]
+#     def expected_arg_types(self):
+#         return [BaseObjectState, BaseObjectState]
 
 
 class StackBowl(BinaryAtomic):
@@ -299,9 +328,9 @@ class StackBowl(BinaryAtomic):
         pos1 = arg1.get_geom_state()["pos"]
         pos2 = arg2.get_geom_state()["pos"]
 
-        xy_threshold = 0.02
+        xy_threshold = 0.05
         z_min_gap = 0.001
-        z_max_gap = 0.5
+        z_max_gap = 0.3
 
         horizontally_aligned = (
             abs(pos1[0] - pos2[0]) < xy_threshold and
