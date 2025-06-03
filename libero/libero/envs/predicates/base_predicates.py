@@ -212,6 +212,19 @@ class Upright(UnaryAtomic):
         return [BaseObjectState]
 
 
+class PosiGreaterThan(UnaryAtomic):
+    """Check if the object's position is greater than a specified value along a specified axis."""
+    def __call__(self, *args):
+        if len(args) != 3:
+            raise ValueError("PosiGreaterThan expects 3 arguments: object, axis ('x', 'y', 'z'), value")
+        arg, axis, value = args
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+
+        pos = arg.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        return pos[axis_index] > value
+
 class AxisAlignedWithin(UnaryAtomic):
     def __call__(self, *args):
         if len(args) != 4:
@@ -255,6 +268,23 @@ class Stack(BinaryAtomic):
 
 
 class StackBowl(BinaryAtomic):
+    """
+    Check if two objects are stacked on top of each other, ensuring that they are 
+    horizontally aligned and vertically separated within a defined range.
+
+    Usage: StackBowl()(object1, object2)
+    Arguments:
+    - object1: The first object that needs to be checked for stacking.
+    - object2: The second object that needs to be checked for stacking.
+    - NOTICE: this does NOT check which object is above.
+
+    Returns:
+    - True if the following conditions are met:
+        1. The objects are in contact with each other (checked by `check_contact`).
+        2. The objects are horizontally aligned within a threshold (xy_threshold).
+        3. The objects are vertically stacked within a defined gap range (z_min_gap to z_max_gap).
+    - False otherwise.
+    """
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
         pos2 = arg2.get_geom_state()["pos"]
@@ -307,16 +337,70 @@ class Close(UnaryAtomic):
         return [BaseObjectState]
 
 class OpenRatio(UnaryAtomic):
+    """
+    Check if the drawer's open ratio is within a specified tolerance from the expected open ratio.
+
+    Usage: OpenRatio()(object, exp_ratio)
+    Arguments:
+    - object: The drawer object which has an open_ratio() method.
+    - exp_ratio: The expected open ratio (a float between 0 to 1) to compare against.
+
+    Returns:
+    - True if the drawer's open ratio is within a tolerance of the expected ratio.
+    - False otherwise.
+    """    
     def __call__(self, arg, exp_ratio):
         tol = 0.2
-        if abs(arg.open_ratio() - float(exp_ratio)) < tol:
+        if abs(arg.open_ratio() - exp_ratio) < tol:
+            return True
+        else:
+            return False
+
+
+class StairCase(UnaryAtomic):
+    """
+    Check if the drawer's open ratio follows a "staircase" pattern, 
+    where each successive drawer is more open than the previous one.
+
+    Usage: StairCase()(object1, object2, object3)
+    Arguments:
+    - object1: The first drawer object.
+    - object2: The second drawer object.
+    - object3: The third drawer object.
+
+    Returns:
+    - True if the open ratios follow an increasing pattern where:
+        1. The first drawer's open ratio is greater than 0.1.
+        2. The second drawer is more open than the first.
+        3. The third drawer is more open than the second.
+    - False otherwise.
+    """
+    def __call__(self, arg1, arg2, arg3):
+        open_range = 0.1
+        if (arg1.open_ratio() > open_range) and (arg1.open_ratio() < arg2.open_ratio()) and (arg2.open_ratio() < arg3.open_ratio()):
             return True
         else:
             return False
     
-    def expected_arg_types(self):
-        return [BaseObjectState, float]
+class InAir(UnaryAtomic):
+    """
+    Check if an object is above a specified height threshold (i.e., in the air).
 
+    Usage: InAir()(object, height_threshold)
+    Arguments:
+    - object: The object to be checked for its height (must have a `get_geom_state()` method that returns its position).
+    - height_threshold: The height (float) above which the object is considered to be "in the air".
+
+    Returns:
+    - True if the object's height is greater than the specified height threshold.
+    - False otherwise.
+    """
+    def __call__(self, arg1, height_threshold):
+        height = arg1.get_geom_state()["pos"][2]
+        if height > height_threshold:
+            return True
+        else:
+            return False
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):
