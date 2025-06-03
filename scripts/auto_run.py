@@ -15,6 +15,12 @@ def run_python_script(path):
             match = re.search(r"\['(.*?)'\]", result.stdout)
             if match:
                 generated_path = match.group(1)
+
+                # check if windows path and convert to Unix style if necessary
+                if os.name == 'nt':
+                    generated_path = generated_path.replace('\\', '/')
+                    generated_path = "C:" + generated_path
+
                 print(f"['{generated_path}']")
 
                 base_dir = os.path.abspath(os.path.join(path, os.pardir, os.pardir))
@@ -38,5 +44,9 @@ def run_python_script(path):
         print(f"An error occurred: {str(e)}")
 
 if __name__ == '__main__':
-    script_path = input("Please enter the path to the Python file of your task: ").strip()
+    args = sys.argv
+    if len(args) != 2:
+        print("Usage: python auto_run.py <path_to_python_script>")
+        sys.exit(1)
+    script_path = args[1]
     run_python_script(script_path)
