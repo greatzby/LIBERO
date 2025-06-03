@@ -862,6 +862,22 @@ class BDDLBaseDomain(SingleArmEnv):
                 self.object_states_dict[object_1_name],
                 num,
             )
+        
+        if state[0] == "collinearequaldistance":
+            obs = self._get_observations()
+            gripper_pos = obs["robot0_gripper_qpos"]
+            predicate_fn_name = state[0]
+            object_1_name = state[1]
+            object_2_name = state[2]
+            object_3_name = state[3]
+            object_4_name = state[4]
+            return eval_predicate_fn(
+                predicate_fn_name,
+                self.object_states_dict[object_1_name],
+                self.object_states_dict[object_2_name],
+                self.object_states_dict[object_3_name],
+                self.object_states_dict[object_4_name],
+            ) and gripper_pos[0] > 0.01
 
         if len(state) == 3:
             # Checking binary logical predicates
@@ -890,19 +906,6 @@ class BDDLBaseDomain(SingleArmEnv):
                 self.object_states_dict[object_1_name],
                 self.object_states_dict[object_2_name],
                 self.object_states_dict[object_3_name],
-            )
-        elif len(state) == 5:
-            predicate_fn_name = state[0]
-            object_1_name = state[1]
-            object_2_name = state[2]
-            object_3_name = state[3]
-            object_4_name = state[4]
-            return eval_predicate_fn(
-                predicate_fn_name,
-                self.object_states_dict[object_1_name],
-                self.object_states_dict[object_2_name],
-                self.object_states_dict[object_3_name],
-                self.object_states_dict[object_4_name],
             )
 
     def visualize(self, vis_settings):
