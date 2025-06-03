@@ -808,7 +808,7 @@ class BDDLBaseDomain(SingleArmEnv):
         for state in goal_state:
             result = self._eval_predicate(state)
             success = success and result
-            # print(result)
+            # print(state[0], result)
         return success
 
     def _eval_predicate(self, state):
@@ -832,8 +832,16 @@ class BDDLBaseDomain(SingleArmEnv):
             raise ValueError(
                 f"Predicate {predicate_fn_name} expects {len(expected_types)} arguments, but got {len(arg_exprs)}"
             )
-        
+
         evaluated_args = []
+
+        # unwrap arguments for variable-length truth predicates, e.g., Any, All, ...
+        variable_len_predicate = False
+        if len(expected_types) == 1 and expected_types[0] == tuple: 
+            arg_exprs = arg_exprs[0]
+            expected_types = [bool] * len(arg_exprs)
+            variable_len_predicate = True
+        
         for arg_expr, expected_type in zip(arg_exprs, expected_types):
             val = self._eval_predicate(arg_expr)
 
@@ -844,27 +852,12 @@ class BDDLBaseDomain(SingleArmEnv):
                     raise TypeError(f"Cannot convert '{val}' to {expected_type}")
             evaluated_args.append(val)
         
+        # wrap results back into one tuple for variable-length truth predicates
+        if variable_len_predicate:
+            evaluated_args = (tuple(evaluated_args),)
+        
         return predicate_fn(*evaluated_args)
         
-
-        # if len(state) == 3:
-        #     # Checking binary logical predicates
-        #     predicate_fn_name = state[0]
-        #     object_1_name = state[1]
-        #     object_2_name = state[2]
-        #     return eval_predicate_fn(
-        #         predicate_fn_name,
-        #         self.object_states_dict[object_1_name],
-        #         self.object_states_dict[object_2_name],
-        #     )
-        # elif len(state) == 2:
-        #     # Checking unary logical predicates
-        #     predicate_fn_name = state[0]
-        #     object_name = state[1]
-        #     return eval_predicate_fn(
-        #         predicate_fn_name, self.object_states_dict[object_name]
-        #     )
-
         
 
     def visualize(self, vis_settings):
