@@ -100,7 +100,7 @@ def main():
 
     # Modified scene, remove the plate
     scene_name = "kitchen_scene2"
-    language = "Arange the three bowls so that their centers form an equilateral triangle"
+    language = "Arrange the three bowls so that their centers form an equilateral triangle"
     register_task_info(
         language,
         scene_name=scene_name,
