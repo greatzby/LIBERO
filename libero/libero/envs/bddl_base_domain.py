@@ -805,14 +805,12 @@ class BDDLBaseDomain(SingleArmEnv):
         Check if the goal is achieved. Consider conjunction goals at the moment
         """
         goal_state = self.parsed_problem["goal_state"]
-        success = True
         results = []
         for state in goal_state:
             result = self._eval_predicate(state)
             results.append(result)
-            success = success and result        # hide cursor
-        print_states(goal_state, results, self.object_states_dict)
-        return success
+        print_states(goal_state, results, self.object_states_dict)  # debug print function
+        return all(results)
 
     def _eval_predicate(self, state):
         
