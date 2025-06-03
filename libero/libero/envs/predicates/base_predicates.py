@@ -112,7 +112,7 @@ class All(UnaryAtomic):
 
 
 
-class InContactPredicateFn(BinaryAtomic):
+class InContact(BinaryAtomic):
     def __call__(self, arg1, arg2):
         return arg1.check_contact(arg2)
 
@@ -266,6 +266,12 @@ class AxisAlignedWithin(UnaryAtomic):
         axis_index = {"x": 0, "y": 1, "z": 2}[axis]
         object_axis_world = R[:, axis_index]
         cos_angle = object_axis_world[2]
+        
+        # # this is used to print the current angle of the axis with respect to Z+ for debugging
+        # # calculate current angle in degrees
+        # angle_rad = np.arccos(cos_angle)
+        # angle_deg = np.degrees(angle_rad)
+        # print(f"Current angle of {axis} axis with Z+ is {angle_deg:.2f} degrees")
 
         return cos_max <= cos_angle <= cos_min
 
@@ -460,6 +466,8 @@ class Above(BinaryAtomic):
             and pos1[2] > pos2[2]
         )
 
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
 
 class MidBetween(MultiarayAtomic):
     """Check if M is between L and R along axis A."""
@@ -479,3 +487,6 @@ class MidBetween(MultiarayAtomic):
             and L.check_contact(M)
             and M.check_contact(R)
         )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, str]
