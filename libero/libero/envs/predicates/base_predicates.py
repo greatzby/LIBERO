@@ -210,6 +210,23 @@ class PositionWithin(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, float, float, float, float, float, float]
 
+class PositionWithinObject(UnaryAtomic):
+    def __call__(self, arg1, arg2, min_x, min_y, min_z, max_x, max_y, max_z):
+        geom1 = arg1.get_geom_state()
+        geom2 = arg2.get_geom_state()
+        pos1 = geom1["pos"]
+        pos2 = geom2["pos"]
+        # Check if the position is within the specified threshold
+        within_x = min_x <= pos1[0] - pos2[0] <= max_x
+        within_y = min_y <= pos1[1] - pos2[1] <= max_y
+        within_z = min_z <= pos1[2] - pos2[2] <= max_z
+
+        # print(f"x difference: {pos1[0] - pos2[0]}, y difference: {pos1[1] - pos2[1]}, z difference: {pos1[2] - pos2[2]}")
+        # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
+        return within_x and within_y and within_z
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float, float, float, float]
 
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
