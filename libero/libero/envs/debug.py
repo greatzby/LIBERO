@@ -1,7 +1,8 @@
 import numpy as np
 import robosuite.utils.transform_utils as transform_utils
+import os
 
-DEBUG = True
+DEBUG = os.getenv("LIBERO_DEBUG", "0") in ["1", "true", "True", "TRUE"]
 
 def print_states(goal_state, results, object_states_dict, debug_time):
     if not DEBUG:
@@ -50,7 +51,7 @@ def print_states(goal_state, results, object_states_dict, debug_time):
         w, x, y, z = geom["quat"]
         q_curr = np.array([x, y, z, w])
         R_curr = transform_utils.quat2mat(q_curr)
-        object_rotation_str = str(R_curr[0, :])
+        object_rotation_str = str(R_curr[2])
         if len(object_rotation_str) > object_rotation_str_len:
             object_rotation_str = object_rotation_str[:object_rotation_str_len-3] + "..."
         print("│" + object_name_str.ljust(object_name_str_len) + "│" + object_state_str.ljust(object_posi_str_len) + "│" + object_rotation_str.ljust(object_rotation_str_len-1) + "│")
