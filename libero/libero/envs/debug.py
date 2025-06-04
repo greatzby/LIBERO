@@ -1,29 +1,25 @@
 import numpy as np
 import robosuite.utils.transform_utils as transform_utils
 
-DEBUG = False
+DEBUG = True
 
-print_time = 0
-
-def print_states(goal_state, results, object_states_dict):
+def print_states(goal_state, results, object_states_dict, debug_time):
     if not DEBUG:
         return
     
-    global print_time
+    if debug_time == 0:
+        print("\033c", end='')
 
-    if print_time % 100 != 0:
-        print_time += 1
-        return
     print("\033[?25l", end='')
-    num_lines = len(goal_state) + 4 + len(object_states_dict) + 4 + 1
+    num_lines = len(goal_state) + 4 + len(object_states_dict) + 4 + 3
 
-    # move cursor up num_lines lines if any previous output exists
     for _ in range(num_lines):
         print("\033[A", end='')
     
+    print("Detect time:", debug_time)
     predicate_str_len = 60
     print("┌" + "─" * predicate_str_len + "┬" + "─" * 10 + "┐")
-    print("│" + "predicate".ljust(predicate_str_len) + "│" + "result".ljust(10) + "│")
+    print("│" + " predicate".ljust(predicate_str_len) + "│" + " result".ljust(10) + "│")
     print("├" + "─" * predicate_str_len + "┼" + "─" * 10 + "┤")
     
     for i, (state, result) in enumerate(zip(goal_state, results)):
@@ -41,7 +37,7 @@ def print_states(goal_state, results, object_states_dict):
     object_rotation_str_len = 50
     print("Object states:"+" "* (object_name_str_len + object_posi_str_len + object_rotation_str_len - 15))
     print("┌" + "─" * object_name_str_len + "┬" + "─" * object_posi_str_len + "─" * object_rotation_str_len + "┐")
-    print("│" + "object".ljust(object_name_str_len) + "│" + "posi".ljust(object_posi_str_len) + "│" + "rotation".ljust(object_rotation_str_len-1) + "│")
+    print("│" + " object".ljust(object_name_str_len) + "│" + " posi".ljust(object_posi_str_len) + "│" + " rotation".ljust(object_rotation_str_len-1) + "│")
     print("├" + "─" * object_name_str_len + "┼" + "─" * object_posi_str_len + "─" * object_rotation_str_len + "┤")
     for object_name, object in object_states_dict.items():
         object_name_str = str(object_name)
@@ -59,4 +55,3 @@ def print_states(goal_state, results, object_states_dict):
             object_rotation_str = object_rotation_str[:object_rotation_str_len-3] + "..."
         print("│" + object_name_str.ljust(object_name_str_len) + "│" + object_state_str.ljust(object_posi_str_len) + "│" + object_rotation_str.ljust(object_rotation_str_len-1) + "│")
     print("└" + "─" * object_name_str_len + "┴" + "─" * object_posi_str_len + "─"* object_rotation_str_len + "┘")
-    print_time += 1
