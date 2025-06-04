@@ -1,7 +1,8 @@
 import numpy as np
 import robosuite.utils.transform_utils as transform_utils
+import os
 
-DEBUG = False
+DEBUG = os.getenv("LIBERO_DEBUG", "0") in ["1", "true", "True", "TRUE"]
 
 print_time = 0
 
