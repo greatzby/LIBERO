@@ -540,7 +540,7 @@ class Above(BinaryAtomic):
         return [BaseObjectState, BaseObjectState]
 
 class MidBetween(MultiarayAtomic):
-    """Check if M is between L and R along axis A."""
+    """Check if M is between L and R along axis A and in contact with both."""
 
     def __call__(self, L, M, R, A):
         assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
@@ -556,6 +556,27 @@ class MidBetween(MultiarayAtomic):
             )
             and L.check_contact(M)
             and M.check_contact(R)
+        )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+    
+class RelaxedMidBetween(MultiarayAtomic):
+    """Check if M is between L and R along axis A without contact requirement."""
+
+    def __call__(self, L, M, R, A):
+        assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
+        pos_L = L.get_geom_state()["pos"]
+        pos_M = M.get_geom_state()["pos"]
+        pos_R = R.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[A]
+        
+        # print current positions for debugging
+        # print(f"Position L: {pos_L}, Position M: {pos_M}, Position R: {pos_R}")
+        
+        return (
+            (pos_L[axis_index] < pos_M[axis_index] < pos_R[axis_index])
+            or (pos_R[axis_index] < pos_M[axis_index] < pos_L[axis_index])
         )
 
     def expected_arg_types(self):

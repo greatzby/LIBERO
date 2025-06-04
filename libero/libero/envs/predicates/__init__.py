@@ -36,6 +36,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "printgeomstate": PrintGeomState(),
     "above": Above(),
     "between": MidBetween(),
+    "relaxedbetween": RelaxedMidBetween(),
 }
 
 
