@@ -7,6 +7,9 @@ DEBUG = os.getenv("LIBERO_DEBUG", "0") in ["1", "true", "True", "TRUE"]
 def print_states(goal_state, results, object_states_dict, debug_time):
     if not DEBUG:
         return
+
+    if debug_time % 100 != 0:
+        return
     
     if debug_time == 0:
         print("\033c", end='')
