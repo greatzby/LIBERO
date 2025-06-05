@@ -22,7 +22,8 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["akita_black_bowl_1", "plate_1"],
         goal_states=[
-            ("Centre", "akita_black_bowl_1", "plate_1", 0.005, 0.005, 0, 0),
+            ("DistanceBetween", "akita_black_bowl_1", "plate_1", 0.005, 0.005, 0.10),
+            ("InContact", "akita_black_bowl_1", "plate_1")
         ]
     )
 
