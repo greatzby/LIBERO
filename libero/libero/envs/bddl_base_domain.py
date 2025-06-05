@@ -835,8 +835,6 @@ class BDDLBaseDomain(SingleArmEnv):
             )
         
         if state[0] == "collinearequaldistance":
-            obs = self._get_observations()
-            gripper_pos = obs["robot0_gripper_qpos"]
             predicate_fn_name = state[0]
             object_1_name = state[1]
             object_2_name = state[2]
@@ -848,7 +846,7 @@ class BDDLBaseDomain(SingleArmEnv):
                 self.object_states_dict[object_2_name],
                 self.object_states_dict[object_3_name],
                 self.object_states_dict[object_4_name],
-            ) and gripper_pos[0] > 0.01
+            )
 
         evaluated_args = []
 
