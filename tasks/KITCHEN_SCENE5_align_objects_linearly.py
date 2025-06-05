@@ -12,7 +12,7 @@ def main():
         scene_name="kitchen_scene5",
         objects_of_interest=["plate_1", "ketchup_1", "akita_black_bowl_1"],
         goal_states=[
-            ("linear", 0.005, "plate_1", "ketchup_1", "akita_black_bowl_1"),
+            ("linear", "plate_1", "ketchup_1", "akita_black_bowl_1", 0.005),
         ],
     )
     bddl, _ = generate_bddl_from_task_info()

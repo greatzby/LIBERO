@@ -571,7 +571,7 @@ class RelaxedMidBetween(MultiarayAtomic):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
     
 class Linear(MultiarayAtomic):
-    def __call__(self, tolerance, L,M,R):
+    def __call__(self, L, M, R, tolerance):
         x1, y1, z1 = L.get_geom_state()["pos"]
         x2, y2, z2 = M.get_geom_state()["pos"]
         x3, y3, z3 = R.get_geom_state()["pos"]
@@ -584,4 +584,4 @@ class Linear(MultiarayAtomic):
         return area < tolerance and y1 <= y2 <= y3 and x1 <= x2 <= x3
     
     def expected_arg_types(self):
-        return [float, BaseObjectState, BaseObjectState, BaseObjectState]
+        return [BaseObjectState, BaseObjectState, BaseObjectState, float]

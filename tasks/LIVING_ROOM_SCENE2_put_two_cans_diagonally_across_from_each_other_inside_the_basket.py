@@ -80,8 +80,8 @@ def main():
             ("Not", ("InContact", "tomato_sauce_1", "tomato_sauce_2")),
             (
                 "or",
-                ("linear", 0.005, "tomato_sauce_1", "basket_1", "tomato_sauce_2"),
-                ("linear", 0.005, "tomato_sauce_2", "basket_1", "tomato_sauce_1"),
+                ("linear", "tomato_sauce_1", "basket_1", "tomato_sauce_2", 0.005),
+                ("linear", "tomato_sauce_2", "basket_1", "tomato_sauce_1", 0.005),
             ),
         ],
     )
