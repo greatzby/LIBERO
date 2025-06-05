@@ -22,13 +22,13 @@ def main():
                     ("On", "black_book_1", "yellow_book_1"),
                     ("AxisAlignedWithin", "black_book_1", "z", 85, 95),
                     ("AxisAlignedWithin", "yellow_book_1", "z", 85, 95),
-                    ("On", "yellow_book_1", "wooden_two_layer_shelf_1_top_side"),
+                    ("In", "yellow_book_1", "wooden_two_layer_shelf_1_top_region"),
                 )),
                 ("All", (
                     ("On", "black_book_1", "yellow_book_2"),
                     ("AxisAlignedWithin", "black_book_1", "z", 85, 95),
                     ("AxisAlignedWithin", "yellow_book_2", "z", 85, 95),
-                    ("On", "yellow_book_2", "wooden_two_layer_shelf_1_top_side")
+                    ("In", "yellow_book_2", "wooden_two_layer_shelf_1_top_region")
                 ))
             )
         ],
