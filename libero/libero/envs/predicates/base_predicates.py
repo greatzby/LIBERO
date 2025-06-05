@@ -569,3 +569,19 @@ class RelaxedMidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+    
+class Linear(MultiarayAtomic):
+    def __call__(self, tolerance, L,M,R):
+        x1, y1, z1 = L.get_geom_state()["pos"]
+        x2, y2, z2 = M.get_geom_state()["pos"]
+        x3, y3, z3 = R.get_geom_state()["pos"]
+        
+        # Calculate the area of the triangle formed by x_i,y_i
+        area = 0.5 * abs(
+            x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)
+        )
+        # If the area is close to zero, the points are collinear
+        return area < tolerance and y1 <= y2 <= y3 and x1 <= x2 <= x3
+    
+    def expected_arg_types(self):
+        return [float, BaseObjectState, BaseObjectState, BaseObjectState]
