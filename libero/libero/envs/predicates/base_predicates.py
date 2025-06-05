@@ -593,7 +593,22 @@ class Linear(MultiarayAtomic):
             x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)
         )
         # If the area is close to zero, the points are collinear
-        return area < tolerance and y1 <= y2 <= y3 and x1 <= x2 <= x3
+        return area < tolerance
     
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, float]
+    
+class LROrdering(MultiarayAtomic):
+    ''' Ordering from left to right along the y-axis.'''
+    
+    def __call__(self, *args):
+        assert len(args) >= 2, "At least two objects are required for ordering"
+        for i in range(len(args) - 1):
+            pos1 = args[i].get_geom_state()["pos"]
+            pos2 = args[i + 1].get_geom_state()["pos"]
+            if pos1[1] >= pos2[1]:
+                return False
+        return True
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState]
