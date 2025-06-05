@@ -17,7 +17,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["wooden_two_layer_shelf_1", "black_book_1", "yellow_book_1", "yellow_book_2"],
         goal_states=[
-            ("Or", (
+            ("Or", 
                 ("All", (
                     ("On", "black_book_1", "yellow_book_1"),
                     ("AxisAlignedWithin", "black_book_1", "z", 85, 95),
@@ -30,8 +30,7 @@ def main():
                     ("AxisAlignedWithin", "yellow_book_2", "z", 85, 95),
                     ("On", "yellow_book_2", "wooden_two_layer_shelf_1_top_side")
                 ))
-            ))
-            
+            )
         ],
     )
 
