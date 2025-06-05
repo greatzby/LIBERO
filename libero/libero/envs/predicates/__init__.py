@@ -31,6 +31,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "axisalignedwithin": AxisAlignedWithin(),
     "under": Under(),
     "posigreaterthan": PosiGreaterThan(),
+    "posilessthan": PosiLessThan(),
     "positionwithin": PositionWithin(),
     "getposi": GetPosi(),
     "printgeomstate": PrintGeomState(),
@@ -38,6 +39,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "between": MidBetween(),
     "collinearequaldistance": CollinearEqualDistance(),
     "relaxedbetween": RelaxedMidBetween(),
+    "distancebetween": DistanceBetween(),
+    "flexibleon": FlexibleOn(),
 }
 
 
