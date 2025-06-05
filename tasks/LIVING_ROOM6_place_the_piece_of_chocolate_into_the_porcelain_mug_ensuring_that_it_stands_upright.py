@@ -22,8 +22,9 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["chocolate_pudding_1", "porcelain_mug_1"],
         goal_states=[
-            ("Centre", "chocolate_pudding_1", "porcelain_mug_1", 0.020, 0.030, 0.08, 1),
+            ("FlexibleOn", "chocolate_pudding_1", "porcelain_mug_1", 0.020, 0.030),
             ("AxisAlignedWithin", "chocolate_pudding_1", "z", 85, 95),
+            ("DistanceBetween", "chocolate_pudding_1", "porcelain_mug_1", 0.020, 0.030, 0.06),
         ]
     )
 
