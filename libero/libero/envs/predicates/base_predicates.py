@@ -569,3 +569,53 @@ class RelaxedMidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+
+class Centre(BinaryAtomic):
+    '''
+        Check whether an object is in the centre of another object with a flexible margin of error for x,y,z separately.
+
+        Usage: Centre()(object1, object2, x, y, z, z_status)
+        Arguments:
+        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        - arg2: The object that is supposed to be in the centre below the first object (arg1).
+        - (x,y,z): The thresholds
+        - z_status: 1 if z threshold is used, 0 if object1 is simply on top of object2 (similar to the 'On' predicate)
+        
+        Returns:
+        - True if the object1 is in the centre of object2 within the user-defined margin of error.
+        - False otherwise.
+            
+    '''
+    def check_centre(self, arg2, arg1, x, y, z, z_status):
+        this_object = arg2.env.get_object(arg2.object_name)
+        this_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg2.object_name]
+        ]
+        other_object = arg2.env.get_object(arg1.object_name)
+        other_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg1.object_name]
+        ]
+        
+        res = (
+            arg2.check_contact(arg1)
+            and (
+                np.linalg.norm(this_object_position[:1] - other_object_position[:1])
+                < x
+            ) and (
+                np.linalg.norm(this_object_position[1:2] - other_object_position[1:2])
+                < y
+            ))
+        if z_status:
+            return res and (
+                np.linalg.norm(this_object_position[2:] - other_object_position[2:]) < z
+                )
+        else:
+            return res and (
+                this_object_position[2] <= other_object_position[2]
+            )
+      
+    def __call__(self, arg1, arg2, x, y, z, z_status):
+        return self.check_centre(arg2, arg1, x, y ,z, z_status) 
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float, int]
