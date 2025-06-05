@@ -134,6 +134,8 @@ class BDDLBaseDomain(SingleArmEnv):
         self._arena_xml = os.path.join(self.custom_asset_dir, scene_xml)
         self._arena_properties = scene_properties
 
+        self.debug_time = 0
+
         super().__init__(
             robots=robots,
             env_configuration=env_configuration,
@@ -757,6 +759,7 @@ class BDDLBaseDomain(SingleArmEnv):
         Resets simulation internal configurations.
         """
         super()._reset_internal()
+        self.debug_time = 0
 
         # Reset all object positions using initializer sampler if we're not directly loading from an xml
         if not self.deterministic_reset:
@@ -809,7 +812,10 @@ class BDDLBaseDomain(SingleArmEnv):
         for state in goal_state:
             result = self._eval_predicate(state)
             results.append(result)
-        print_states(goal_state, results, self.object_states_dict)  # debug print function
+
+        print_states(goal_state, results, self.object_states_dict, self.debug_time)  # debug print function
+        self.debug_time += 1
+
         return all(results)
 
     def _eval_predicate(self, state):

@@ -266,6 +266,20 @@ class PosiGreaterThan(UnaryAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, str, float]
+    
+class PosiLessThan(UnaryAtomic):
+    """Check if the object's position is less than a specified value along a specified axis."""
+    def __call__(self, *args):
+        arg, axis, value = args
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+
+        pos = arg.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        return pos[axis_index] < value
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, str, float]
 
 class AxisAlignedWithin(UnaryAtomic):
     """
@@ -507,8 +521,6 @@ class TurnOff(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState]
-
-
 
 
 class Above(BinaryAtomic):
