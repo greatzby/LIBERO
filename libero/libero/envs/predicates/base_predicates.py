@@ -211,6 +211,23 @@ class PositionWithin(UnaryAtomic):
         return [BaseObjectState, float, float, float, float, float, float]
 
 class PositionWithinObject(UnaryAtomic):
+    """
+    Check if the position of one object is within a bounding box relative to another object's position.
+    
+    The method calculates the relative position difference between two objects (arg1 and arg2), and checks
+    if that difference falls within the specified minimum and maximum bounds along each axis.
+    
+    This can be useful to determine whether one object is "near" or "inside" a region defined relative to another.
+
+    Args:
+        arg1: The object whose position is being checked.
+        arg2: The reference object to define the bounding region.
+        min_x, min_y, min_z: Minimum allowable differences in position (arg1 - arg2) along each axis.
+        max_x, max_y, max_z: Maximum allowable differences in position (arg1 - arg2) along each axis.
+
+    Returns:
+        bool: True if arg1's position is within the specified bounds relative to arg2, False otherwise.
+    """
     def __call__(self, arg1, arg2, min_x, min_y, min_z, max_x, max_y, max_z):
         geom1 = arg1.get_geom_state()
         geom2 = arg2.get_geom_state()
