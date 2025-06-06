@@ -582,19 +582,120 @@ class RelaxedMidBetween(MultiarayAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
 
-
+    
 class Linear(MultiarayAtomic):
     def __call__(self, L, M, R, tolerance):
         x1, y1, z1 = L.get_geom_state()["pos"]
         x2, y2, z2 = M.get_geom_state()["pos"]
         x3, y3, z3 = R.get_geom_state()["pos"]
-
+        
         # Calculate the area of the triangle formed by x_i,y_i
         area = 0.5 * abs(
             x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)
         )
         # If the area is close to zero, the points are collinear
         return area < tolerance
-
+    
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, float]
+    
+class LROrdering(MultiarayAtomic):
+    ''' Ordering from left to right along the y-axis.'''
+    
+    def __call__(self, *args):
+        assert len(args) >= 2, "At least two objects are required for ordering"
+        for i in range(len(args) - 1):
+            pos1 = args[i].get_geom_state()["pos"]
+            pos2 = args[i + 1].get_geom_state()["pos"]
+            if pos1[1] >= pos2[1]:
+                return False
+        return True
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState]
+
+
+class DistanceBetween(BinaryAtomic):
+    '''
+        Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
+
+        Usage: DistanceBetween()(object1, object2, x, y, z)
+        Arguments:
+        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        - arg2: The object that is supposed to be in the centre below the first object (arg1).
+        - (x,y,z): The thresholds
+        
+        Returns:
+        - True if the objects are close to each other within the user-defined margin of error.
+        - False otherwise.
+            
+    '''
+    def check_centre(self, arg2, arg1, x, y, z):
+        this_object = arg2.env.get_object(arg2.object_name)
+        this_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg2.object_name]
+        ]
+        other_object = arg2.env.get_object(arg1.object_name)
+        other_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg1.object_name]
+        ]
+        
+        return ( 
+            (np.linalg.norm(this_object_position[:1] - other_object_position[:1])
+                < x
+            ) and (
+                np.linalg.norm(this_object_position[1:2] - other_object_position[1:2])
+                < y
+            ) and (
+                np.linalg.norm(this_object_position[2:] - other_object_position[2:]) < z)
+            )
+      
+    def __call__(self, arg1, arg2, x, y, z):
+        return self.check_centre(arg2, arg1, x, y ,z)
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float]
+    
+class FlexibleOn(BinaryAtomic):
+    '''
+        Check whether an object is on the centre of another object with a flexible margin of error for x,y separately.
+
+        Usage: FlexibleOn()(object1, object2, x, y)
+        Arguments:
+        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        - arg2: The object that is supposed to be in the centre below the first object (arg1).
+        - (x,y): The thresholds
+
+        Returns:
+        - True if the object1 is on the centre of object2 within the user-defined margin of error.
+        - False otherwise.
+            
+    '''
+    def check_centre(self, arg2, arg1, x, y):
+        this_object = arg2.env.get_object(arg2.object_name)
+        this_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg2.object_name]
+        ]
+        other_object = arg2.env.get_object(arg1.object_name)
+        other_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg1.object_name]
+        ]
+        
+        return (
+            arg2.check_contact(arg1)
+            and (
+                np.linalg.norm(this_object_position[:1] - other_object_position[:1])
+                < x
+            ) and (
+                np.linalg.norm(this_object_position[1:2] - other_object_position[1:2])
+                < y
+            ) and (
+                this_object_position[2] <= other_object_position[2])
+            )
+      
+    def __call__(self, arg1, arg2, x, y):
+        return self.check_centre(arg2, arg1, x, y) 
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float]
+
