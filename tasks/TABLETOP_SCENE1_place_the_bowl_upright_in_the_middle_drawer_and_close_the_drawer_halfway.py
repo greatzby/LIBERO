@@ -1,30 +1,27 @@
-"""This is a standalone file for creating a task in libero."""
-import numpy as np
-
+"""This is a standalone file for create a task in libero."""
 from libero.libero.utils.bddl_generation_utils import (
     get_xy_region_kwargs_list_from_regions_info,
 )
 from libero.libero.utils.mu_utils import register_mu, InitialSceneTemplates
 from libero.libero.utils.task_generation_utils import (
     register_task_info,
-    get_task_info,
     generate_bddl_from_task_info,
 )
+import numpy as np
 
-from libero.libero.benchmark.mu_creation import *
+from libero.libero.benchmark.mu_creation import TabletopScene1
 
 def main():
-
-    # Write your reward code here
-    scene_name = "kitchen_scene4"
-    language = "Lay the wine bottle on the top tier of the rack, aligned with the tilt of the surface for a balanced and elegant placement"
+    scene_name = "tabletop_scene1"
+    language = "Place the bowl upright in the middle drawer and close the drawer halfway"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["wine_bottle_1", "wine_rack_1"],
+        objects_of_interest=["akita_black_bowl_1", "wooden_cabinet_1"],
         goal_states=[
-            ("On", "wine_bottle_1", "wine_rack_1_top_region"),
-            ("AxisAlignedWithin", "wine_bottle_1", "z", 50, 60)
+            ("In", "akita_black_bowl_1", "wooden_cabinet_1_middle_region"),
+            ("OpenRatio", "wooden_cabinet_1_middle_region", 0.5),
+            ("Upright", "akita_black_bowl_1"),
         ],
     )
 

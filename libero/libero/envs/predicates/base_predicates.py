@@ -68,6 +68,11 @@ class FalsePredicateFn(MultiarayAtomic):
 
 
 class Not(UnaryAtomic):
+    """
+    Logical NOT operation.
+    
+    Expects a single boolean input and returns its logical negation.
+    """
     def __call__(self, arg):
         return not arg
 
@@ -76,6 +81,11 @@ class Not(UnaryAtomic):
 
 
 class And(BinaryAtomic):
+    """
+    Logical AND operation.
+    
+    Takes two boolean inputs and returns True if both are True.
+    """
     def __call__(self, arg1, arg2):
         return arg1 and arg2
 
@@ -84,6 +94,11 @@ class And(BinaryAtomic):
 
 
 class Or(BinaryAtomic):
+    """
+    Logical OR operation.
+    
+    Takes two boolean inputs and returns True if at least one is True.
+    """
     def __call__(self, arg1, arg2):
         return arg1 or arg2
 
@@ -92,6 +107,11 @@ class Or(BinaryAtomic):
 
 
 class Any(UnaryAtomic):
+    """
+    Returns True if any element in the input tuple of booleans is True.
+    
+    Expects a tuple of booleans.
+    """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
             raise TypeError("Any expects a tuple of booleans")
@@ -102,6 +122,11 @@ class Any(UnaryAtomic):
 
 
 class All(UnaryAtomic):
+    """
+    Returns True only if all elements in the input tuple of booleans are True.
+    
+    Expects a tuple of booleans.
+    """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
             raise TypeError("All expects a list or tuple of booleans")
@@ -111,6 +136,11 @@ class All(UnaryAtomic):
         return [tuple]
 
 class Equal(BinaryAtomic):
+    """
+    Checks if two float values are approximately equal within a given threshold.
+    
+    Returns True if abs(arg1 - arg2) <= threshold.
+    """
     def __call__(self, arg1, arg2, threshold):
         return abs(arg1 - arg2) <= threshold
 
@@ -119,6 +149,9 @@ class Equal(BinaryAtomic):
 
 
 class Distance(BinaryAtomic):
+    """
+    Computes the Euclidean distance between two objects using their position data.
+    """
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
         pos2 = arg2.get_geom_state()["pos"]
@@ -129,6 +162,9 @@ class Distance(BinaryAtomic):
     
 
 class GetPosi(UnaryAtomic):
+    """
+    Retrieves a specific coordinate (x, y, or z) from an object's position.
+    """
     def __call__(self, arg, axis):
         if axis not in {"x", "y", "z"}:
             raise ValueError("Axis must be one of 'x', 'y', or 'z'")
