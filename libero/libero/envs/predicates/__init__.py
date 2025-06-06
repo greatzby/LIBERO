@@ -38,7 +38,6 @@ VALIDATE_PREDICATE_FN_DICT = {
     "printgeomstate": PrintGeomState(),
     "above": Above(),
     "between": MidBetween(),
-    "collinearequaldistance": CollinearEqualDistance(),
     "relaxedbetween": RelaxedMidBetween(),
     "linear": Linear(),
     "ordering": LROrdering(),

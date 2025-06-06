@@ -32,15 +32,6 @@ class BaseObjectState:
 
     def check_ontop(self, other):
         raise NotImplementedError
-    
-    def check_collinear(self, other2, other3):
-        raise NotImplementedError
-    
-    def get_distance(self, other):
-        raise NotImplementedError
-    
-    def get_height(self):
-        raise NotImplementedError
 
 
 class ObjectState(BaseObjectState):
@@ -152,47 +143,6 @@ class ObjectState(BaseObjectState):
     def update_state(self):
         if self.has_turnon_affordance:
             self.turn_on()
-
-    def check_collinear(self, other2, other3):
-        object_1 = self.env.get_object(self.object_name)
-        object_1_position = self.env.sim.data.body_xpos[
-            self.env.obj_body_id[self.object_name]
-        ]
-        object_2 = self.env.get_object(other2.object_name)
-        object_2_position = self.env.sim.data.body_xpos[
-            self.env.obj_body_id[other2.object_name]
-        ]
-        object_3 = self.env.get_object(other3.object_name)
-        object_3_position = self.env.sim.data.body_xpos[
-            self.env.obj_body_id[other3.object_name]
-        ]
-        p1 = object_1_position[:2]
-        p2 = object_2_position[:2]
-        p3 = object_3_position[:2]
-        v1 = p2 - p1
-        v2 = p3 - p1
-        cross_product = v1[0] * v2[1] - v1[1] * v2[0]
-        v1_magnitude = np.linalg.norm(v1)
-        v2_magnitude = np.linalg.norm(v2)
-        if v1_magnitude == 0 or v2_magnitude == 0:
-            return 1.0
-        normalized_cross_product = cross_product / (v1_magnitude * v2_magnitude)
-        return 1 - abs(normalized_cross_product)
-    
-    def get_distance(self, other):
-        object_1 = self.env.get_object(self.object_name)
-        object_1_position = self.env.sim.data.body_xpos[
-            self.env.obj_body_id[self.object_name]
-        ]
-        object_2 = self.env.get_object(other.object_name)
-        object_2_position = self.env.sim.data.body_xpos[
-            self.env.obj_body_id[other.object_name]
-        ]
-        distance_2d = np.linalg.norm(object_1_position[:2] - object_2_position[:2])
-        return distance_2d
-    
-    def get_height(self):
-        return self.env.sim.data.body_xpos[self.env.obj_body_id[self.object_name]][2]
 
 class SiteObjectState(BaseObjectState):
     """

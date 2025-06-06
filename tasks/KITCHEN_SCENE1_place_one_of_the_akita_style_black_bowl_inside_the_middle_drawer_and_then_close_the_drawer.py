@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene1"
-    language = "Place one of the Akita-style black bowl inside the middle drawer and then close the drawer"
+    language = "Place the Akita-style black bowl inside the middle drawer and then close the drawer"
     register_task_info(
         language,
         scene_name=scene_name,

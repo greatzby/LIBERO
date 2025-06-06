@@ -839,20 +839,6 @@ class BDDLBaseDomain(SingleArmEnv):
             raise ValueError(
                 f"Predicate {predicate_fn_name} expects {len(expected_types)} arguments, but got {len(arg_exprs)}"
             )
-        
-        if state[0] == "collinearequaldistance":
-            predicate_fn_name = state[0]
-            object_1_name = state[1]
-            object_2_name = state[2]
-            object_3_name = state[3]
-            object_4_name = state[4]
-            return eval_predicate_fn(
-                predicate_fn_name,
-                self.object_states_dict[object_1_name],
-                self.object_states_dict[object_2_name],
-                self.object_states_dict[object_3_name],
-                self.object_states_dict[object_4_name],
-            )
 
         evaluated_args = []
 

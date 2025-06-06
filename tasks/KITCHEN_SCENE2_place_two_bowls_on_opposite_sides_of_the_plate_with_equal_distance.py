@@ -23,7 +23,34 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["plate_1", "akita_black_bowl_1", "akita_black_bowl_2", "akita_black_bowl_3"],
         goal_states=[
-            ("CollinearEqualDistance", "plate_1", "akita_black_bowl_1", "akita_black_bowl_2", "akita_black_bowl_3"),
+            ('Any',
+                (
+                    ('And',
+                        ('Linear', 'akita_black_bowl_1', 'plate_1', 'akita_black_bowl_2', 0.002),
+                        ('Equal',
+                            ('Distance', 'plate_1', 'akita_black_bowl_1'),
+                            ('Distance', 'plate_1', 'akita_black_bowl_2'),
+                            0.02
+                        )
+                    ),
+                    ('And',
+                        ('Linear', 'akita_black_bowl_1', 'plate_1', 'akita_black_bowl_3', 0.002),
+                        ('Equal',
+                            ('Distance', 'plate_1', 'akita_black_bowl_1'),
+                            ('Distance', 'plate_1', 'akita_black_bowl_3'),
+                            0.02
+                        )
+                    ),
+                    ('And',
+                        ('Linear', 'akita_black_bowl_2', 'plate_1', 'akita_black_bowl_3', 0.002),
+                        ('Equal',
+                            ('Distance', 'plate_1', 'akita_black_bowl_2'),
+                            ('Distance', 'plate_1', 'akita_black_bowl_3'),
+                            0.02
+                        )
+                    )
+                )
+            )
         ],
     )
 
