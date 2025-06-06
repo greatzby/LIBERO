@@ -16,15 +16,15 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     # Write your reward code here
-    scene_name = "kitchen_scene4"
-    language = "Lay the wine bottle on the top tier of the rack, aligned with the tilt of the surface for a balanced and elegant placement"
+    scene_name = "kitchen_scene5"
+    language = "Hold the ketchup bottle horizontally in the air, make sure it is higher than the bowl"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["wine_bottle_1", "wine_rack_1"],
+        objects_of_interest=["ketchup_1"],
         goal_states=[
-            ("On", "wine_bottle_1", "wine_rack_1_top_region"),
-            ("AxisAlignedWithin", "wine_bottle_1", "z", 50, 60)
+            ("InAir", "ketchup_1", 1),
+            ("AxisAlignedWithin", "ketchup_1", "y", 85, 95),
         ],
     )
 
