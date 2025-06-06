@@ -18,6 +18,7 @@ def main():
         objects_of_interest=["black_book_1", "yellow_book_1", "yellow_book_2", "wooden_two_layer_shelf_1"],
         goal_states=[
             ("InContact", "black_book_1", "wooden_two_layer_shelf_1"),
+            ("Not", ("InContact", "yellow_book_1", "wooden_two_layer_shelf_1")),
             ("AxisAlignedWithin", "black_book_1", "z", 10, 80),
             (
                 "Or",

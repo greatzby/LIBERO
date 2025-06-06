@@ -23,8 +23,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["ketchup_1", "plate_1"],
         goal_states=[
-            ("RelaxedOn", "ketchup_1", "plate_1"),
-            ("InContact", "ketchup_1", "plate_1"),
+            ("RelaxedOn", "ketchup_1", "plate_1")
             (
                 "Or",
                 ("AxisAlignedWithin", "ketchup_1", "z", 0, 10),

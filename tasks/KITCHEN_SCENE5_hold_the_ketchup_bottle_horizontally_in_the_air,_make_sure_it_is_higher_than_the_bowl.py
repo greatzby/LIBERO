@@ -17,18 +17,14 @@ def main():
 
     # Write your reward code here
     scene_name = "kitchen_scene5"
-    language = "Hold the ketchup bottle horizontally in the air"
+    language = "Hold the ketchup bottle horizontally in the air, make sure it is higher than the bowl"
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["ketchup_1"],
         goal_states=[
             ("InAir", "ketchup_1", 1),
-            (
-                "Or",
-                ("AxisAlignedWithin", "ketchup_1", "z", 0, 5),
-                ("AxisAlignedWithin", "ketchup_1", "z", 175, 180)
-            ),
+            ("AxisAlignedWithin", "ketchup_1", "y", 85, 95),
         ],
     )
 
