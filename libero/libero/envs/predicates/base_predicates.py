@@ -665,7 +665,6 @@ class FlexibleOn(BinaryAtomic):
         - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
         - arg2: The object that is supposed to be in the centre below the first object (arg1).
         - (x,y): The thresholds
-
         Returns:
         - True if the object1 is on the centre of object2 within the user-defined margin of error.
         - False otherwise.
