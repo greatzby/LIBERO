@@ -83,7 +83,7 @@ class StudyScene4(InitialSceneTemplates):
 
 def main():
     scene_name = "study_scene4"
-    language = "Place the black book on a top shelf of the bookshelf, laying it flat."
+    language = "Place the black book on the bottom level of the bookshelf, laying it flat."
     register_task_info(
         language,
         scene_name=scene_name,

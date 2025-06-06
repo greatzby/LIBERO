@@ -11,7 +11,7 @@ from libero.libero.benchmark.mu_creation import StudyScene4
 
 def main():
     scene_name = "study_scene4"
-    language = "Place a yellow book flat on top of the bookshelf, then place a black book flat on top of it."
+    language = "Place a yellow book flat on the top-level shelf, then place a black book flat on top of it."
     register_task_info(
         language,
         scene_name=scene_name,
