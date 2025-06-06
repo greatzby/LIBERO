@@ -13,7 +13,7 @@ from libero.libero.benchmark.mu_creation import KitchenScene5
 
 def main():
     scene_name = "kitchen_scene5"
-    language = "Place the bowl on the top drawer and make sure it is rolling on its rim"
+    language = "Place the bowl on the top drawer and make sure it is resting on its side wall"
     register_task_info(
         language,
         scene_name=scene_name,
