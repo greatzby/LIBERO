@@ -32,6 +32,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "posigreaterthan": PosiGreaterThan(),
     "posilessthan": PosiLessThan(),
     "positionwithin": PositionWithin(),
+    "positionwithinobject": PositionWithinObject(),
     "getposi": GetPosi(),
     "printgeomstate": PrintGeomState(),
     "above": Above(),

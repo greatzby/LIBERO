@@ -246,6 +246,40 @@ class PositionWithin(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, float, float, float, float, float, float]
 
+class PositionWithinObject(UnaryAtomic):
+    """
+    Check if the position of one object is within a bounding box relative to another object's position.
+    
+    The method calculates the relative position difference between two objects (arg1 and arg2), and checks
+    if that difference falls within the specified minimum and maximum bounds along each axis.
+    
+    This can be useful to determine whether one object is "near" or "inside" a region defined relative to another.
+
+    Args:
+        arg1: The object whose position is being checked.
+        arg2: The reference object to define the bounding region.
+        min_x, min_y, min_z: Minimum allowable differences in position (arg1 - arg2) along each axis.
+        max_x, max_y, max_z: Maximum allowable differences in position (arg1 - arg2) along each axis.
+
+    Returns:
+        bool: True if arg1's position is within the specified bounds relative to arg2, False otherwise.
+    """
+    def __call__(self, arg1, arg2, min_x, min_y, min_z, max_x, max_y, max_z):
+        geom1 = arg1.get_geom_state()
+        geom2 = arg2.get_geom_state()
+        pos1 = geom1["pos"]
+        pos2 = geom2["pos"]
+        # Check if the position is within the specified threshold
+        within_x = min_x <= pos1[0] - pos2[0] <= max_x
+        within_y = min_y <= pos1[1] - pos2[1] <= max_y
+        within_z = min_z <= pos1[2] - pos2[2] <= max_z
+
+        # print(f"x difference: {pos1[0] - pos2[0]}, y difference: {pos1[1] - pos2[1]}, z difference: {pos1[2] - pos2[2]}")
+        # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
+        return within_x and within_y and within_z
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float, float, float, float]
 
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
