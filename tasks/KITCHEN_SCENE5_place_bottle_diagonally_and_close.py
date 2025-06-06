@@ -12,8 +12,8 @@ def main():
         objects_of_interest=["ketchup_1", "white_cabinet_1"],
         goal_states=[
             ("In", "ketchup_1", "white_cabinet_1_top_region"),
-            ("AxisAlignedWithin", "ketchup_1", "x", 60, 120),
-            ("AxisAlignedWithin", "ketchup_1", "y", 60, 120),
+            ("AxisAlignedWithin", "ketchup_1", "x", 45, 135),
+            ("AxisAlignedWithin", "ketchup_1", "y", 45, 135),
             ("Close", "white_cabinet_1_top_region"),
         ],
     )
