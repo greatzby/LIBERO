@@ -14,7 +14,7 @@ from libero.libero.benchmark.mu_creation import LivingRoomScene2
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Stand the butter upright on its smallest end and place it in the center of the cream cheese's largest flat surface to form a T-shape"
+    language = "Stand the butter upright on its smallest end and place it in the center of the cream cheese's largest flat surface to form a upside down T-shape"
     register_task_info(
         language,
         scene_name=scene_name,
