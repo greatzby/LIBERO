@@ -582,6 +582,39 @@ class RelaxedMidBetween(MultiarayAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
 
+    
+class Linear(MultiarayAtomic):
+    def __call__(self, L, M, R, tolerance):
+        x1, y1, z1 = L.get_geom_state()["pos"]
+        x2, y2, z2 = M.get_geom_state()["pos"]
+        x3, y3, z3 = R.get_geom_state()["pos"]
+        
+        # Calculate the area of the triangle formed by x_i,y_i
+        area = 0.5 * abs(
+            x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)
+        )
+        # If the area is close to zero, the points are collinear
+        return area < tolerance
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, float]
+    
+class LROrdering(MultiarayAtomic):
+    ''' Ordering from left to right along the y-axis.'''
+    
+    def __call__(self, *args):
+        assert len(args) >= 2, "At least two objects are required for ordering"
+        for i in range(len(args) - 1):
+            pos1 = args[i].get_geom_state()["pos"]
+            pos2 = args[i + 1].get_geom_state()["pos"]
+            if pos1[1] >= pos2[1]:
+                return False
+        return True
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState]
+
+
 class DistanceBetween(BinaryAtomic):
     '''
         Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
@@ -665,3 +698,4 @@ class FlexibleOn(BinaryAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, float, float]
+
