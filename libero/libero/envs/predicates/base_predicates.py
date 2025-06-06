@@ -576,6 +576,13 @@ class InAir(UnaryAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, float]
+    
+class SameHeight(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        return abs(arg1.get_geom_state()["pos"][2] - arg2.get_geom_state()["pos"][2]) < 0.01
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):
@@ -591,7 +598,6 @@ class TurnOff(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState]
-
 
 class Above(BinaryAtomic):
     """Check if arg1 is above arg2 in the z-axis, with a small xy threshold."""
@@ -630,6 +636,7 @@ class MidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+      
     
 class RelaxedMidBetween(MultiarayAtomic):
     """Check if M is between L and R along axis A without contact requirement."""
