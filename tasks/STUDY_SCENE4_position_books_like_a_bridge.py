@@ -60,7 +60,8 @@ class StudyScene4(InitialSceneTemplates):
             ("On", "yellow_book_2", "study_table_yellow_book_left_init_region"),
             ("On", "black_book_1", "study_table_black_book_init_region"),
         ]
-        
+
+
 def main():
     register_task_info(
         language="Position the black book horizontally so it bridges across the tops of the two upright yellow book",
@@ -69,6 +70,8 @@ def main():
         goal_states=[
             ("relaxedon", "black_book_1", "yellow_book_1"),
             ("relaxedon", "black_book_1", "yellow_book_2"),
+            ("axisalignedwithin", "black_book_1", "z", 85, 95),
+            ("linear", "yellow_book_2", "black_book_1", "yellow_book_1", 0.0005), # small tolerance due to close objects.
             ("upright", "yellow_book_1"),
             ("upright", "yellow_book_2"),
         ],
@@ -76,6 +79,6 @@ def main():
     bddl, _ = generate_bddl_from_task_info()
     print(bddl)
 
+
 if __name__ == "__main__":
     main()
-    
