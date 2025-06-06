@@ -39,6 +39,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "relaxedbetween": RelaxedMidBetween(),
     "linear": Linear(),
     "ordering": LROrdering(),
+    "distancebetween": DistanceBetween(),
+    "flexibleon": FlexibleOn(),
 }
 
 

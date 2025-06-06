@@ -581,6 +581,7 @@ class RelaxedMidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+
     
 class Linear(MultiarayAtomic):
     def __call__(self, L, M, R, tolerance):
@@ -612,3 +613,89 @@ class LROrdering(MultiarayAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState]
+
+
+class DistanceBetween(BinaryAtomic):
+    '''
+        Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
+
+        Usage: DistanceBetween()(object1, object2, x, y, z)
+        Arguments:
+        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        - arg2: The object that is supposed to be in the centre below the first object (arg1).
+        - (x,y,z): The thresholds
+        
+        Returns:
+        - True if the objects are close to each other within the user-defined margin of error.
+        - False otherwise.
+            
+    '''
+    def check_centre(self, arg2, arg1, x, y, z):
+        this_object = arg2.env.get_object(arg2.object_name)
+        this_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg2.object_name]
+        ]
+        other_object = arg2.env.get_object(arg1.object_name)
+        other_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg1.object_name]
+        ]
+        
+        return ( 
+            (np.linalg.norm(this_object_position[:1] - other_object_position[:1])
+                < x
+            ) and (
+                np.linalg.norm(this_object_position[1:2] - other_object_position[1:2])
+                < y
+            ) and (
+                np.linalg.norm(this_object_position[2:] - other_object_position[2:]) < z)
+            )
+      
+    def __call__(self, arg1, arg2, x, y, z):
+        return self.check_centre(arg2, arg1, x, y ,z)
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float]
+    
+class FlexibleOn(BinaryAtomic):
+    '''
+        Check whether an object is on the centre of another object with a flexible margin of error for x,y separately.
+
+        Usage: FlexibleOn()(object1, object2, x, y)
+        Arguments:
+        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        - arg2: The object that is supposed to be in the centre below the first object (arg1).
+        - (x,y): The thresholds
+
+        Returns:
+        - True if the object1 is on the centre of object2 within the user-defined margin of error.
+        - False otherwise.
+            
+    '''
+    def check_centre(self, arg2, arg1, x, y):
+        this_object = arg2.env.get_object(arg2.object_name)
+        this_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg2.object_name]
+        ]
+        other_object = arg2.env.get_object(arg1.object_name)
+        other_object_position = arg2.env.sim.data.body_xpos[
+            arg2.env.obj_body_id[arg1.object_name]
+        ]
+        
+        return (
+            arg2.check_contact(arg1)
+            and (
+                np.linalg.norm(this_object_position[:1] - other_object_position[:1])
+                < x
+            ) and (
+                np.linalg.norm(this_object_position[1:2] - other_object_position[1:2])
+                < y
+            ) and (
+                this_object_position[2] <= other_object_position[2])
+            )
+      
+    def __call__(self, arg1, arg2, x, y):
+        return self.check_centre(arg2, arg1, x, y) 
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float]
+
