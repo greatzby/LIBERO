@@ -41,6 +41,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "ordering": LROrdering(),
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
+    "orientedatdegree": OrientedAtDegree(),
 }
 
 

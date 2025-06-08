@@ -699,3 +699,40 @@ class FlexibleOn(BinaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, float, float]
 
+class OrientedAtDegree(UnaryAtomic):
+    """
+    Check if the object's orientation (roll, pitch, yaw) is within the specified degree thresholds.
+
+    Usage: OrientedAtDegree()(object, roll, pitch, yaw, roll_thresh, pitch_thresh, yaw_thresh)
+    Arguments:
+    - object: The object to check.
+    - roll, pitch, yaw: Target euler angles in degrees.
+    - roll_thresh, pitch_thresh, yaw_thresh: Allowed deviation for each angle in degrees.
+
+    Returns:
+    - True if all angles are within their respective thresholds.
+    """
+    def __call__(self, arg, roll, pitch, yaw, roll_thresh, pitch_thresh, yaw_thresh):
+        geom = arg.get_geom_state()
+        w, x, y, z = geom["quat"]
+        quat = np.array([x, y, z, w])
+        R = transform_utils.quat2mat(quat)
+        roll_curr, pitch_curr, yaw_curr = transform_utils.mat2euler(R)
+        # Convert to degrees
+        roll_curr = np.degrees(roll_curr)
+        pitch_curr = np.degrees(pitch_curr)
+        yaw_curr = np.degrees(yaw_curr)
+        
+        def acute_diff(a, b):
+            diff = abs(a - b)
+            if diff > 180:
+                diff = 360 - diff
+            return diff
+
+        within_roll = acute_diff(roll_curr, roll) <= roll_thresh
+        within_pitch = acute_diff(pitch_curr, pitch) <= pitch_thresh
+        within_yaw = acute_diff(yaw_curr, yaw) <= yaw_thresh
+        return within_roll and within_pitch and within_yaw
+
+    def expected_arg_types(self):
+        return [BaseObjectState, float, float, float, float, float, float]
