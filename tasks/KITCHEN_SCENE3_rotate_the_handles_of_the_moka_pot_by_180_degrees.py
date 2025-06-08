@@ -22,8 +22,8 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["moka_pot_1"],
         goal_states=[
-            ("OrientedAtDegree", "moka_pot_1", 0, 0, 0, 10, 10, 15),
-            ("On", "moka_pot_1", "kitchen_table_moka_pot_init_region"),
+            ("OrientedAtDegree", "moka_pot_1", 0, 0, 0, 5, 5, 15), # Ensure upright and rotated by 180 degrees
+            ("PositionWithin", "moka_pot_1", 0, 0, 0.96, 10, 10, 0.2), # No restriction on x, y position
         ]
     )
 
