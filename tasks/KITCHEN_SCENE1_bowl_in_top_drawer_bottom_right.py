@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene1"
-    language = "Put the black bowl on the wooden cabinet's corner that is closest to the robot arm base"
+    language = "Place the bowl into the top drawer located in the drawer's bottom right corner"
     # x-y center of cabinet is 0, -0.3 (from the init_state of the scene)
     # known from teleoperation and printing out the current position
     # then calculate the target position
