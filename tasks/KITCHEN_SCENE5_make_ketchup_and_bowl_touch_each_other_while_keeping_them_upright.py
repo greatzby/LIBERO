@@ -96,7 +96,7 @@ class KitchenScene5(InitialSceneTemplates):
 def main():
     # Write your reward code here
     scene_name = "kitchen_scene5"
-    language = "Keep ketchup and bowl upright on the table and touch each other at the same time"
+    language = "Make ketchup and bowl touch each other while keeping them upright"
     register_task_info(
         language,
         scene_name=scene_name,
