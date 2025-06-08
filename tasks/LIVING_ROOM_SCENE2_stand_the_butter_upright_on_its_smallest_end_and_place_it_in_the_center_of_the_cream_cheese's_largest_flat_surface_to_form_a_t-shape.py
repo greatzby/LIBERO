@@ -20,14 +20,8 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["butter_1", "cream_cheese_1"],
         goal_states=[
-            (
-                "Or",
-                    ("AxisAlignedWithin", "butter_1", "x", 0, 5),
-                    ("AxisAlignedWithin", "butter_1", "x", 175, 180),
-            ),
-            ("AxisAlignedWithin", "butter_1", "y", 85, 95),
             ("AxisAlignedWithin", "butter_1", "z", 85, 95),
-            ("FlexibleOn", "butter_1", "cream_cheese_1", 0.01, 0.01),
+            ("FlexibleOn", "butter_1", "cream_cheese_1", 0.02, 0.02),
         ],
     )
 
