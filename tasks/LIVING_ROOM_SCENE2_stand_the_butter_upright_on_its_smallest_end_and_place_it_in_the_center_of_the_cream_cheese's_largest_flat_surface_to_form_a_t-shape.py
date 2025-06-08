@@ -21,7 +21,7 @@ def main():
         objects_of_interest=["butter_1", "cream_cheese_1"],
         goal_states=[
             ("AxisAlignedWithin", "butter_1", "z", 85, 95),
-            ("FlexibleOn", "butter_1", "cream_cheese_1", 0.02, 0.02),
+            ("FlexibleOn", "butter_1", "cream_cheese_1", 0.01, 0.01),
         ],
     )
 
