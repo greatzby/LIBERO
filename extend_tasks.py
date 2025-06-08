@@ -83,6 +83,8 @@ def convert_scene_name(scene_name, target_scene_type):
         return scene_name + '_kitchen'
     elif target_scene_type == 'study':
         return scene_name + '_study'
+    elif target_scene_type == 'living_room':
+        return scene_name + '_living_room'
     return scene_name
 
 def update_position_within_coordinates(line, original_type, target_type):
@@ -266,14 +268,15 @@ def main():
             # Skip if converting to the same type
             if target_type == original_type:
                 continue
-                
-            # Generate output filename
+                  # Generate output filename
             if target_type == 'tabletop_manipulation':
                 suffix = '_TABLETOP_MANIPULATION'
             elif target_type == 'kitchen':
                 suffix = '_KITCHEN'
             elif target_type == 'study':
                 suffix = '_STUDY'
+            elif target_type == 'living_room':
+                suffix = '_LIVING_ROOM'
             else:
                 suffix = f'_{target_type.upper()}'
                 
