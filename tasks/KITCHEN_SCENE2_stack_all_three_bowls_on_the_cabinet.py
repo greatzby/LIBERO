@@ -34,6 +34,14 @@ def main():
             ("Or", ("StackBowl", "akita_black_bowl_1", "akita_black_bowl_2"), ("StackBowl", "akita_black_bowl_1", "akita_black_bowl_3")),
             ("Or", ("StackBowl", "akita_black_bowl_2", "akita_black_bowl_3"), ("StackBowl", "akita_black_bowl_2", "akita_black_bowl_1")),
             ("Or", ("StackBowl", "akita_black_bowl_3", "akita_black_bowl_1"), ("StackBowl", "akita_black_bowl_3", "akita_black_bowl_2")),
+            (
+                "Any",
+                (
+                    ("Equal", ("GetPosi", "akita_black_bowl_1", "z"), 1.126, 0.001),
+                    ("Equal", ("GetPosi", "akita_black_bowl_2", "z"), 1.126, 0.001),
+                    ("Equal", ("GetPosi", "akita_black_bowl_3", "z"), 1.126, 0.001),
+                )
+            ),
         ],
     )
 
