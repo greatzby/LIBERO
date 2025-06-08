@@ -25,11 +25,11 @@ def main():
         goal_states=[
             (
                 "Any",
-                    (
-                        ("InContact", "wooden_cabinet_1", "akita_black_bowl_1"),
-                        ("InContact", "wooden_cabinet_1", "akita_black_bowl_2"),
-                        ("InContact", "wooden_cabinet_1", "akita_black_bowl_3"),
-                    )
+                (
+                    ("InContact", "wooden_cabinet_1", "akita_black_bowl_1"),
+                    ("InContact", "wooden_cabinet_1", "akita_black_bowl_2"),
+                    ("InContact", "wooden_cabinet_1", "akita_black_bowl_3"),
+                )
             ),
             ("Or", ("StackBowl", "akita_black_bowl_1", "akita_black_bowl_2"), ("StackBowl", "akita_black_bowl_1", "akita_black_bowl_3")),
             ("Or", ("StackBowl", "akita_black_bowl_2", "akita_black_bowl_3"), ("StackBowl", "akita_black_bowl_2", "akita_black_bowl_1")),
@@ -37,9 +37,9 @@ def main():
             (
                 "Any",
                 (
-                    ("Equal", ("GetPosi", "akita_black_bowl_1", "z"), 1.126, 0.001),
-                    ("Equal", ("GetPosi", "akita_black_bowl_2", "z"), 1.126, 0.001),
-                    ("Equal", ("GetPosi", "akita_black_bowl_3", "z"), 1.126, 0.001),
+                    ("RelaxedOn", "akita_black_bowl_1", "wooden_cabinet_1"),
+                    ("RelaxedOn", "akita_black_bowl_2", "wooden_cabinet_1"),
+                    ("RelaxedOn", "akita_black_bowl_3", "wooden_cabinet_1"),
                 )
             ),
         ],

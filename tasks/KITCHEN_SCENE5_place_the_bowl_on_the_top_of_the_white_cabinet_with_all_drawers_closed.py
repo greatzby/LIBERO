@@ -22,7 +22,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["akita_black_bowl_1", "white_cabinet_1"],
         goal_states=[
-            ("Equal", ("GetPosi", "akita_black_bowl_1", "z"), 1.126, 0.001),
+            ("RelaxedOn", "akita_black_bowl_1", "white_cabinet_1"),
             ("Close", "white_cabinet_1_middle_region"),
             ("Close", "white_cabinet_1_bottom_region"),
             ("Close", "white_cabinet_1_top_region"),
