@@ -16,14 +16,16 @@ class TabletopScene1Kitchen(TabletopScene1):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
+            "wooden_cabinet": 1,
+            "flat_stove": 1,
+            "wine_rack": 1,
         }
-
         object_num_info = {
             "akita_black_bowl": 1,
+            "cream_cheese": 1,
+            "wine_bottle": 1,
             "plate": 1,
-            "ketchup": 1,
         }
-
         super(TabletopScene1, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -45,14 +47,16 @@ class TabletopScene1LivingRoom(TabletopScene1):
     def __init__(self):
         fixture_num_info = {
             "living_room_table": 1,
+            "wooden_cabinet": 1,
+            "flat_stove": 1,
+            "wine_rack": 1,
         }
-
         object_num_info = {
             "akita_black_bowl": 1,
+            "cream_cheese": 1,
+            "wine_bottle": 1,
             "plate": 1,
-            "ketchup": 1,
         }
-
         super(TabletopScene1, self).__init__(
             workspace_name="living_room_table",
             fixture_num_info=fixture_num_info,
@@ -74,14 +78,16 @@ class TabletopScene1Study(TabletopScene1):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
+            "wooden_cabinet": 1,
+            "flat_stove": 1,
+            "wine_rack": 1,
         }
-
         object_num_info = {
             "akita_black_bowl": 1,
+            "cream_cheese": 1,
+            "wine_bottle": 1,
             "plate": 1,
-            "ketchup": 1,
         }
-
         super(TabletopScene1, self).__init__(
             workspace_name="study_table",
             fixture_num_info=fixture_num_info,

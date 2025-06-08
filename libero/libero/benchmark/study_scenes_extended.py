@@ -20,12 +20,10 @@ class StudyScene1Kitchen(StudyScene1):
             "kitchen_table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
             "black_book": 1,
             "white_yellow_mug": 1,
         }
-
         super(StudyScene1, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -48,12 +46,10 @@ class StudyScene2Kitchen(StudyScene2):
             "kitchen_table": 1,
             "wooden_two_layer_shelf": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "chefmate_8_frypan": 1,
+            "red_coffee_mug": 1,
         }
-
         super(StudyScene2, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -76,12 +72,11 @@ class StudyScene3Kitchen(StudyScene3):
             "kitchen_table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
-            "black_book": 2,
-            "white_yellow_mug": 1,
+            "black_book": 1,
+            "red_coffee_mug": 1,
+            "porcelain_mug": 1,
         }
-
         super(StudyScene3, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -104,13 +99,10 @@ class StudyScene4Kitchen(StudyScene4):
             "kitchen_table": 1,
             "wooden_two_layer_shelf": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "white_yellow_mug": 1,
-            "chefmate_8_frypan": 1,
+            "yellow_book": 2,
         }
-
         super(StudyScene4, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -134,12 +126,10 @@ class StudyScene1LivingRoom(StudyScene1):
             "living_room_table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
             "black_book": 1,
             "white_yellow_mug": 1,
         }
-
         super(StudyScene1, self).__init__(
             workspace_name="living_room_table",
             fixture_num_info=fixture_num_info,
@@ -160,14 +150,12 @@ class StudyScene2LivingRoom(StudyScene2):
     def __init__(self):
         fixture_num_info = {
             "living_room_table": 1,
-            "wooden_two_layer_shelf": 1,
+            "desk_caddy": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "chefmate_8_frypan": 1,
+            "red_coffee_mug": 1,
         }
-
         super(StudyScene2, self).__init__(
             workspace_name="living_room_table",
             fixture_num_info=fixture_num_info,
@@ -190,12 +178,11 @@ class StudyScene3LivingRoom(StudyScene3):
             "living_room_table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
-            "black_book": 2,
-            "white_yellow_mug": 1,
+            "black_book": 1,
+            "red_coffee_mug": 1,
+            "porcelain_mug": 1,
         }
-
         super(StudyScene3, self).__init__(
             workspace_name="living_room_table",
             fixture_num_info=fixture_num_info,
@@ -218,13 +205,10 @@ class StudyScene4LivingRoom(StudyScene4):
             "living_room_table": 1,
             "wooden_two_layer_shelf": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "white_yellow_mug": 1,
-            "chefmate_8_frypan": 1,
+            "yellow_book": 2,
         }
-
         super(StudyScene4, self).__init__(
             workspace_name="living_room_table",
             fixture_num_info=fixture_num_info,
@@ -248,12 +232,10 @@ class StudyScene1Tabletop(StudyScene1):
             "table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
             "black_book": 1,
             "white_yellow_mug": 1,
         }
-
         super(StudyScene1, self).__init__(
             workspace_name="main_table",
             fixture_num_info=fixture_num_info,
@@ -274,14 +256,12 @@ class StudyScene2Tabletop(StudyScene2):
     def __init__(self):
         fixture_num_info = {
             "table": 1,
-            "wooden_two_layer_shelf": 1,
+            "desk_caddy": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "chefmate_8_frypan": 1,
+            "red_coffee_mug": 1,
         }
-
         super(StudyScene2, self).__init__(
             workspace_name="main_table",
             fixture_num_info=fixture_num_info,
@@ -304,12 +284,11 @@ class StudyScene3Tabletop(StudyScene3):
             "table": 1,
             "desk_caddy": 1,
         }
-
         object_num_info = {
-            "black_book": 2,
-            "white_yellow_mug": 1,
+            "black_book": 1,
+            "red_coffee_mug": 1,
+            "porcelain_mug": 1,
         }
-
         super(StudyScene3, self).__init__(
             workspace_name="main_table",
             fixture_num_info=fixture_num_info,
@@ -332,13 +311,10 @@ class StudyScene4Tabletop(StudyScene4):
             "table": 1,
             "wooden_two_layer_shelf": 1,
         }
-
         object_num_info = {
             "black_book": 1,
-            "white_yellow_mug": 1,
-            "chefmate_8_frypan": 1,
+            "yellow_book": 2,
         }
-
         super(StudyScene4, self).__init__(
             workspace_name="main_table",
             fixture_num_info=fixture_num_info,

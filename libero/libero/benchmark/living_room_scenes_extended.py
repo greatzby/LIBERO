@@ -19,14 +19,14 @@ class LivingRoomScene1Kitchen(LivingRoomScene1):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "flat_stove": 1,
         }
-
         object_num_info = {
-            "wine_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "basket": 1,
         }
-
         super(LivingRoomScene1, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -47,14 +47,17 @@ class LivingRoomScene2Kitchen(LivingRoomScene2):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "flat_stove": 1,
         }
-
         object_num_info = {
-            "beer_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "orange_juice": 1,
+            "milk": 1,
+            "butter": 1,
+            "basket": 1,
         }
-
         super(LivingRoomScene2, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -75,15 +78,15 @@ class LivingRoomScene3Kitchen(LivingRoomScene3):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "flat_stove": 1,
         }
-
         object_num_info = {
-            "wine_bottle": 1,
-            "beer_bottle": 1,
-            "porcelain_mug": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "butter": 1,
+            "wooden_tray": 1,
         }
-
         super(LivingRoomScene3, self).__init__(
             workspace_name="kitchen_table",
             fixture_num_info=fixture_num_info,
@@ -104,12 +107,13 @@ class LivingRoomScene4Kitchen(LivingRoomScene4):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "flat_stove": 1,
         }
 
         object_num_info = {
-            "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
+            "akita_black_bowl": 2,
+            "new_salad_dressing": 1,
+            "chocolate_pudding": 1,
+            "wooden_tray": 1,
         }
 
         super(LivingRoomScene4, self).__init__(
@@ -132,13 +136,13 @@ class LivingRoomScene5Kitchen(LivingRoomScene5):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "wooden_cabinet": 1,
         }
 
         object_num_info = {
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
             "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
-            "plate": 1,
+            "plate": 2,
         }
 
         super(LivingRoomScene5, self).__init__(
@@ -161,12 +165,13 @@ class LivingRoomScene6Kitchen(LivingRoomScene6):
     def __init__(self):
         fixture_num_info = {
             "kitchen_table": 1,
-            "white_cabinet": 1,
         }
 
         object_num_info = {
-            "wine_bottle": 1,
-            "akita_black_bowl": 1,
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
+            "plate": 1,
+            "chocolate_pudding": 1,
         }
 
         super(LivingRoomScene6, self).__init__(
@@ -190,14 +195,14 @@ class LivingRoomScene1Study(LivingRoomScene1):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "desk_caddy": 1,
         }
-
         object_num_info = {
-            "wine_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "basket": 1,
         }
-
         super(LivingRoomScene1, self).__init__(
             workspace_name="study_table",
             fixture_num_info=fixture_num_info,
@@ -218,14 +223,17 @@ class LivingRoomScene2Study(LivingRoomScene2):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "desk_caddy": 1,
         }
-
         object_num_info = {
-            "beer_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "orange_juice": 1,
+            "milk": 1,
+            "butter": 1,
+            "basket": 1,
         }
-
         super(LivingRoomScene2, self).__init__(
             workspace_name="study_table",
             fixture_num_info=fixture_num_info,
@@ -246,13 +254,15 @@ class LivingRoomScene3Study(LivingRoomScene3):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "wooden_two_layer_shelf": 1,
         }
 
         object_num_info = {
-            "wine_bottle": 1,
-            "beer_bottle": 1,
-            "porcelain_mug": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "butter": 1,
+            "wooden_tray": 1,
         }
 
         super(LivingRoomScene3, self).__init__(
@@ -275,12 +285,13 @@ class LivingRoomScene4Study(LivingRoomScene4):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "wooden_two_layer_shelf": 1,
         }
 
         object_num_info = {
-            "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
+            "akita_black_bowl": 2,
+            "new_salad_dressing": 1,
+            "chocolate_pudding": 1,
+            "wooden_tray": 1,
         }
 
         super(LivingRoomScene4, self).__init__(
@@ -303,13 +314,13 @@ class LivingRoomScene5Study(LivingRoomScene5):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "wooden_two_layer_shelf": 1,
         }
 
         object_num_info = {
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
             "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
-            "plate": 1,
+            "plate": 2,
         }
 
         super(LivingRoomScene5, self).__init__(
@@ -332,12 +343,13 @@ class LivingRoomScene6Study(LivingRoomScene6):
     def __init__(self):
         fixture_num_info = {
             "study_table": 1,
-            "desk_caddy": 1,
         }
 
         object_num_info = {
-            "wine_bottle": 1,
-            "akita_black_bowl": 1,
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
+            "plate": 1,
+            "chocolate_pudding": 1,
         }
 
         super(LivingRoomScene6, self).__init__(
@@ -362,12 +374,13 @@ class LivingRoomScene1TabletopManipulation(LivingRoomScene1):
         fixture_num_info = {
             "table": 1,
         }
-
         object_num_info = {
-            "wine_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "basket": 1,
         }
-
         super(LivingRoomScene1, self).__init__(
             workspace_name="main_table",
             fixture_num_info=fixture_num_info,
@@ -391,8 +404,14 @@ class LivingRoomScene2TabletopManipulation(LivingRoomScene2):
         }
 
         object_num_info = {
-            "beer_bottle": 1,
-            "wine_glass": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "orange_juice": 1,
+            "milk": 1,
+            "butter": 1,
+            "basket": 1,
         }
 
         super(LivingRoomScene2, self).__init__(
@@ -418,9 +437,12 @@ class LivingRoomScene3TabletopManipulation(LivingRoomScene3):
         }
 
         object_num_info = {
-            "wine_bottle": 1,
-            "beer_bottle": 1,
-            "porcelain_mug": 1,
+            "alphabet_soup": 1,
+            "cream_cheese": 1,
+            "tomato_sauce": 1,
+            "ketchup": 1,
+            "butter": 1,
+            "wooden_tray": 1,
         }
 
         super(LivingRoomScene3, self).__init__(
@@ -446,8 +468,10 @@ class LivingRoomScene4TabletopManipulation(LivingRoomScene4):
         }
 
         object_num_info = {
-            "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
+            "akita_black_bowl": 2,
+            "new_salad_dressing": 1,
+            "chocolate_pudding": 1,
+            "wooden_tray": 1,
         }
 
         super(LivingRoomScene4, self).__init__(
@@ -473,9 +497,10 @@ class LivingRoomScene5TabletopManipulation(LivingRoomScene5):
         }
 
         object_num_info = {
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
             "white_yellow_mug": 1,
-            "akita_black_bowl": 1,
-            "plate": 1,
+            "plate": 2,
         }
 
         super(LivingRoomScene5, self).__init__(
@@ -501,8 +526,10 @@ class LivingRoomScene6TabletopManipulation(LivingRoomScene6):
         }
 
         object_num_info = {
-            "wine_bottle": 1,
-            "akita_black_bowl": 1,
+            "porcelain_mug": 1,
+            "red_coffee_mug": 1,
+            "plate": 1,
+            "chocolate_pudding": 1,
         }
 
         super(LivingRoomScene6, self).__init__(
