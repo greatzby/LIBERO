@@ -101,7 +101,6 @@ class LivingRoomScene3(InitialSceneTemplates):
         return states
     
 def main():
-    # kitchen_scene_1
     scene_name = "living_room_scene3"
     language = "Place the butter on the tomato sauce can with its bottom facing up"
     register_task_info(

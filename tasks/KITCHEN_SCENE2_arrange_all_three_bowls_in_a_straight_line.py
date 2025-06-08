@@ -11,27 +11,28 @@ from libero.libero.utils.task_generation_utils import (
     generate_bddl_from_task_info,
 )
 
-from libero.libero.benchmark.mu_creation import *
+from libero.libero.benchmark.mu_creation import KitchenScene2
+
 
 def main():
-
-    scene_name = "kitchen_scene1"
-    language = "Place the bowl into the top drawer located in the drawer's bottom right corner"
-    # x-y center of cabinet is 0, -0.3 (from the init_state of the scene)
-    # known from teleoperation and printing out the current position
-    # then calculate the target position
-    bottom_right_corner = [-0.05, -0.25, 1.06]
+    # kitchen_scene_2
+    scene_name = "kitchen_scene2"
+    language = "Arrange all three bowls in a straight line"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1"],
+        objects_of_interest=["akita_black_bowl_1", "akita_black_bowl_2", "akita_black_bowl_3"],
         goal_states=[
-            ("PositionWithin", "akita_black_bowl_1", bottom_right_corner[0], bottom_right_corner[1], bottom_right_corner[2], 0.015, 0.05, 0.01),
-        ]
+            ("Linear", "akita_black_bowl_1", "akita_black_bowl_2", "akita_black_bowl_3", 0.001),
+            ("PosiLessThan", "akita_black_bowl_1", "z", 0.90),
+            ("PosiLessThan", "akita_black_bowl_2", "z", 0.90),
+            ("PosiLessThan", "akita_black_bowl_3", "z", 0.90),
+        ],
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()
     print(bddl_file_names)
+
 
 if __name__ == "__main__":
     main()

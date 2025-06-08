@@ -1,4 +1,3 @@
-"""This is a standalone file for create a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
@@ -14,16 +13,16 @@ from libero.libero.utils.task_generation_utils import (
 from libero.libero.benchmark.mu_creation import *
 
 def main():
-    # kitchen_scene_1
-    scene_name = "kitchen_scene1"
-    language = "Open the top drawer halfway, and open the middle drawer fully"
+    scene_name = "living_room_scene3"
+    language = "Put the ketchup lying flat, then invert the wooden tray to cover it"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["wooden_cabinet_1"],
+        objects_of_interest=["ketchup_1","wooden_tray_1"],
         goal_states=[
-            ("OpenRatio", "wooden_cabinet_1_top_region", 0.5),
-            ("OpenRatio", "wooden_cabinet_1_middle_region", 1),
+            ("UpsideDown", "wooden_tray_1"),
+            ("In", "ketchup_1", "wooden_tray_1_contain_region"),
+            ("AxisAlignedWithin", "ketchup_1", "y", 85, 95),
         ],
     )
 

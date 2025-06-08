@@ -68,6 +68,11 @@ class FalsePredicateFn(MultiarayAtomic):
 
 
 class Not(UnaryAtomic):
+    """
+    Logical NOT operation.
+    
+    Expects a single boolean input and returns its logical negation.
+    """
     def __call__(self, arg):
         return not arg
 
@@ -76,6 +81,11 @@ class Not(UnaryAtomic):
 
 
 class And(BinaryAtomic):
+    """
+    Logical AND operation.
+    
+    Takes two boolean inputs and returns True if both are True.
+    """
     def __call__(self, arg1, arg2):
         return arg1 and arg2
 
@@ -84,6 +94,11 @@ class And(BinaryAtomic):
 
 
 class Or(BinaryAtomic):
+    """
+    Logical OR operation.
+    
+    Takes two boolean inputs and returns True if at least one is True.
+    """
     def __call__(self, arg1, arg2):
         return arg1 or arg2
 
@@ -92,6 +107,11 @@ class Or(BinaryAtomic):
 
 
 class Any(UnaryAtomic):
+    """
+    Returns True if any element in the input tuple of booleans is True.
+    
+    Expects a tuple of booleans.
+    """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
             raise TypeError("Any expects a tuple of booleans")
@@ -102,6 +122,11 @@ class Any(UnaryAtomic):
 
 
 class All(UnaryAtomic):
+    """
+    Returns True only if all elements in the input tuple of booleans are True.
+    
+    Expects a tuple of booleans.
+    """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
             raise TypeError("All expects a list or tuple of booleans")
@@ -111,6 +136,11 @@ class All(UnaryAtomic):
         return [tuple]
 
 class Equal(BinaryAtomic):
+    """
+    Checks if two float values are approximately equal within a given threshold.
+    
+    Returns True if abs(arg1 - arg2) <= threshold.
+    """
     def __call__(self, arg1, arg2, threshold):
         return abs(arg1 - arg2) <= threshold
 
@@ -119,6 +149,9 @@ class Equal(BinaryAtomic):
 
 
 class Distance(BinaryAtomic):
+    """
+    Computes the Euclidean distance between two objects using their position data.
+    """
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
         pos2 = arg2.get_geom_state()["pos"]
@@ -129,6 +162,9 @@ class Distance(BinaryAtomic):
     
 
 class GetPosi(UnaryAtomic):
+    """
+    Retrieves a specific coordinate (x, y, or z) from an object's position.
+    """
     def __call__(self, arg, axis):
         if axis not in {"x", "y", "z"}:
             raise ValueError("Axis must be one of 'x', 'y', or 'z'")
@@ -210,6 +246,40 @@ class PositionWithin(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, float, float, float, float, float, float]
 
+class PositionWithinObject(UnaryAtomic):
+    """
+    Check if the position of one object is within a bounding box relative to another object's position.
+    
+    The method calculates the relative position difference between two objects (arg1 and arg2), and checks
+    if that difference falls within the specified minimum and maximum bounds along each axis.
+    
+    This can be useful to determine whether one object is "near" or "inside" a region defined relative to another.
+
+    Args:
+        arg1: The object whose position is being checked.
+        arg2: The reference object to define the bounding region.
+        min_x, min_y, min_z: Minimum allowable differences in position (arg1 - arg2) along each axis.
+        max_x, max_y, max_z: Maximum allowable differences in position (arg1 - arg2) along each axis.
+
+    Returns:
+        bool: True if arg1's position is within the specified bounds relative to arg2, False otherwise.
+    """
+    def __call__(self, arg1, arg2, min_x, min_y, min_z, max_x, max_y, max_z):
+        geom1 = arg1.get_geom_state()
+        geom2 = arg2.get_geom_state()
+        pos1 = geom1["pos"]
+        pos2 = geom2["pos"]
+        # Check if the position is within the specified threshold
+        within_x = min_x <= pos1[0] - pos2[0] <= max_x
+        within_y = min_y <= pos1[1] - pos2[1] <= max_y
+        within_z = min_z <= pos1[2] - pos2[2] <= max_z
+
+        # print(f"x difference: {pos1[0] - pos2[0]}, y difference: {pos1[1] - pos2[1]}, z difference: {pos1[2] - pos2[2]}")
+        # print(f"Within X: {within_x}, Within Y: {within_y}, Within Z: {within_z}")
+        return within_x and within_y and within_z
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float, float, float, float]
 
 class Under(BinaryAtomic):
     def __call__(self, arg1, arg2):
@@ -506,6 +576,13 @@ class InAir(UnaryAtomic):
     
     def expected_arg_types(self):
         return [BaseObjectState, float]
+    
+class SameHeight(BinaryAtomic):
+    def __call__(self, arg1, arg2):
+        return abs(arg1.get_geom_state()["pos"][2] - arg2.get_geom_state()["pos"][2]) < 0.01
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState]
 
 class TurnOn(UnaryAtomic):
     def __call__(self, arg):
@@ -521,7 +598,6 @@ class TurnOff(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState]
-
 
 class Above(BinaryAtomic):
     """Check if arg1 is above arg2 in the z-axis, with a small xy threshold."""
@@ -560,6 +636,7 @@ class MidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
+      
     
 class RelaxedMidBetween(MultiarayAtomic):
     """Check if M is between L and R along axis A without contact requirement."""
@@ -665,7 +742,6 @@ class FlexibleOn(BinaryAtomic):
         - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
         - arg2: The object that is supposed to be in the centre below the first object (arg1).
         - (x,y): The thresholds
-
         Returns:
         - True if the object1 is on the centre of object2 within the user-defined margin of error.
         - False otherwise.
@@ -736,3 +812,35 @@ class OrientedAtDegree(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, float, float, float, float, float, float]
+
+
+class PositionWithinObjectAnnulus(UnaryAtomic):
+    """
+    Check if the position of one object is within a bounding annulus relative to another object's position in the x-y plane.
+
+    Usage: PositionWithinObjectAnnulus()(arg1, arg2, min_radius, max_radius)
+    Args:
+        arg1: The object whose position is being checked.
+        arg2: The reference object to define the bounding region.
+        min_radius: The minimum distance from arg2's position.
+        max_radius: The maximum distance from arg2's position.
+    Returns:
+        bool: True if arg1's position is within the specified bounds relative to arg2, False otherwise.
+    """
+    def __call__(self, arg1, arg2, min_radius, max_radius):
+        if min_radius < 0 or max_radius < 0:
+            raise ValueError("min_radius and max_radius must be non-negative")
+        geom1 = arg1.get_geom_state()
+        geom2 = arg2.get_geom_state()
+        pos1 = geom1["pos"]
+        pos2 = geom2["pos"]
+
+        # Check if the position is within the annulus defined by min_radius and max_radius
+        distance = np.linalg.norm(np.array(pos1[:2]) - np.array(pos2[:2]))
+        within_radius = min_radius <= distance <= max_radius
+
+        # print(f"Distance: {distance}, Min Radius: {min_radius}, Max Radius: {max_radius}, Within Radius: {within_radius}")
+        return within_radius
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float]
