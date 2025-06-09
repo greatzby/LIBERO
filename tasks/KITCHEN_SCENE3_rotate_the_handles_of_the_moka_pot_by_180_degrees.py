@@ -15,19 +15,15 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
 
-    scene_name = "kitchen_scene5"
-    language = "Place the bowl on the top of the white cabinet with all drawers closed"
+    scene_name = "kitchen_scene3"
+    language = "Rotate the handles of the moka pot by 180 degrees"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "white_cabinet_1"],
+        objects_of_interest=["moka_pot_1"],
         goal_states=[
-            ("RelaxedOn", "akita_black_bowl_1", "white_cabinet_1"),
-            ("Close", "white_cabinet_1_middle_region"),
-            ("Close", "white_cabinet_1_bottom_region"),
-            ("Close", "white_cabinet_1_top_region"),
-            ("Upright", "akita_black_bowl_1"),
-            ("InContact", "akita_black_bowl_1", "white_cabinet_1")
+            ("OrientedAtDegree", "moka_pot_1", 0, 0, 0, 5, 5, 15), # Ensure upright and rotated by 180 degrees
+            ("PositionWithin", "moka_pot_1", 0, 0, 0.96, 10, 10, 0.2), # No restriction on x, y position
         ]
     )
 
