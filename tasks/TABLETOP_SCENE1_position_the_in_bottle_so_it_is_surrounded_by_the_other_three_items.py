@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "tabletop_scene1"
-    language = "position the wine bottle so it is surrounded by the other three items"
+    language = "Position the wine bottle so it is surrounded and contacted by the other three items. Please make sure that the orientation of the objects are unchanged and that the objects are on the table."
     register_task_info(
         language,
         scene_name=scene_name,
@@ -31,6 +31,10 @@ def main():
             ("Upright", "wine_bottle_1"),
             ("Upright", "akita_black_bowl_1"),
             ("Upright", "plate_1"),
+            ("Not", ("InAir", "wine_bottle_1", 0.898861)), # potential reward hacking: Wine bottle has to be on the table
+            ("Not", ("InAir", "plate_1", 0.9024997)),
+            ("Not", ("InAir", "cream_cheese_1", 0.908907)),
+            ("Not", ("InAir", "akita_black_bowl_1", 0.898403)),
         ]
     )
 
