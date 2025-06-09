@@ -844,3 +844,56 @@ class PositionWithinObjectAnnulus(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, float, float]
+
+class OrientationAligned(BinaryAtomic):
+    """
+    Check if the orientation (roll, pitch, yaw) of two objects are aligned within specified thresholds (in degrees),
+    after applying offsets to the second object's angles.
+
+    Usage: OrientationAligned()(obj1, obj2, roll_thresh, pitch_thresh, yaw_thresh, roll_offset, pitch_offset, yaw_offset)
+    Arguments:
+    - obj1: The first object.
+    - obj2: The second object.
+    - roll_thresh, pitch_thresh, yaw_thresh: Allowed deviation for each angle in degrees.
+    - roll_offset, pitch_offset, yaw_offset: Offsets (in degrees) to apply to obj2's roll, pitch, and yaw before comparison.
+
+    Returns:
+    - True if the absolute difference of each Euler angle (with offset) is within its threshold (using acute angle).
+    """
+    def __call__(self, obj1, obj2, roll_thresh, pitch_thresh, yaw_thresh, roll_offset, pitch_offset, yaw_offset):
+        geom1 = obj1.get_geom_state()
+        geom2 = obj2.get_geom_state()
+        w1, x1, y1, z1 = geom1["quat"]
+        w2, x2, y2, z2 = geom2["quat"]
+        quat1 = np.array([x1, y1, z1, w1])
+        quat2 = np.array([x2, y2, z2, w2])
+        R1 = transform_utils.quat2mat(quat1)
+        R2 = transform_utils.quat2mat(quat2)
+        roll1, pitch1, yaw1 = transform_utils.mat2euler(R1)
+        roll2, pitch2, yaw2 = transform_utils.mat2euler(R2)
+        # Convert to degrees
+        roll1 = np.degrees(roll1)
+        pitch1 = np.degrees(pitch1)
+        yaw1 = np.degrees(yaw1)
+
+        def clamp_angle(angle):
+            """Clamp any angle to the range [-180, 180] degrees."""
+            return ((angle % 360) + 180) % 360 - 180
+
+        roll2 = clamp_angle(np.degrees(roll2) + roll_offset)
+        pitch2 = clamp_angle(np.degrees(pitch2) + pitch_offset)
+        yaw2 = clamp_angle(np.degrees(yaw2) + yaw_offset)
+
+        def acute_diff(a, b):
+            diff = abs(a - b)
+            if diff > 180:
+                diff = 360 - diff
+            return diff
+
+        within_roll = acute_diff(roll1, roll2) <= roll_thresh
+        within_pitch = acute_diff(pitch1, pitch2) <= pitch_thresh
+        within_yaw = acute_diff(yaw1, yaw2) <= yaw_thresh
+        return within_roll and within_pitch and within_yaw
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float, float, float, float, float]
