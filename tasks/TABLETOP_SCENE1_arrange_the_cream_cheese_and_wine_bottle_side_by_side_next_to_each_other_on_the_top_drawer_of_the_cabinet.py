@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "tabletop_scene1"
-    language = "arrange the cream cheese and wine bottle side by side next to each other on the top drawer of the cabinet"
+    language = "arrange the cream cheese and wine bottle side by side next to each other on the top side of the cabinet"
     register_task_info(
         language,
         scene_name=scene_name,
@@ -26,10 +26,10 @@ def main():
             ("InContact", "wine_bottle_1", "wooden_cabinet_1"),
             ("InContact", "cream_cheese_1", "wooden_cabinet_1"),
             ("Upright", "wine_bottle_1"),
-            ("Under", "wooden_cabinet_1_middle_region", "wine_bottle_1"),
-            ("Under", "wooden_cabinet_1_middle_region", "cream_cheese_1"),
-            ("Under", "wine_bottle_1", "wooden_cabinet_1_top_side"),
-            ("Under", "cream_cheese_1", "wooden_cabinet_1_top_side"),
+            ("Under", "wooden_cabinet_1_top_side", "wine_bottle_1"),
+            ("Not", ("Under", "cream_cheese_1", "wooden_cabinet_1_top_side")),
+            ("InAir", "cream_cheese_1", 1.1369258),
+            ("DistanceBetween", "cream_cheese_1", "wine_bottle_1", 0.2, 0.2, 10),
         ]
     )
 
