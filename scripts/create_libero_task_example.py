@@ -77,28 +77,19 @@ class KitchenScene1(InitialSceneTemplates):
 def main():
     # kitchen_scene_1
     scene_name = "kitchen_scene1"
-    language = "Your Language 1"
+    language = "Put the plate in the middle drawer."
+    
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["wooden_cabinet_1", "akita_black_bowl_1"],
-        goal_states=[
-            ("Open", "wooden_cabinet_1_top_region"),
-            ("In", "akita_black_bowl_1", "wooden_cabinet_1_top_region"),
-        ],
+        objects_of_interest=["wooden_cabinet_1", "plate_1"],
+            goal_states = [
+            ("In", "plate_1", "wooden_cabinet_1_middle_region"),
+            ("Close", "wooden_cabinet_1_middle_region"),
+            ("Upright", "plate_1"),
+        ]
     )
 
-    scene_name = "kitchen_scene1"
-    language = "Your Language 2"
-    register_task_info(
-        language,
-        scene_name=scene_name,
-        objects_of_interest=["wooden_cabinet_1", "akita_black_bowl_1"],
-        goal_states=[
-            ("Open", "wooden_cabinet_1_top_region"),
-            ("In", "akita_black_bowl_1", "wooden_cabinet_1_bottom_region"),
-        ],
-    )
     bddl_file_names, failures = generate_bddl_from_task_info()
     print(bddl_file_names)
 
