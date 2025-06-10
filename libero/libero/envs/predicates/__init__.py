@@ -34,6 +34,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "posilessthan": PosiLessThan(),
     "positionwithin": PositionWithin(),
     "positionwithinobject": PositionWithinObject(),
+    "positionwithinobjectannulus": PositionWithinObjectAnnulus(),
     "getposi": GetPosi(),
     "printgeomstate": PrintGeomState(),
     "above": Above(),
@@ -43,6 +44,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "ordering": LROrdering(),
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
+    "orientedatdegree": OrientedAtDegree(),
 }
 
 

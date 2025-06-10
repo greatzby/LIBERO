@@ -46,6 +46,13 @@ class MultiarayAtomic(Expression):
 
 
 class TruePredicateFn(MultiarayAtomic):
+    """A predicate function that always returns True.
+
+    Args:
+        None
+    Returns:
+        bool: Always returns True.
+    """
     def __init__(self):
         super().__init__()
 
@@ -57,6 +64,12 @@ class TruePredicateFn(MultiarayAtomic):
 
 
 class FalsePredicateFn(MultiarayAtomic):
+    """A predicate function that always returns False.
+    Args:
+        None
+    Returns:
+        bool: Always returns False.
+    """
     def __init__(self):
         super().__init__()
 
@@ -70,8 +83,12 @@ class FalsePredicateFn(MultiarayAtomic):
 class Not(UnaryAtomic):
     """
     Logical NOT operation.
-    
     Expects a single boolean input and returns its logical negation.
+    
+    Args:
+        arg: A boolean value to negate.
+    Returns:
+        bool: The negation of the input boolean value.
     """
     def __call__(self, arg):
         return not arg
@@ -83,8 +100,13 @@ class Not(UnaryAtomic):
 class And(BinaryAtomic):
     """
     Logical AND operation.
-    
     Takes two boolean inputs and returns True if both are True.
+    
+    Args:
+        arg1: First boolean value.
+        arg2: Second boolean value.
+    Returns:
+        bool: True if both arg1 and arg2 are True, otherwise False.
     """
     def __call__(self, arg1, arg2):
         return arg1 and arg2
@@ -96,8 +118,13 @@ class And(BinaryAtomic):
 class Or(BinaryAtomic):
     """
     Logical OR operation.
-    
     Takes two boolean inputs and returns True if at least one is True.
+    
+    Args:
+        arg1: First boolean value.
+        arg2: Second boolean value.
+    Returns:
+        bool: True if either arg1 or arg2 is True, otherwise False.
     """
     def __call__(self, arg1, arg2):
         return arg1 or arg2
@@ -109,8 +136,12 @@ class Or(BinaryAtomic):
 class Any(UnaryAtomic):
     """
     Returns True if any element in the input tuple of booleans is True.
-    
     Expects a tuple of booleans.
+    
+    Args:
+        arg: A tuple of boolean values.
+    Returns:
+        bool: True if any element in the tuple is True, otherwise False.
     """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
@@ -124,8 +155,12 @@ class Any(UnaryAtomic):
 class All(UnaryAtomic):
     """
     Returns True only if all elements in the input tuple of booleans are True.
-    
     Expects a tuple of booleans.
+    
+    Args:
+        arg: A tuple of boolean values.
+    Returns:
+        bool: True if all elements in the tuple are True, otherwise False.
     """
     def __call__(self, arg):
         if not isinstance(arg, tuple):
@@ -138,8 +173,14 @@ class All(UnaryAtomic):
 class Equal(BinaryAtomic):
     """
     Checks if two float values are approximately equal within a given threshold.
-    
     Returns True if abs(arg1 - arg2) <= threshold.
+    
+    Args:
+        arg1: First float value.
+        arg2: Second float value.
+        threshold: A float value representing the maximum allowable difference.
+    Returns:
+        bool: True if the absolute difference between arg1 and arg2 is within the threshold, otherwise False.
     """
     def __call__(self, arg1, arg2, threshold):
         return abs(arg1 - arg2) <= threshold
@@ -151,6 +192,12 @@ class Equal(BinaryAtomic):
 class Distance(BinaryAtomic):
     """
     Computes the Euclidean distance between two objects using their position data.
+    
+    Args:
+        arg1: The first object (BaseObjectState) whose position is used.
+        arg2: The second object (BaseObjectState) whose position is used.
+    Returns:
+        float: The Euclidean distance between the positions of arg1 and arg2.
     """
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
@@ -164,6 +211,13 @@ class Distance(BinaryAtomic):
 class GetPosi(UnaryAtomic):
     """
     Retrieves a specific coordinate (x, y, or z) from an object's position.
+    
+    Usage: GetPosi()(object, axis)
+    Args:
+        arg: The object from which to retrieve the position.
+        axis: A string indicating the axis ('x', 'y', or 'z') to retrieve.
+    Returns:
+        float: The position coordinate along the specified axis.
     """
     def __call__(self, arg, axis):
         if axis not in {"x", "y", "z"}:
@@ -178,6 +232,16 @@ class GetPosi(UnaryAtomic):
 
 
 class InContact(BinaryAtomic):
+    """
+    Check if two objects are in contact with each other.
+    
+    Usage: InContact()(object1, object2)
+    Args:
+        arg1: The first object to check for contact.
+        arg2: The second object to check for contact.
+    Returns:
+        bool: True if arg1 and arg2 are in contact, False otherwise.
+    """
     def __call__(self, arg1, arg2):
         return arg1.check_contact(arg2)
 
@@ -186,6 +250,17 @@ class InContact(BinaryAtomic):
 
 
 class In(BinaryAtomic):
+    """
+    Check if arg1 is contained within arg2.
+    This predicate checks if the first object (arg1) is contained within the second object (arg2).
+    
+    Usage: In()(arg1, arg2)
+    Args:
+        arg1: The object to check for containment.
+        arg2: The object that is expected to contain arg1.
+    Returns:
+        bool: True if arg1 is contained within arg2, False otherwise.
+    """
     def __call__(self, arg1, arg2):
         return arg2.check_contact(arg1) and arg2.check_contain(arg1)
 
@@ -196,6 +271,16 @@ class In(BinaryAtomic):
 class On(BinaryAtomic):
     """
     With 3cm center alignement constraint (original)
+    Check if arg1 is on top of arg2.
+    This predicate checks if the first object (arg1) is on top of the second object (arg2),
+    with a center alignment constraint of 3cm.
+    
+    Usage: On()(arg1, arg2)
+    Args:
+        arg1: The object expected to be on top.
+        arg2: The object expected to be underneath.
+    Returns:
+        bool: True if arg1 is on top of arg2, False otherwise.
     """
     def __call__(self, arg1, arg2):
         return arg2.check_ontop(arg1)
@@ -206,6 +291,16 @@ class On(BinaryAtomic):
 class RelaxedOn(BinaryAtomic):
     """
     Without center alignment constraint
+    Check if arg1 is on top of arg2.
+    This predicate checks if the first object (arg1) is on top of the second object (arg2),
+    without any center alignment constraint.
+    
+    Usage: RelaxedOn()(arg1, arg2)
+    Args:
+        arg1: The object expected to be on top.
+        arg2: The object expected to be underneath.
+    Returns:
+        bool: True if arg1 is on top of arg2, False otherwise.
     """
     def __call__(self, arg1, arg2):
         return arg2.check_ontop(arg1, threshold=float('inf'))
@@ -215,20 +310,20 @@ class RelaxedOn(BinaryAtomic):
 
 
 class PositionWithin(UnaryAtomic):
+    """
+    Check if the object's position is within a certain threshold of a specified position.
+    
+    HINT: You may teleoperate and print out the current position and the target position to get a sense of the position
+    
+    Args:
+        arg: The object to check.
+        position: three floats pos_x, pos_y, pos_z coordinates to compare against.
+        threshold: three floats t_x, t_y, t_z thresholds for proximity. Default is (0.01, 0.01, 0.01).
+    
+    Returns:
+        bool: True if the object's position is within the threshold of the specified position, False otherwise.
+    """
     def __call__(self, arg, pos_x, pos_y, pos_z, t_x, t_y, t_z):
-        """
-        Check if the object's position is within a certain threshold of a specified position.
-        
-        HINT: You may teleoperate and print out the current position and the target position to get a sense of the position
-        
-        Args:
-            arg: The object to check.
-            position: three floats pos_x, pos_y, pos_z coordinates to compare against.
-            threshold: three floats t_x, t_y, t_z thresholds for proximity. Default is (0.01, 0.01, 0.01).
-        
-        Returns:
-            bool: True if the object's position is within the threshold of the specified position, False otherwise.
-        """
         geom = arg.get_geom_state()
         pos = geom["pos"]
         # Check if the position is within the specified threshold
@@ -282,6 +377,18 @@ class PositionWithinObject(UnaryAtomic):
         return [BaseObjectState, BaseObjectState, float, float, float, float, float, float]
 
 class Under(BinaryAtomic):
+    """
+    Check if arg1 is under arg2 in the z-axis, with a small xy threshold.
+    This predicate checks if the first object (arg1) is under the second object (arg2),
+    with a center alignment constraint of 2cm in the x and y axes.
+    
+    Usage: Under()(arg1, arg2)
+    Args:
+        arg1: The object expected to be under.
+        arg2: The object expected to be above.
+    Returns:
+        bool: True if arg1 is under arg2, False otherwise.
+    """
     def __call__(self, arg1, arg2):
         return arg1.get_geom_state()["pos"][2] <= arg2.get_geom_state()["pos"][2]
 
@@ -290,6 +397,16 @@ class Under(BinaryAtomic):
 
 
 class Up(UnaryAtomic):
+    """
+    Check if the object is above a certain height threshold.
+    This predicate checks if the z-coordinate of the object's position is greater than or equal to 1.0.
+    
+    Usage: Up()(arg1)
+    Args:
+        arg1: The object to check.
+    Returns:
+        bool: True if the object's z-coordinate is greater than or equal to 1.0, False otherwise.
+    """
     def __call__(self, arg1):
         return arg1.get_geom_state()["pos"][2] >= 1.0
 
@@ -298,6 +415,17 @@ class Up(UnaryAtomic):
 
 
 class UpsideDown(UnaryAtomic):
+    """
+    Check if the object is upside down based on its quaternion orientation.
+    This predicate checks if the z-axis of the object's orientation is pointing downwards,
+    which is determined by the z-component of the quaternion being less than -0.95.
+    
+    Usage: UpsideDown()(arg1)
+    Args:
+        arg1: The object to check.
+    Returns:
+        bool: True if the object is upside down (z-axis pointing downwards), False otherwise.
+    """
     def __call__(self, arg):
         geom = arg.get_geom_state()
         w, x, y, z = geom["quat"]
@@ -311,6 +439,16 @@ class UpsideDown(UnaryAtomic):
 
 
 class Upright(UnaryAtomic):
+    """
+    Check if the object is upright based on its quaternion orientation.
+    This predicate checks if the z-axis of the object's orientation is pointing upwards,
+    which is determined by the z-component of the quaternion being greater than or equal to 0.9.
+    Usage: Upright()(arg1)
+    Args:
+        arg: The object to check.
+    Returns:
+        bool: True if the object is upright (z-axis pointing upwards), False otherwise.
+    """
     def __call__(self, arg):
         geom = arg.get_geom_state()
         w, x, y, z = geom["quat"]
@@ -324,7 +462,17 @@ class Upright(UnaryAtomic):
 
 
 class PosiGreaterThan(UnaryAtomic):
-    """Check if the object's position is greater than a specified value along a specified axis."""
+    """
+    Check if the object's position is greater than a specified value along a specified axis.
+    
+    Usage: PosiGreaterThan()(object, axis, value)
+    Args:
+        arg: The object whose position is being checked.
+        axis: A string indicating the axis ('x', 'y', or 'z') to check.
+        value: A float value to compare against the object's position along the specified axis.
+    Returns:
+        bool: True if the object's position along the specified axis is greater than the given value, False otherwise.
+    """
     def __call__(self, *args):
         arg, axis, value = args
         if axis not in {"x", "y", "z"}:
@@ -338,7 +486,17 @@ class PosiGreaterThan(UnaryAtomic):
         return [BaseObjectState, str, float]
     
 class PosiLessThan(UnaryAtomic):
-    """Check if the object's position is less than a specified value along a specified axis."""
+    """
+    Check if the object's position is less than a specified value along a specified axis.
+    
+    Usage: PosiLessThan()(object, axis, value)
+    Args:
+        arg: The object whose position is being checked.
+        axis: A string indicating the axis ('x', 'y', or 'z') to check.
+        value: A float value to compare against the object's position along the specified axis.
+    Returns:
+        bool: True if the object's position along the specified axis is less than the given value, False otherwise.
+    """
     def __call__(self, *args):
         arg, axis, value = args
         if axis not in {"x", "y", "z"}:
@@ -357,6 +515,16 @@ class AxisAlignedWithin(UnaryAtomic):
     from alignment with the world Z+ axis.
 
     Usage: Upright()(object, axis, min_deg, max_deg)
+    Args:
+        obj: The object whose orientation is being checked.
+        axis: A string indicating the axis ('x', 'y', or 'z') to check.
+        min_deg: Minimum angle in degrees for the axis to be considered aligned.
+        max_deg: Maximum angle in degrees for the axis to be considered aligned.
+    Returns:
+        bool: True if the object's specified axis is within the degree range from alignment with Z+,
+        False otherwise.
+    Raises:
+        ValueError: If the axis is not one of 'x', 'y', or 'z', or if the degree range is invalid.
     """
 
     def __call__(self, *args):
@@ -396,12 +564,12 @@ class AxisAlignedWithin(UnaryAtomic):
 class PrintGeomState(UnaryAtomic):
     """
     Print the geometry state of an object at specified intervals.
+    
     Usage: PrintGeomState()(object, interval)
-    Arguments:
-    - object: The object whose geometry state will be printed.
-    - interval: The number of calls after which the geometry state will be printed.
+    Args:
+        object: The object whose geometry state will be printed.
     Returns:
-    - True: Always returns True, as this is a side-effect action.
+        True: Always returns True, as this is a side-effect action.
     """
     def __init__(self):
         super().__init__()
@@ -421,18 +589,6 @@ class PrintGeomState(UnaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, int]
 
-# class Stack(BinaryAtomic):
-#     def __call__(self, arg1, arg2):
-#         return (
-#             arg1.check_contact(arg2)
-#             and arg2.check_contain(arg1)
-#             and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
-#         )
-
-#     def expected_arg_types(self):
-#         return [BaseObjectState, BaseObjectState]
-
-
 class StackBowl(BinaryAtomic):
     """
     Check if two objects are stacked on top of each other, ensuring that they are 
@@ -440,16 +596,16 @@ class StackBowl(BinaryAtomic):
 
     Usage: StackBowl()(object1, object2)
     Arguments:
-    - object1: The first object that needs to be checked for stacking.
-    - object2: The second object that needs to be checked for stacking.
-    - NOTICE: this does NOT check which object is above.
+        object1: The first object that needs to be checked for stacking.
+        object2: The second object that needs to be checked for stacking.
+    NOTICE: this does NOT check which object is above.
 
     Returns:
-    - True if the following conditions are met:
-        1. The objects are in contact with each other (checked by `check_contact`).
-        2. The objects are horizontally aligned within a threshold (xy_threshold).
-        3. The objects are vertically stacked within a defined gap range (z_min_gap to z_max_gap).
-    - False otherwise.
+        True if the following conditions are met:
+            1. The objects are in contact with each other (checked by `check_contact`).
+            2. The objects are horizontally aligned within a threshold (xy_threshold).
+            3. The objects are vertically stacked within a defined gap range (z_min_gap to z_max_gap).
+        False otherwise.
     """
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
@@ -479,6 +635,15 @@ class StackBowl(BinaryAtomic):
 
 
 class PrintJointState(UnaryAtomic):
+    """
+    Print the joint state of an object.
+    
+    Usage: PrintJointState()(object)
+    Arguments:
+        object: The object whose joint state will be printed.
+    Returns:
+        True: Always returns True, as this is a side-effect action.
+    """
     def __call__(self, arg):
         print(arg.get_joint_state())
         return True
@@ -488,6 +653,16 @@ class PrintJointState(UnaryAtomic):
 
 
 class Open(UnaryAtomic):
+    """
+    Check if the object is open.
+    This predicate checks if the object is in an open state, which is typically defined by its joint positions.
+    
+    Usage: Open()(object)
+    Args:
+        arg: The object to check for an open state.
+    Returns:
+        bool: True if the object is open, False otherwise.
+    """
     def __call__(self, arg):
         return arg.is_open()
 
@@ -496,6 +671,16 @@ class Open(UnaryAtomic):
 
 
 class Close(UnaryAtomic):
+    """
+    Check if the object is closed.
+    This predicate checks if the object is in a closed state, which is typically defined by its joint positions.
+    
+    Usage: Close()(object)
+    Args:
+        arg: The object to check for a closed state.
+    Returns:
+        bool: True if the object is closed, False otherwise.
+    """
     def __call__(self, arg):
         return arg.is_close()
 
@@ -508,12 +693,12 @@ class OpenRatio(UnaryAtomic):
 
     Usage: OpenRatio()(object, exp_ratio)
     Arguments:
-    - object: The drawer object which has an open_ratio() method.
-    - exp_ratio: The expected open ratio (a float between 0 to 1) to compare against.
+        object: The drawer object which has an open_ratio() method.
+        exp_ratio: The expected open ratio (a float between 0 to 1) to compare against.
 
     Returns:
-    - True if the drawer's open ratio is within a tolerance of the expected ratio.
-    - False otherwise.
+        True if the drawer's open ratio is within a tolerance of the expected ratio.
+        False otherwise.
     """    
     def __call__(self, arg, exp_ratio):
         tol = 0.2
@@ -533,16 +718,16 @@ class StairCase(UnaryAtomic):
 
     Usage: StairCase()(object1, object2, object3)
     Arguments:
-    - object1: The first drawer object.
-    - object2: The second drawer object.
-    - object3: The third drawer object.
+        object1: The first drawer object.
+        object2: The second drawer object.
+        object3: The third drawer object.
 
     Returns:
-    - True if the open ratios follow an increasing pattern where:
-        1. The first drawer's open ratio is greater than 0.1.
-        2. The second drawer is more open than the first.
-        3. The third drawer is more open than the second.
-    - False otherwise.
+        True if the open ratios follow an increasing pattern where:
+            1. The first drawer's open ratio is greater than 0.1.
+            2. The second drawer is more open than the first.
+            3. The third drawer is more open than the second.
+        False otherwise.
     """
     def __call__(self, arg1, arg2, arg3):
         open_range = 0.1
@@ -560,12 +745,12 @@ class InAir(UnaryAtomic):
 
     Usage: InAir()(object, height_threshold)
     Arguments:
-    - object: The object to be checked for its height (must have a `get_geom_state()` method that returns its position).
-    - height_threshold: The height (float) above which the object is considered to be "in the air".
+        object: The object to be checked for its height (must have a `get_geom_state()` method that returns its position).
+        height_threshold: The height (float) above which the object is considered to be "in the air".
 
     Returns:
-    - True if the object's height is greater than the specified height threshold.
-    - False otherwise.
+        True if the object's height is greater than the specified height threshold.
+        False otherwise.
     """
     def __call__(self, arg1, height_threshold):
         height = arg1.get_geom_state()["pos"][2]
@@ -578,6 +763,17 @@ class InAir(UnaryAtomic):
         return [BaseObjectState, float]
     
 class SameHeight(BinaryAtomic):
+    """
+    Check if two objects are at the same height within a small threshold.
+    This predicate checks if the z-coordinates of the two objects' positions are within a small threshold (0.01).
+    
+    Usage: SameHeight()(object1, object2)
+    Args:
+        arg1: The first object to check.
+        arg2: The second object to check.
+    Returns:
+        bool: True if the z-coordinates of arg1 and arg2 are within 0.01 of each other, False otherwise.
+    """
     def __call__(self, arg1, arg2):
         return abs(arg1.get_geom_state()["pos"][2] - arg2.get_geom_state()["pos"][2]) < 0.01
 
@@ -585,6 +781,15 @@ class SameHeight(BinaryAtomic):
         return [BaseObjectState, BaseObjectState]
 
 class TurnOn(UnaryAtomic):
+    """
+    Turn on an object, typically a light or a device.
+    
+    Usage: TurnOn()(object)
+    Args:
+        arg: The object to be turned on.
+    Returns:
+        The result of the turn_on method of the object.
+    """
     def __call__(self, arg):
         return arg.turn_on()
 
@@ -593,6 +798,15 @@ class TurnOn(UnaryAtomic):
 
 
 class TurnOff(UnaryAtomic):
+    """
+    Turn off an object, typically a light or a device.
+    
+    Usage: TurnOff()(object)
+    Args:
+        arg: The object to be turned off.
+    Returns:
+        The result of the turn_off method of the object.
+    """
     def __call__(self, arg):
         return arg.turn_off()
 
@@ -600,7 +814,17 @@ class TurnOff(UnaryAtomic):
         return [BaseObjectState]
 
 class Above(BinaryAtomic):
-    """Check if arg1 is above arg2 in the z-axis, with a small xy threshold."""
+    """
+    This predicate checks if the first object (arg1) is above the second object (arg2),
+    with a center alignment constraint of 2cm in the x and y axes.
+    
+    Usage: Above()(arg1, arg2)
+    Args:
+        arg1: The object expected to be above.
+        arg2: The object expected to be below.
+    Returns:
+        bool: True if arg1 is above arg2, False otherwise.
+    """
 
     def __call__(self, arg1, arg2):
         pos1 = arg1.get_geom_state()["pos"]
@@ -616,7 +840,20 @@ class Above(BinaryAtomic):
         return [BaseObjectState, BaseObjectState]
 
 class MidBetween(MultiarayAtomic):
-    """Check if M is between L and R along axis A and in contact with both."""
+    """
+    This predicate checks if the middle object (M) is positioned between the left object (L) and the right object (R)
+    along a specified axis (A), and that both L and R are in contact with M.
+    
+    Usage: MidBetween()(L, M, R, A)
+    Args:
+        L: The left object (BaseObjectState).
+        M: The middle object (BaseObjectState).
+        R: The right object (BaseObjectState).
+        A: A string indicating the axis ('x', 'y', or 'z') to check.
+    Returns:
+        bool: True if M is between L and R along axis A, and both L and R are in contact with M.
+        False otherwise.
+    """
 
     def __call__(self, L, M, R, A):
         assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
@@ -639,7 +876,18 @@ class MidBetween(MultiarayAtomic):
       
     
 class RelaxedMidBetween(MultiarayAtomic):
-    """Check if M is between L and R along axis A without contact requirement."""
+    """
+    Check if M is between L and R along axis A without contact requirement.
+    
+    Usage: RelaxedMidBetween()(L, M, R, A)
+    Args:
+        L: The left object (BaseObjectState).
+        M: The middle object (BaseObjectState).
+        R: The right object (BaseObjectState).
+        A: A string indicating the axis ('x', 'y', or 'z') to check.
+    Returns:
+        bool: True if M is between L and R along axis A, False otherwise.
+    """
 
     def __call__(self, L, M, R, A):
         assert A in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
@@ -661,6 +909,19 @@ class RelaxedMidBetween(MultiarayAtomic):
 
     
 class Linear(MultiarayAtomic):
+    """
+    Check if three objects L, M, and R are collinear in the x-y plane.
+    This predicate checks if the area of the triangle formed by the positions of L, M, and R is less than a specified tolerance.
+    
+    Usage: Linear()(L, M, R, tolerance)
+    Args:
+        L: The left object (BaseObjectState).
+        M: The middle object (BaseObjectState).
+        R: The right object (BaseObjectState).
+        tolerance: A float value representing the tolerance for collinearity.
+    Returns:
+        bool: True if L, M, and R are collinear within the specified tolerance, False otherwise.
+    """
     def __call__(self, L, M, R, tolerance):
         x1, y1, z1 = L.get_geom_state()["pos"]
         x2, y2, z2 = M.get_geom_state()["pos"]
@@ -677,7 +938,15 @@ class Linear(MultiarayAtomic):
         return [BaseObjectState, BaseObjectState, BaseObjectState, float]
     
 class LROrdering(MultiarayAtomic):
-    ''' Ordering from left to right along the y-axis.'''
+    """
+    This predicate checks if a sequence of objects is ordered from left to right based on their y-coordinates.
+    
+    Usage: LROrdering()(object1, object2, ..., objectN)
+    Args:
+        *args: A variable number of BaseObjectState objects to be checked for left-to-right ordering.
+    Returns:
+        bool: True if the objects are ordered from left to right based on their y-coordinates, False otherwise.
+    """
     
     def __call__(self, *args):
         assert len(args) >= 2, "At least two objects are required for ordering"
@@ -693,20 +962,19 @@ class LROrdering(MultiarayAtomic):
 
 
 class DistanceBetween(BinaryAtomic):
-    '''
-        Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
+    """
+    Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
 
-        Usage: DistanceBetween()(object1, object2, x, y, z)
-        Arguments:
-        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
-        - arg2: The object that is supposed to be in the centre below the first object (arg1).
-        - (x,y,z): The thresholds
-        
-        Returns:
-        - True if the objects are close to each other within the user-defined margin of error.
-        - False otherwise.
-            
-    '''
+    Usage: DistanceBetween()(object1, object2, x, y, z)
+    Arguments:
+        arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        arg2: The object that is supposed to be in the centre below the first object (arg1).
+        (x,y,z): The thresholds
+    
+    Returns:
+        True if the objects are close to each other within the user-defined margin of error.
+        False otherwise.
+    """
     def check_centre(self, arg2, arg1, x, y, z):
         this_object = arg2.env.get_object(arg2.object_name)
         this_object_position = arg2.env.sim.data.body_xpos[
@@ -734,19 +1002,18 @@ class DistanceBetween(BinaryAtomic):
         return [BaseObjectState, BaseObjectState, float, float, float]
     
 class FlexibleOn(BinaryAtomic):
-    '''
-        Check whether an object is on the centre of another object with a flexible margin of error for x,y separately.
+    """
+    Check whether an object is on the centre of another object with a flexible margin of error for x,y separately.
 
-        Usage: FlexibleOn()(object1, object2, x, y)
-        Arguments:
-        - arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
-        - arg2: The object that is supposed to be in the centre below the first object (arg1).
-        - (x,y): The thresholds
-        Returns:
-        - True if the object1 is on the centre of object2 within the user-defined margin of error.
-        - False otherwise.
-            
-    '''
+    Usage: FlexibleOn()(object1, object2, x, y)
+    Arguments:
+        arg1: The object that is supposed to be in the centre ontop of the second object (arg2).
+        arg2: The object that is supposed to be in the centre below the first object (arg1).
+        (x,y): The thresholds
+    Returns:
+        True if the object1 is on the centre of object2 within the user-defined margin of error.
+        False otherwise.
+    """
     def check_centre(self, arg2, arg1, x, y):
         this_object = arg2.env.get_object(arg2.object_name)
         this_object_position = arg2.env.sim.data.body_xpos[
@@ -775,3 +1042,83 @@ class FlexibleOn(BinaryAtomic):
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, float, float]
 
+class OrientedAtDegree(UnaryAtomic):
+    """
+    Check if the object's orientation (roll, pitch, yaw) is within the specified degree thresholds.
+
+    Usage: OrientedAtDegree()(object, roll, pitch, yaw, roll_thresh, pitch_thresh, yaw_thresh)
+    Arguments:
+    - object: The object to check.
+    - roll, pitch, yaw: Target euler angles in degrees.
+    - roll_thresh, pitch_thresh, yaw_thresh: Allowed deviation for each angle in degrees.
+
+    Returns:
+    - True if all angles are within their respective thresholds.
+    """
+    def __call__(self, arg, roll, pitch, yaw, roll_thresh, pitch_thresh, yaw_thresh):
+        geom = arg.get_geom_state()
+        w, x, y, z = geom["quat"]
+        quat = np.array([x, y, z, w])
+        R = transform_utils.quat2mat(quat)
+        roll_curr, pitch_curr, yaw_curr = transform_utils.mat2euler(R)
+        # Convert to degrees
+        roll_curr = np.degrees(roll_curr)
+        pitch_curr = np.degrees(pitch_curr)
+        yaw_curr = np.degrees(yaw_curr)
+        
+        def acute_diff(a, b):
+            diff = abs(a - b)
+            if diff > 180:
+                diff = 360 - diff
+            return diff
+
+        within_roll = acute_diff(roll_curr, roll) <= roll_thresh
+        within_pitch = acute_diff(pitch_curr, pitch) <= pitch_thresh
+        within_yaw = acute_diff(yaw_curr, yaw) <= yaw_thresh
+        return within_roll and within_pitch and within_yaw
+
+    def expected_arg_types(self):
+        return [BaseObjectState, float, float, float, float, float, float]
+
+
+class PositionWithinObjectAnnulus(UnaryAtomic):
+    """
+    Check if the position of one object is within a bounding annulus relative to another object's position in the x-y plane.
+
+    Usage: PositionWithinObjectAnnulus()(arg1, arg2, min_radius, max_radius)
+    Args:
+        arg1: The object whose position is being checked.
+        arg2: The reference object to define the bounding region.
+        min_radius: The minimum distance from arg2's position.
+        max_radius: The maximum distance from arg2's position.
+    Returns:
+        bool: True if arg1's position is within the specified bounds relative to arg2, False otherwise.
+    """
+    def __call__(self, arg1, arg2, min_radius, max_radius):
+        if min_radius < 0 or max_radius < 0:
+            raise ValueError("min_radius and max_radius must be non-negative")
+        geom1 = arg1.get_geom_state()
+        geom2 = arg2.get_geom_state()
+        pos1 = geom1["pos"]
+        pos2 = geom2["pos"]
+
+        # Check if the position is within the annulus defined by min_radius and max_radius
+        distance = np.linalg.norm(np.array(pos1[:2]) - np.array(pos2[:2]))
+        within_radius = min_radius <= distance <= max_radius
+
+        # print(f"Distance: {distance}, Min Radius: {min_radius}, Max Radius: {max_radius}, Within Radius: {within_radius}")
+        return within_radius
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, float, float]
+    
+# class Stack(BinaryAtomic):
+#     def __call__(self, arg1, arg2):
+#         return (
+#             arg1.check_contact(arg2)
+#             and arg2.check_contain(arg1)
+#             and arg1.get_geom_state()["pos"][2] > arg2.get_geom_state()["pos"][2]
+#         )
+
+#     def expected_arg_types(self):
+#         return [BaseObjectState, BaseObjectState]

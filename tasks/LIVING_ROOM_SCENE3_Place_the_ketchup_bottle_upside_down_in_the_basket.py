@@ -1,4 +1,3 @@
-"""This is a standalone file for create a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
@@ -14,21 +13,16 @@ from libero.libero.utils.task_generation_utils import (
 from libero.libero.benchmark.mu_creation import *
 
 def main():
-
-    scene_name = "kitchen_scene5"
-    language = "Place the bowl on the top of the white cabinet with all drawers closed"
+    scene_name = "living_room_scene3"
+    language = "Place the ketchup bottle upside down in the wooden tray"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "white_cabinet_1"],
+        objects_of_interest=["ketchup_1","wooden_tray_1"],
         goal_states=[
-            ("RelaxedOn", "akita_black_bowl_1", "white_cabinet_1"),
-            ("Close", "white_cabinet_1_middle_region"),
-            ("Close", "white_cabinet_1_bottom_region"),
-            ("Close", "white_cabinet_1_top_region"),
-            ("Upright", "akita_black_bowl_1"),
-            ("InContact", "akita_black_bowl_1", "white_cabinet_1")
-        ]
+            ("In", "ketchup_1", "wooden_tray_1_contain_region"),
+            ("AxisAlignedWithin", "ketchup_1", "y", 175, 180),
+        ],
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()
