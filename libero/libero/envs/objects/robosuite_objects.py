@@ -130,6 +130,7 @@ class PlateWithHole(RobosuiteObject):
     def __init__(self,
                  name="plate_with_hole",
                  obj_name="plate_with_hole",
+                 joints=None
                  ):
         super().__init__(
             custom_path=os.path.join(
