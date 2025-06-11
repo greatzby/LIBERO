@@ -69,7 +69,8 @@ def get_table_name_for_scene_type(scene_type):
         "kitchen": "kitchen_table",
         "living_room": "living_room_table", 
         "study": "study_table",
-        "tabletop_manipulation": "main_table"
+        "tabletop_manipulation": "main_table",
+        "coffee": "coffee_table",
     }
     return table_mapping.get(scene_type, "table")
 
@@ -140,6 +141,15 @@ def create_scene_class(scene_data, scene_type):
             )
 
         def define_regions(self):
+            self.regions.update(
+                self.get_region_dict(
+                        region_centroid_xy=[0.0, 0.0],
+                        region_name="table_region",
+                        target_name=self.workspace_name,
+                        region_half_len=100,
+                        yaw_rotation=(0.0, 0.0),
+                )
+            )
             for region in regions:
                 yaw_rotation = convert_yaw_rotation_to_numpy(region["yaw_rotation"])
                 
@@ -190,7 +200,7 @@ def load_and_register_scenes():
     print(f"Loading {len(scene_files)} scene files from {scenes_dir}")
     
     # Define all scene types
-    scene_types = ["kitchen", "living_room", "study", "tabletop_manipulation"]
+    scene_types = ["kitchen", "living_room", "study", "tabletop_manipulation", "coffee"]
     
     # Create and register scene classes for all combinations
     for scene_file in scene_files:
