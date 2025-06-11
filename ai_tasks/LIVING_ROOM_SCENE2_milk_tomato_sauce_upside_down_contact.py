@@ -16,14 +16,17 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Position the tomato sauce on the table between the butter and cream cheese and stay in contact with both"
+    language = "Turn the milk and tomato sauce upside down while keeping them next to each other and on the table"
     
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["tomato_sauce_1", "butter_1", "cream_cheese_1"],
+        objects_of_interest=["milk_1", "tomato_sauce_1"],
         goal_states=[
-            ("MidBetween", "butter_1", "tomato_sauce_1", "cream_cheese_1", "y"),
+            ("UpsideDown", "milk_1"),
+            ("UpsideDown", "tomato_sauce_1"),
+            ("InContact", "milk_1", "tomato_sauce_1"),
+            # TODO: ON TABLE is not implemented yet, so we use InContact with the table
         ]
     )
 

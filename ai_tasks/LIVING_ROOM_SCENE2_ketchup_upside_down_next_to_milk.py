@@ -25,6 +25,7 @@ def main():
         goal_states=[
             ("UpsideDown", "ketchup_1"),
             ("InContact", "ketchup_1", "milk_1"),
+            ("Upright", "milk_1"),
         ]
     )
 

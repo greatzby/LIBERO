@@ -16,15 +16,16 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Stack the cream cheese on top of the alphabet soup with the cream cheese standing upright"
+    language = "Place the orange juice tilted at an angle next to the basket"
     
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["cream_cheese_1", "alphabet_soup_1"],
+        objects_of_interest=["orange_juice_1", "basket_1"],
         goal_states=[
-            ("On", "cream_cheese_1", "alphabet_soup_1"),
-            ("Upright", "cream_cheese_1"),
+            ("InContact", "orange_juice_1", "basket_1"),
+            ("AxisAlignedWithin", "orange_juice_1", "z", 30, 60),
+            # TODO: ON THE FLOOR
         ]
     )
 

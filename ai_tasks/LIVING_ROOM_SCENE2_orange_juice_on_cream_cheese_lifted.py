@@ -25,6 +25,9 @@ def main():
         goal_states=[
             ("On", "orange_juice_1", "cream_cheese_1"),
             ("InAir", "cream_cheese_1", 0.85),
+            ("InAir", "orange_juice_1", 0.85),  # Ensure both items are lifted
+            ("Upright", "orange_juice_1"),  # Ensure orange juice is upright
+            ("Upright", "cream_cheese_1"),  # Ensure cream cheese is upright
         ]
     )
 
