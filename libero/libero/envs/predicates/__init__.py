@@ -23,6 +23,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "openratio": OpenRatio(),
     "staircase": StairCase(),
     "inair": InAir(),
+    "sameheight": SameHeight(),
     "turnon": TurnOn(),
     "turnoff": TurnOff(),
     "upsidedown": UpsideDown(),
@@ -32,6 +33,8 @@ VALIDATE_PREDICATE_FN_DICT = {
     "posigreaterthan": PosiGreaterThan(),
     "posilessthan": PosiLessThan(),
     "positionwithin": PositionWithin(),
+    "positionwithinobject": PositionWithinObject(),
+    "positionwithinobjectannulus": PositionWithinObjectAnnulus(),
     "getposi": GetPosi(),
     "printgeomstate": PrintGeomState(),
     "above": Above(),
@@ -41,6 +44,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "ordering": LROrdering(),
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
+    "orientedatdegree": OrientedAtDegree(),
 }
 
 

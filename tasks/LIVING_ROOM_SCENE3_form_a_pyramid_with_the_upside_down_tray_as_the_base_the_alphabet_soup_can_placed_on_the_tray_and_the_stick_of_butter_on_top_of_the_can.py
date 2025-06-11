@@ -15,23 +15,22 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
 
-    scene_name = "kitchen_scene1"
-    language = "Place the bowl into the top drawer located in the drawer's bottom right corner"
-    # x-y center of cabinet is 0, -0.3 (from the init_state of the scene)
-    # known from teleoperation and printing out the current position
-    # then calculate the target position
-    bottom_right_corner = [-0.05, -0.25, 1.06]
+    scene_name = "living_room_scene3"
+    language = "Form a pyramid with the upside-down tray as the base, the alphabet soup can placed on the tray, and the stick of butter on top of the can"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1"],
+        objects_of_interest=["alphabet_soup_1", "butter_1", "wooden_tray_1"],
         goal_states=[
-            ("PositionWithin", "akita_black_bowl_1", bottom_right_corner[0], bottom_right_corner[1], bottom_right_corner[2], 0.015, 0.05, 0.01),
+            ("UpsideDown", "wooden_tray_1"),
+            ("RelaxedOn", "alphabet_soup_1", "wooden_tray_1"),
+            ("RelaxedOn", "butter_1", "alphabet_soup_1"),
         ]
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()
     print(bddl_file_names)
+
 
 if __name__ == "__main__":
     main()

@@ -336,6 +336,14 @@ if __name__ == "__main__":
         + language_instruction.replace(" ", "_").strip('""'),
     )
 
+    # handle the case when the directory name is too long
+    if len(new_dir) > 200:
+        new_dir = os.path.join(
+            args.directory,
+            f"{domain_name}_ln_{problem_name}_{t1}_{t2}_"
+            + language_instruction.replace(" ", "_").strip('""')[:200 - len(t1) - len(t2) - 20],
+        )
+
     os.makedirs(new_dir)
 
     # collect demonstrations

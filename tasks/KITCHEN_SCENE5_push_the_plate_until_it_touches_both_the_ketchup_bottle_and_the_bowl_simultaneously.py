@@ -1,4 +1,4 @@
-"""This is a standalone file for create a task in libero."""
+"""This is a standalone file for creating a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
@@ -15,20 +15,20 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
 
+    # Write your reward code here
     scene_name = "kitchen_scene5"
-    language = "Place the bowl on the top of the white cabinet with all drawers closed"
+    language = "Push the plate until it touches both the ketchup bottle and the bowl simultaneously"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "white_cabinet_1"],
+        objects_of_interest=["ketchup_1", "plate_1", "akita_black_bowl_1"],
         goal_states=[
-            ("RelaxedOn", "akita_black_bowl_1", "white_cabinet_1"),
-            ("Close", "white_cabinet_1_middle_region"),
-            ("Close", "white_cabinet_1_bottom_region"),
-            ("Close", "white_cabinet_1_top_region"),
-            ("Upright", "akita_black_bowl_1"),
-            ("InContact", "akita_black_bowl_1", "white_cabinet_1")
-        ]
+            ("InContact", "plate_1", "ketchup_1"),
+            ("InContact", "plate_1", "akita_black_bowl_1"),
+            ("PositionWithin", "plate_1", 0, 0, 0.9, 1, 1, 0.01),
+            ("PositionWithin", "akita_black_bowl_1", 0.02, -0.05, 0.89, 0.1, 0.1, 0.01),
+            ("PositionWithin", "ketchup_1", -0.09, -0.09, 0.97, 0.1, 0.1, 0.01),
+        ],
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()

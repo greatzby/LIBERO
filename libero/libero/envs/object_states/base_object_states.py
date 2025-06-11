@@ -144,7 +144,6 @@ class ObjectState(BaseObjectState):
         if self.has_turnon_affordance:
             self.turn_on()
 
-
 class SiteObjectState(BaseObjectState):
     """
     This is to make site based objects to have the same API as normal Object State.
