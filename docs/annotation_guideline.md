@@ -215,3 +215,24 @@ Given a task: ``[living_room_scene_1] turn the basket upside down over the alpha
   Here is a visual representation of the coordinate system:
     ![](images/world_coordinate.jpg)
 - **Positioning**: sometimes you might find it hard to know the exact target position. For example you want to check whether an object is put on the corner of the table but you cannot know the exact position of the corner. In this case, you can print out the current position and target position (there is one in function `PositionWithin` in `base_predicates.py`). However, it is strongly advised to try to calculate the position by yourself through initial state (defined in the scene class, you can know it in the function `define_regions` most of the time) and the size of the object (defined in the xml file of the object) and double-check the position by printing it out.
+
+### Debugging
+We provide a debug printing function in `libero/libero/envs/debug.py`. You can use it to print out the current state of the environment, which can be helpful for debugging your task. If you want to use it, simply set the environment variable `LIBERO_DEBUG` to `true` before running your script. For example:
+
+```bash
+export LIBERO_DEBUG=true
+python scripts/auto_run.py <path-to-your-task-file.py>
+```
+in windows, you can use the following command:
+
+```bash
+set LIBERO_DEBUG=true
+python scripts/auto_run.py <path-to-your-task-file.py>
+```
+
+### Long Path Issue
+If you encounter a "long path" issue on Windows, you can try the following steps:
+1. Open the Registry Editor by typing `regedit` in the Windows search bar.
+2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`.
+3. Find the `LongPathsEnabled` key and set its value to `1`.
+4. Restart your computer for the changes to take effect.

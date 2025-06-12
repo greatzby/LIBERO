@@ -1,4 +1,4 @@
-"""This is a standalone file for creating a task in libero."""
+"""This is a standalone file for create a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
@@ -15,16 +15,15 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
 
-    # Write your reward code here
-    scene_name = "kitchen_scene4"
-    language = "Lay the wine bottle on the top tier of the rack, aligned with the tilt of the surface for a balanced and elegant placement"
+    scene_name = "kitchen_scene1"
+    language = "Place the Akita-style black bowl inside the middle drawer and then close the drawer"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["wine_bottle_1", "wine_rack_1"],
+        objects_of_interest=["akita_black_bowl_1", "wooden_cabinet_1"],
         goal_states=[
-            ("On", "wine_bottle_1", "wine_rack_1_top_region"),
-            ("AxisAlignedWithin", "wine_bottle_1", "z", 50, 60)
+            ("In", "akita_black_bowl_1", "wooden_cabinet_1_middle_region"),
+            ("Close", "wooden_cabinet_1_middle_region")
         ],
     )
 

@@ -6,6 +6,10 @@ from libero.libero.utils.object_utils import get_affordance_regions
 
 from libero.libero.utils.mu_utils import register_mu, InitialSceneTemplates
 
+KITCHEN_TABLE_HEIGHT = 0.875
+LIVING_ROOM_TABLE_HEIGHT = 0.41
+STUDY_TABLE_HEIGHT = 0.67
+TABLE_HEIGHT = 0.895
 
 @register_mu(scene_type="kitchen")
 class KitchenScene1(InitialSceneTemplates):
@@ -720,6 +724,73 @@ class KitchenScene10(InitialSceneTemplates):
             ),
             ("On", "wooden_cabinet_1", "kitchen_table_wooden_cabinet_init_region"),
             ("Open", "wooden_cabinet_1_top_region"),
+        ]
+        return states
+
+@register_mu(scene_type="kitchen")
+class KitchenScene11(InitialSceneTemplates):
+    def __init__(self):
+
+        fixture_num_info = {
+            "kitchen_table": 1,
+            "wooden_cabinet": 1,
+        }
+
+        object_num_info = {
+            "white_bowl": 3,
+            "plate": 1,
+        }
+
+        super().__init__(
+            workspace_name="kitchen_table",
+            fixture_num_info=fixture_num_info,
+            object_num_info=object_num_info,
+        )
+
+    def define_regions(self):
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.0, -0.30],
+                region_name="wooden_cabinet_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+                yaw_rotation=(np.pi, np.pi),
+            )
+        )
+
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.0, 0.0],
+                region_name="plate_init_region",
+                target_name=self.workspace_name,
+                region_half_len=0.025,
+            )
+        )
+        self.xy_region_kwargs_list = get_xy_region_kwargs_list_from_regions_info(
+            self.regions
+        )
+
+    @property
+    def init_states(self):
+        states = [
+            ("On", "plate_1", "kitchen_table_plate_init_region"),
+            ("On", "wooden_cabinet_1", "kitchen_table_wooden_cabinet_init_region"),
+            (
+                "In",
+                "white_bowl_1",
+                "wooden_cabinet_1_top_region",
+            ),
+            (
+                "In",
+                "white_bowl_2",
+                "wooden_cabinet_1_middle_region",
+            ),
+            (
+                "In",
+                "white_bowl_3",
+                "wooden_cabinet_1_bottom_region",
+            ),
         ]
         return states
 
@@ -1571,5 +1642,198 @@ class StudyScene4(InitialSceneTemplates):
             ("On", "yellow_book_1", "study_table_yellow_book_right_init_region"),
             ("On", "yellow_book_2", "study_table_yellow_book_left_init_region"),
             ("On", "black_book_1", "study_table_black_book_init_region"),
+        ]
+        return states
+
+@register_mu(scene_type="tabletop_manipulation")
+class TabletopScene1(InitialSceneTemplates):
+    def __init__(self):
+
+        fixture_num_info = {
+            "table": 1,
+            "wooden_cabinet": 1,
+            "flat_stove": 1,
+            "wine_rack": 1,
+        }
+
+        object_num_info = {
+            "akita_black_bowl": 1,
+            "cream_cheese": 1,
+            "wine_bottle": 1,
+            "plate": 1,
+        }
+
+        super().__init__(
+            workspace_name="main_table",
+            fixture_num_info=fixture_num_info,
+            object_num_info=object_num_info,
+        )
+
+    def define_regions(self):
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.05, -0.02],
+                region_name="plate_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.09, 0],
+                region_name="akita_black_bowl_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.2, -0.05],
+                region_name="wine_bottle_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.05, 0.13],
+                region_name="cream_cheese_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.05, 0.21],
+                region_name="stove_front_region",
+                target_name=self.workspace_name,
+                region_half_len=0.04,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.03, -0.24],
+                region_name="cabinet_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+                yaw_rotation=(np.pi, np.pi)
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.41, 0.21],
+                region_name="stove_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.26, -0.26],
+                region_name="wine_rack_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+                yaw_rotation=(np.pi, np.pi)
+            )
+        )
+        self.xy_region_kwargs_list = get_xy_region_kwargs_list_from_regions_info(
+            self.regions
+        )
+
+    @property
+    def init_states(self):
+        states = [
+            ("On", "wine_bottle_1", "main_table_wine_bottle_region"),
+            ("On", "akita_black_bowl_1", "main_table_akita_black_bowl_region"),
+            ("On", "plate_1", "main_table_plate_region"),
+            ("On", "cream_cheese_1", "main_table_cream_cheese_region"),
+            ("On", "wooden_cabinet_1", "main_table_cabinet_region"),
+            ("On", "flat_stove_1", "main_table_stove_region"),
+            ("On", "wine_rack_1", "main_table_wine_rack_region"),
+        ]
+        return states
+
+
+@register_mu(scene_type="floor_manipulation")
+class FloorScene1(InitialSceneTemplates):
+    def __init__(self):
+
+        fixture_num_info = {
+            "floor": 1,
+        }
+
+        object_num_info = {
+            "bread": 1,
+            "lemon": 1,
+            "cereal": 1,
+            "soda": 1,
+            "plate_with_hole": 1,
+        }
+
+        super().__init__(
+            workspace_name="floor",
+            fixture_num_info=fixture_num_info,
+            object_num_info=object_num_info,
+        )
+
+    def define_regions(self):
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.05, -0.07],
+                region_name="bread_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0.05, -0.05],
+                region_name="lemon_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.14, -0.18],
+                region_name="cereal_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[-0.01, -0.16],
+                region_name="soda_region",
+                target_name=self.workspace_name,
+                region_half_len=0.01,
+            )
+        )
+
+
+        self.regions.update(
+            self.get_region_dict(
+                region_centroid_xy=[0, 0],
+                region_name="plate_with_hole_region",
+                target_name=self.workspace_name,
+                region_half_len=0.001,
+            )
+        )
+
+        self.xy_region_kwargs_list = get_xy_region_kwargs_list_from_regions_info(
+            self.regions
+        )
+
+    @property
+    def init_states(self):
+        states = [
+            ("On", "bread_1", "floor_bread_region"),
+            ("On", "lemon_1", "floor_lemon_region"),
+            ("On", "cereal_1", "floor_cereal_region"),
+            ("On", "soda_1", "floor_soda_region"),
+            ("On", "plate_with_hole_1", "floor_plate_with_hole_region"),
         ]
         return states
