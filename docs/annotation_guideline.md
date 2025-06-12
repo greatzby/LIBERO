@@ -229,3 +229,10 @@ in windows, you can use the following command:
 set LIBERO_DEBUG=true
 python scripts/auto_run.py <path-to-your-task-file.py>
 ```
+
+### Long Path Issue
+If you encounter a "long path" issue on Windows, you can try the following steps:
+1. Open the Registry Editor by typing `regedit` in the Windows search bar.
+2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`.
+3. Find the `LongPathsEnabled` key and set its value to `1`.
+4. Restart your computer for the changes to take effect.
