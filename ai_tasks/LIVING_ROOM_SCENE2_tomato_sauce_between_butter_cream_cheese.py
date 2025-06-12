@@ -11,11 +11,11 @@ from libero.libero.utils.task_generation_utils import (
     generate_bddl_from_task_info,
 )
 
-from libero.libero.benchmark.mu_creation import *
+from libero.libero.benchmark.mu_creation_dynamic import *
 
 def main():
 
-    scene_name = "living_room_scene2"
+    scene_name = "living_room_scene12"
     language = "Position the tomato sauce on the table between the butter and cream cheese and stay in contact with both"
     
     register_task_info(
@@ -27,8 +27,9 @@ def main():
                 ("MidBetween", "butter_1", "tomato_sauce_1", "cream_cheese_1", "y"),
                 ("MidBetween", "cream_cheese_1", "tomato_sauce_1", "butter_1", "x")
             ),
-            ("Contact", "tomato_sauce_1", "butter_1"),
-            ("Contact", "tomato_sauce_1", "cream_cheese_1"),
+            ("On", "tomato_sauce_1", "living_room_table_table_region"),
+            ("On", "butter_1", "living_room_table_table_region"),
+            ("On", "cream_cheese_1", "living_room_table_table_region"),
         ]
     )
 

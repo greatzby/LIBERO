@@ -11,11 +11,11 @@ from libero.libero.utils.task_generation_utils import (
     generate_bddl_from_task_info,
 )
 
-from libero.libero.benchmark.mu_creation import *
+from libero.libero.benchmark.mu_creation_dynamic import *
 
 def main():
 
-    scene_name = "living_room_scene2"
+    scene_name = "living_room_scene12"
     language = "Place the orange juice tilted at an angle next to the basket"
     
     register_task_info(
@@ -24,8 +24,8 @@ def main():
         objects_of_interest=["orange_juice_1", "basket_1"],
         goal_states=[
             ("InContact", "orange_juice_1", "basket_1"),
-            ("AxisAlignedWithin", "orange_juice_1", "z", 30, 60),
-            # TODO: ON THE FLOOR
+            ("AxisAlignedWithin", "orange_juice_1", "y", 30, 60),
+            ("On", "orange_juice_1", "living_room_table_table_region"),
         ]
     )
 

@@ -16,18 +16,18 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Stack the orange juice on the cream cheese and lift both items up together"
+    language = "Stack the orange juice on the tomato sauce and lift both items up together"
     
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["orange_juice_1", "cream_cheese_1"],
+        objects_of_interest=["orange_juice_1", "tomato_sauce_1"],
         goal_states=[
-            ("On", "orange_juice_1", "cream_cheese_1"),
-            ("InAir", "cream_cheese_1", 0.85),
-            ("InAir", "orange_juice_1", 0.85),  # Ensure both items are lifted
-            ("Upright", "orange_juice_1"),  # Ensure orange juice is upright
-            ("Upright", "cream_cheese_1"),  # Ensure cream cheese is upright
+            ("On", "orange_juice_1", "tomato_sauce_1"),
+            ("InAir", "tomato_sauce_1", 0.6),
+            ("InAir", "orange_juice_1", 0.6), 
+            ("AxisAlignedWithin", "orange_juice_1", "y", 0, 5),
+            ("AxisAlignedWithin", "tomato_sauce_1", "y", 0, 5),
         ]
     )
 

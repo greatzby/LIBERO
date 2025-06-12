@@ -23,10 +23,11 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["milk_1", "tomato_sauce_1"],
         goal_states=[
-            ("UpsideDown", "milk_1"),
-            ("UpsideDown", "tomato_sauce_1"),
+            ("AxisAlignedWithin", "milk_1", "y", 170, 180),
+            ("AxisAlignedWithin", "tomato_sauce_1", "y", 170, 180),
             ("InContact", "milk_1", "tomato_sauce_1"),
-            # TODO: ON TABLE is not implemented yet, so we use InContact with the table
+            ("PosiLessThan", "milk_1", 'z', 0.505),
+            ("PosiLessThan", "tomato_sauce_1", 'z', 0.48),
         ]
     )
 

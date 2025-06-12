@@ -16,16 +16,18 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Place the ketchup upside down next to the milk"
+    language = "Place the ketchup upside down next to the milk on the table"
     
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["ketchup_1", "milk_1"],
         goal_states=[
-            ("UpsideDown", "ketchup_1"),
+            ("AxisAlignedWithin", "ketchup_1", "y", 170, 180),
             ("InContact", "ketchup_1", "milk_1"),
-            ("Upright", "milk_1"),
+            ("AxisAlignedWithin", "milk_1", "y", 0, 10),
+            ("PosiLessThan", "ketchup_1", 'z', 0.512),
+            ("PosiLessThan", "milk_1", 'z', 0.51),
         ]
     )
 

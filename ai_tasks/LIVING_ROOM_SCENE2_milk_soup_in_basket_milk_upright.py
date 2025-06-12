@@ -23,9 +23,9 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["milk_1", "alphabet_soup_1", "basket_1"],
         goal_states=[
-            ("In", "milk_1", "basket_1"),
-            ("In", "alphabet_soup_1", "basket_1"),
-            ("Upright", "milk_1"),
+            ("In", "milk_1", "basket_1_contain_region"),
+            ("In", "alphabet_soup_1", "basket_1_contain_region"),
+            ("AxisAlignedWithin", "milk_1", "y", 0, 5),
         ]
     )
 

@@ -48,6 +48,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "lrordering": LROrdering(),
     "posisamewith": PosiSameWith(),
     "orderalongaxis": OrderAlongAxis(),
+    "midbetween": MidBetween(),
 }
 
 
