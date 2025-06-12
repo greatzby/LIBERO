@@ -815,7 +815,7 @@ class TurnOff(UnaryAtomic):
 
 class Above(BinaryAtomic):
     """
-    This predicate checks if the first object (arg1) is above the second object (arg2),
+    This predicate checks if the first object (arg1) is above the second object (arg2) but not necessarily in contact.,
     with a center alignment constraint of 2cm in the x and y axes.
     
     Usage: Above()(arg1, arg2)
