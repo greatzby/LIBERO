@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Stack the cream cheese on top of the alphabet soup with the cream cheese standing upright"
+    language = "Stack the cream cheese on top of the alphabet soup with the cream cheese standing with its short side"
     
     register_task_info(
         language,
@@ -24,7 +24,10 @@ def main():
         objects_of_interest=["cream_cheese_1", "alphabet_soup_1"],
         goal_states=[
             ("On", "cream_cheese_1", "alphabet_soup_1"),
-            ("Upright", "cream_cheese_1"),
+            ("Or",
+                ("AxisAlignedWithin", "cream_cheese_1", "x", 0, 5),
+                ("AxisAlignedWithin", "cream_cheese_1", "x", 175, 180)
+            ),
             ("AxisAlignedWithin", "alphabet_soup_1", "y", 0, 5),
         ]
     )

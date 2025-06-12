@@ -23,9 +23,9 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["ketchup_1", "orange_juice_1"],
         goal_states=[
-            ("InAir", "ketchup_1", 0.9),
+            ("InAir", "ketchup_1", 0.6),
             ("Above", "ketchup_1", "orange_juice_1"),
-            ("UpsideDown", "ketchup_1"),
+            ("AxisAlignedWithin", "ketchup_1", "y", 175, 180),
         ]
     )
 
