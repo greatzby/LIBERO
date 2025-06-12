@@ -25,7 +25,7 @@ def main():
         goal_states=[
             ("On", "cream_cheese_1", "alphabet_soup_1"),
             ("Upright", "cream_cheese_1"),
-            ("Upright", "alphabet_soup_1"),
+            ("AxisAlignedWithin", "alphabet_soup_1", "y", 0, 5),
         ]
     )
 

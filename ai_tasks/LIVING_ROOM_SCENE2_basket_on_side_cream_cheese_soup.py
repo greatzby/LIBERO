@@ -23,7 +23,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["basket_1", "cream_cheese_1", "alphabet_soup_1"],
         goal_states=[
-            ("Above", "cream_cheese_1", "basket_1"),
+            ("PosiGreaterThan", "cream_cheese_1", "z", 0.67),
             ("Under", "alphabet_soup_1", "basket_1"),
             ("AxisAlignedWithin", "basket_1", "z", 80, 100),
             ("incontact", "cream_cheese_1", "basket_1"),

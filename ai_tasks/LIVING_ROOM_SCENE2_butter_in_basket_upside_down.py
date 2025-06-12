@@ -16,15 +16,16 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Put the butter in the basket upside down"
+    language = "Put the butter in the upright basket upside down"
     
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["butter_1", "basket_1"],
         goal_states=[
-            ("In", "butter_1", "basket_1"),
+            ("In", "butter_1", "basket_1_contain_region"),
             ("UpsideDown", "butter_1"),
+            ("Upright", "basket_1"),
         ]
     )
 

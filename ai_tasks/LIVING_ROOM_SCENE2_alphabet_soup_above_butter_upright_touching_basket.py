@@ -26,7 +26,7 @@ def main():
             ("Above", "alphabet_soup_1", "butter_1"),
             ("InContact", "butter_1", "basket_1"),
             ("InContact", "alphabet_soup_1", "basket_1"),
-            ("Upright", "alphabet_soup_1"),
+            ("AxisAlignedWithin", "alphabet_soup_1", "y", 0, 5),
             ("Upright", "butter_1"),
         ]
     )
