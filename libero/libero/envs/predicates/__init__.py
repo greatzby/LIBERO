@@ -49,6 +49,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "posisamewith": PosiSameWith(),
     "orderalongaxis": OrderAlongAxis(),
     "midbetween": MidBetween(),
+    "relaxedmidbetween": RelaxedMidBetween(),
 }
 
 
