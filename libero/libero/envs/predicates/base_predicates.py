@@ -560,6 +560,66 @@ class AxisAlignedWithin(UnaryAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, str, float, float]
+    
+
+class AxisAlignedWithinWorldAxis(UnaryAtomic):
+    """
+    Check if the object's specified axis is within a degree range [min_deg, max_deg]
+    from alignment with a reference axis in world coordinates.
+    Usage: AxisAlignedWithin()(object, axis, min_deg, max_deg, reference_axis)
+    Args:
+        obj: The object whose orientation is being checked.
+        axis: A string indicating the object's axis ('x', 'y', or 'z') to check.
+        min_deg: Minimum angle in degrees for the axis to be considered aligned.
+        max_deg: Maximum angle in degrees for the axis to be considered aligned.
+        reference_axis: A string indicating the world reference axis ('x', 'y', or 'z') 
+                       to measure against. Defaults to 'z' for backward compatibility.
+    Returns:
+        bool: True if the object's specified axis is within the degree range from 
+              alignment with the reference axis, False otherwise.
+    Raises:
+        ValueError: If the axis or reference_axis is not one of 'x', 'y', or 'z', 
+                   or if the degree range is invalid.
+    """
+
+    def __call__(self, obj, axis, min_deg, max_deg, reference_axis):
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+        if reference_axis not in {"x", "y", "z"}:
+            raise ValueError("Reference axis must be one of 'x', 'y', or 'z'")
+        if not (0 <= min_deg <= max_deg <= 180):
+            raise ValueError("Degrees must satisfy 0 <= min_deg <= max_deg <= 180")
+
+        min_rad = np.radians(min_deg)
+        max_rad = np.radians(max_deg)
+        cos_min = np.cos(min_rad)
+        cos_max = np.cos(max_rad)
+
+        geom = obj.get_geom_state()
+        w, x, y, z = geom["quat"]
+        quat_for_rs = np.array([x, y, z, w])
+        R = transform_utils.quat2mat(quat_for_rs)
+
+        # Get the object's axis vector in world coordinates
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        object_axis_world = R[:, axis_index]
+
+        # Get the reference axis vector in world coordinates
+        reference_vectors = {
+            "x": np.array([1.0, 0.0, 0.0]),
+            "y": np.array([0.0, 1.0, 0.0]), 
+            "z": np.array([0.0, 0.0, 1.0])
+        }
+        reference_vector = reference_vectors[reference_axis]
+
+        # Calculate the cosine of the angle between the object axis and reference axis
+        cos_angle = np.dot(object_axis_world, reference_vector)
+
+        return cos_max <= cos_angle <= cos_min
+
+    def expected_arg_types(self):
+        return [BaseObjectState, str, float, float, str]
+
 
 class PrintGeomState(UnaryAtomic):
     """
@@ -873,7 +933,56 @@ class MidBetween(MultiarayAtomic):
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, BaseObjectState, str]
-      
+    
+class MidBetweenAnyDirection(MultiarayAtomic):
+    """
+    Checks if the middle object (M) is between the left object (L) and the right object (R)
+    in any direction (not limited to a specific axis), by checking the angle between LM and MR vectors.
+
+    Usage: MidBetweenAnyDirection()(L, M, R, ignore_z=True, angle_threshold=30)
+    Args:
+        L: The first object (BaseObjectState).
+        M: The middle object (BaseObjectState).
+        R: The third object (BaseObjectState).
+        ignore_z: If True, only consider the xy plane.
+        angle_threshold: The maximum angle (in degrees) allowed between LM and MR (suggested: 30).
+    Returns:
+        bool: True if the angle between LM and MR is less than angle_threshold degrees,
+              and L is in contact with M, and M is in contact with R.
+    """
+    def __call__(self, L, M, R, ignore_z=True, angle_threshold=30):
+        pos_L = np.array(L.get_geom_state()["pos"])
+        pos_M = np.array(M.get_geom_state()["pos"])
+        pos_R = np.array(R.get_geom_state()["pos"])
+
+        if ignore_z:
+            pos_L = pos_L[:2]
+            pos_M = pos_M[:2]
+            pos_R = pos_R[:2]
+
+        v_LM = pos_M - pos_L
+        v_MR = pos_R - pos_M
+
+        norm_LM = np.linalg.norm(v_LM)
+        norm_MR = np.linalg.norm(v_MR)
+        if norm_LM == 0 or norm_MR == 0:
+            return False  # Avoid division by zero
+
+        cos_angle = np.dot(v_LM, v_MR) / (norm_LM * norm_MR)
+        # Clamp to [-1, 1] to avoid numerical issues
+        cos_angle = np.clip(cos_angle, -1.0, 1.0)
+        # Convert angle_threshold to cosine
+        angle_threshold_rad = np.radians(angle_threshold)
+        cos_threshold = np.cos(angle_threshold_rad)
+
+        return (
+            cos_angle > cos_threshold
+            and L.check_contact(M)
+            and M.check_contact(R)
+        )
+
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, BaseObjectState, bool, float]
     
 class RelaxedMidBetween(MultiarayAtomic):
     """
