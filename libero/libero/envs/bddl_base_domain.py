@@ -745,8 +745,8 @@ class BDDLBaseDomain(SingleArmEnv):
                 mujoco_objects=self.objects_dict[object_name],
                 # x_ranges=[[-site_xy_size[0] / 2, site_xy_size[0] / 2]],
                 # y_ranges=[[-site_xy_size[1] / 2, site_xy_size[1] / 2]],
-                ensure_object_boundary_in_range=True,
-                ensure_valid_placement=True,
+                ensure_object_boundary_in_range=False,
+                ensure_valid_placement=False,
                 rotation=self.objects_dict[object_name].rotation,
                 rotation_axis=self.objects_dict[object_name].rotation_axis,
             )
