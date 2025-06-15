@@ -16,15 +16,15 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene3"
-    language = "Align the handles of the moka pot and the frypan"
+    language = "Align the handles of the moka pot and the frypan, and ensure both stand upright on the table"
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["moka_pot_1", "chefmate_8_frypan_1"],
         goal_states=[
-            ("OrientationAligned", "chefmate_8_frypan_1", "moka_pot_1", 10, 10, 10, 0, 0, 90),
-            ("PositionWithin", "moka_pot_1",  0.04675264, 0.00549812, 0.96610586, 1.0, 1.0, 0.02),
-            ("PositionWithin", "chefmate_8_frypan_1", -0.05837239, -0.22592801,  0.89917096, 1.0, 1.0, 0.02)
+            ("YawAngleAligned", "chefmate_8_frypan_1", "moka_pot_1", 10, 90),
+            ("PositionWithin", "moka_pot_1",  0, 0, 0.96610586, 1.0, 1.0, 0.01),
+            ("PositionWithin", "chefmate_8_frypan_1", 0, 0,  0.89917096, 1.0, 1.0, 0.01)
         ]
     )
 
