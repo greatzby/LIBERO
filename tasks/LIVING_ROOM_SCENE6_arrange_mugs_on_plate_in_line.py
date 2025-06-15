@@ -29,8 +29,8 @@ def main():
             "chocolate_pudding_1",
         ],
         goal_states=[
-            ("RelaxedOn", "porcelain_mug_1", "plate_1"),
-            ("RelaxedOn", "red_coffee_mug_1", "plate_1"),
+            ("FlexibleOn", "porcelain_mug_1", "plate_1", 0.075, 0.075),
+            ("FlexibleOn", "red_coffee_mug_1", "plate_1", 0.075, 0.075),
             ("Ordering", "porcelain_mug_1", "plate_1", "red_coffee_mug_1"),
         ],
     )

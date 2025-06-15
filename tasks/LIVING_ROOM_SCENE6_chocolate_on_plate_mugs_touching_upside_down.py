@@ -16,23 +16,17 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene6"
-    language = "place the chocolate pudding on the plate and position both mugs upside down touching the pudding"
+    language = "place the chocolate pudding on the plate and position both mugs upright touching the pudding"
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["chocolate_pudding_1", "plate_1", "red_coffee_mug_1", "porcelain_mug_1"],
         goal_states=[
             ("RelaxedOn", "chocolate_pudding_1", "plate_1"),
-            ("UpsideDown", "red_coffee_mug_1"),
-            ("UpsideDown", "porcelain_mug_1"),
+            ("Upright", "red_coffee_mug_1"),
+            ("Upright", "porcelain_mug_1"),
             ("InContact", "red_coffee_mug_1", "chocolate_pudding_1"),
             ("InContact", "porcelain_mug_1", "chocolate_pudding_1"),
-            ("Not", ("RelaxedOn", "red_coffee_mug_1", "chocolate_pudding_1")),
-            ("Not", ("RelaxedOn", "porcelain_mug_1", "chocolate_pudding_1")),
-            ("Not", ("RelaxedOn", "red_coffee_mug_1", "plate_1")),
-            ("Not", ("RelaxedOn", "porcelain_mug_1", "plate_1")),
-            ("Not", ("RelaxedOn", "red_coffee_mug_1", "porcelain_mug_1")),
-            ("Not", ("RelaxedOn", "porcelain_mug_1", "red_coffee_mug_1")),
         ]
     )
 

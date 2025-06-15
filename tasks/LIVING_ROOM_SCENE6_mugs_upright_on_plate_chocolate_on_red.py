@@ -27,12 +27,6 @@ def main():
             ("RelaxedOn", "chocolate_pudding_1", "red_coffee_mug_1"),
             ("Upright", "red_coffee_mug_1"),
             ("Upright", "porcelain_mug_1"),
-            ("Not", ("RelaxedOn", "chocolate_pudding_1", "porcelain_mug_1")),
-            ("Not", ("RelaxedOn", "chocolate_pudding_1", "plate_1")),
-            ("Not", ("RelaxedOn", "red_coffee_mug_1", "porcelain_mug_1")),
-            ("Not", ("RelaxedOn", "porcelain_mug_1", "red_coffee_mug_1")),
-            ("Not", ("RelaxedOn", "red_coffee_mug_1", "chocolate_pudding_1")),
-            ("Not", ("RelaxedOn", "porcelain_mug_1", "chocolate_pudding_1")),
         ]
     )
 
