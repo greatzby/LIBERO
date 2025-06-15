@@ -13,19 +13,15 @@ from libero.libero.benchmark.mu_creation import TabletopScene1
 
 def main():
     scene_name = "tabletop_scene1"
-    language = "Create a linear arrangement with the cream cheese, akita bowl, and plate all positioned upright and touching each other in a row"
+    language = "Place the wine bottle lying on its side on top of the plate"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["cream_cheese_1", 'akita_black_bowl_1', 'plate_1'],
+        objects_of_interest=["wine_bottle_1", 'plate_1'],
         goal_states=[
-            ('Upright', 'cream_cheese_1'), 
-            ('Upright', 'akita_black_bowl_1'), 
-            ('Upright', 'plate_1'), 
-            ('InContact', 'cream_cheese_1', 'akita_black_bowl_1'), 
-            ('InContact', 'akita_black_bowl_1', 'plate_1'), 
-            ('Linear', 'cream_cheese_1', 'akita_black_bowl_1', 'plate_1', 0.1)
-        ],
+            ("RelaxedOn", "wine_bottle_1", "plate_1"),
+            ("AxisAlignedWithinWorldAxis", "wine_bottle_1", "z", 80, 100, "z")
+        ]
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()

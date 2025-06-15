@@ -13,15 +13,15 @@ from libero.libero.benchmark.mu_creation import TabletopScene1
 
 def main():
     scene_name = "tabletop_scene1"
-    language = "Place the plate upside down on the stove and position the akita bowl upright on top of the inverted plate"
+    language = "Position the wine bottle upright inside the akita bowl while the bowl sits on the stove"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", 'plate_1', "flat_stove_1"],
+        objects_of_interest=["wine_bottle_1", "akita_black_bowl_1", "flat_stove_1"],
         goal_states=[
-            ('On', 'plate_1', 'flat_stove_1_cook_region'), 
-            ('UpsideDown', 'plate_1'), 
-            ('On', 'akita_black_bowl_1', 'plate_1')
+            ("On", "akita_black_bowl_1", "flat_stove_1_cook_region"),
+            ("On", "wine_bottle_1", "akita_black_bowl_1"),
+            ("AxisAlignedWithinWorldAxis", "wine_bottle_1", "z", 0, 10, "z")
         ],
     )
 
