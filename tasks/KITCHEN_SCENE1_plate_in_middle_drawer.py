@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
     scene_name = "kitchen_scene1"
-    language = "Put the plate in the middle drawer."
+    language = "Put the plate in the middle drawer and close the drawer"
     
     register_task_info(
         language,
