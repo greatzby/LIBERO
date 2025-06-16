@@ -236,3 +236,36 @@ If you encounter a "long path" issue on Windows, you can try the following steps
 2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem`.
 3. Find the `LongPathsEnabled` key and set its value to `1`.
 4. Restart your computer for the changes to take effect.
+
+### Robot Components
+
+#### Available Robot Components
+
+The following robot components are automatically registered and available for use in predicates:
+
+- `gripper0_finger1` - First gripper finger
+- `gripper0_finger2` - Second gripper finger  
+- `gripper0_hand` - Gripper hand/palm
+
+#### Usage in Predicates
+
+You can use these gripper components directly in contact-based predicates and position-based predicates.
+For example:
+
+```python
+# Check if gripper finger is touching an object
+goal_states = [
+    ("InContact", "gripper0_finger1", "cube_1"),
+    ("InContact", "gripper0_finger2", "sphere_1"),
+    ("Above", "gripper0_hand", "cube_1"),
+]
+```
+
+#### Implementation Details
+
+The robot components are implemented as `RobotObjectState` objects that:
+- Track the geometric state of robot collision geometries
+- Support contact detection with other objects in the environment
+- Are automatically initialized when the environment is set up
+- Can be accessed through the standard `get_object()` interface
+
