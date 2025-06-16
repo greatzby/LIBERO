@@ -20,7 +20,7 @@ def main():
         objects_of_interest=["cream_cheese_1", 'wine_rack_1'],
         goal_states=[
             ("On", "cream_cheese_1", "wine_rack_1_top_region"),
-            ("OrientedAtDegree", "cream_cheese_1", 0.0, 0.0, 90.0, 360.0, 360.0, 5.0)
+            ("OrientedAtDegree", "cream_cheese_1", 0.0, 0.0, 90.0, 45.0, 360.0, 5.0)
         ],
     )
 

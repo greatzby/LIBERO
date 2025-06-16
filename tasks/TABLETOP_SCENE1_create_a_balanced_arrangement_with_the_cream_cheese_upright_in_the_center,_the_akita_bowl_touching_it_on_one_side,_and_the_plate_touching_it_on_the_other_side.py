@@ -13,16 +13,21 @@ from libero.libero.benchmark.mu_creation import TabletopScene1
 
 def main():
     scene_name = "tabletop_scene1"
-    language = "Create a arrangement with the cream cheese in the center, the akita bowl touching it on one side, and the plate touching it on the other side"
+    language = "Place the plate between the bowl and cheese so that it touches both items on the table."
     register_task_info(
         language,
         scene_name=scene_name,
         objects_of_interest=["cream_cheese_1", 'akita_black_bowl_1', 'plate_1'],
         goal_states=[
-            ('Upright', 'cream_cheese_1'), 
-            ('InContact', 'akita_black_bowl_1', 'cream_cheese_1'), 
-            ('InContact', 'plate_1', 'cream_cheese_1'), 
-            ('Not', ('InContact', 'akita_black_bowl_1', 'plate_1'))
+            ('Any', (
+                ('Between', 'akita_black_bowl_1', 'plate_1', 'cream_cheese_1', 'y'),
+                ('Between', 'akita_black_bowl_1', 'plate_1', 'cream_cheese_1', 'x'),
+                ('Between', 'cream_cheese_1', 'plate_1', 'akita_black_bowl_1', 'y'),
+                ('Between', 'cream_cheese_1', 'plate_1', 'akita_black_bowl_1', 'x'),
+            )),
+            ('PosiLessThan', 'cream_cheese_1', 'z', 0.91),
+            ('PosiLessThan', 'akita_black_bowl_1', 'z', 0.90),
+            ('PosiLessThan', 'plate_1', 'z', 0.91),
         ]
     )
 
