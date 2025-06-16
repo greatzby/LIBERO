@@ -22,8 +22,9 @@ def main():
         goal_states=[
             ("UpsideDown", "cream_cheese_1"),
             ("InContact", "cream_cheese_1", "alphabet_soup_1"),
-            # use (85, 95) rather than (85, 90) due to the rim of the cup lid and its pull tab
-            ("AxisAlignedWithin", "alphabet_soup_1", "y", 85, 95),
+            # use (80, 100) rather than (85, 90) due to the rim of the cup lid and its pull tab
+            ("AxisAlignedWithin", "alphabet_soup_1", "y", 80, 100),
+            ("PosiLessThan", "alphabet_soup_1", "z", 0.474),
         ],
     )
 
