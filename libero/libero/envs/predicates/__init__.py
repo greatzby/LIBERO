@@ -46,6 +46,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "flexibleon": FlexibleOn(),
     "orientedatdegree": OrientedAtDegree(),
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
+    "istouchingsideaxis": IsTouchingSideAxis(),
 }
 
 
