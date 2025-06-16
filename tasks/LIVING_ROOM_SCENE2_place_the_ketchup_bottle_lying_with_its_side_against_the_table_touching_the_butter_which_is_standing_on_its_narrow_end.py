@@ -23,6 +23,7 @@ def main():
             ("AxisAlignedWithin", "butter_1", "z", 85, 90),
             ("AxisAlignedWithin", "ketchup_1", "y", 85, 95),
             ("InContact", "ketchup_1", "butter_1"),
+            ("PosiLessThan", "ketchup_1", "z", 0.464),
         ],
     )
 
