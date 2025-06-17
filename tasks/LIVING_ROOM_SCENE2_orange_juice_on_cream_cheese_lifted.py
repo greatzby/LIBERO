@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Stack the orange juice on the tomato sauce and lift both items up together"
+    language = "Stack the orange juice on the tomato sauce keep them upright and lift both items up together"
     
     register_task_info(
         language,
