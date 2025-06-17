@@ -50,6 +50,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "flexibleon": FlexibleOn(),
     "orientedatdegree": OrientedAtDegree(),
     "getorientation": GetOrientation(),
+    "neuraljudge": NeuralJudge(),
 }
 
 
