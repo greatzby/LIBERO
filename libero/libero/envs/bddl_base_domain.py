@@ -99,15 +99,15 @@ class BDDLBaseDomain(SingleArmEnv):
         if object_property_initializers is not None:
             self.object_property_initializers = object_property_initializers
         else:
-            self.object_property_initializers = list()
-
-        # Keep track of movable objects in the tasks
+            self.object_property_initializers = list()        # Keep track of movable objects in the tasks
         self.objects_dict = {}
         # Kepp track of fixed objects in the tasks
         self.fixtures_dict = {}
         # Keep track of site objects in the tasks. site objects
         # (instances of SiteObject)
         self.object_sites_dict = {}
+        # Keep track of robot components (gripper fingers, hand, etc.)
+        self.robot_states_dict = {}
         # This is a dictionary that stores all the object states
         # interface for all the objects
         self.object_states_dict = {}
@@ -237,8 +237,7 @@ class BDDLBaseDomain(SingleArmEnv):
             object_states_dict[object_name] = ObjectState(
                 self, object_name, is_fixture=True
             )
-            if (
-                self.fixtures_dict[object_name].category_name
+            if (                self.fixtures_dict[object_name].category_name
                 in VISUAL_CHANGE_OBJECTS_DICT
             ):
                 tracking_object_states_changes.append(object_states_dict[object_name])
@@ -251,6 +250,11 @@ class BDDLBaseDomain(SingleArmEnv):
                 object_name,
                 parent_name=self.object_sites_dict[object_name].parent_name,
             )
+            
+        # Add robot states for gripper components
+        for geom_name in self.robot_states_dict.keys():
+            object_states_dict[geom_name] = self.robot_states_dict[geom_name]
+            
         self.object_states_dict = object_states_dict
         self.tracking_object_states_change = tracking_object_states_changes
 
@@ -427,6 +431,32 @@ class BDDLBaseDomain(SingleArmEnv):
             self.obj_body_id[fixture_name] = self.sim.model.body_name2id(
                 fixture_body.root_body
             )
+            
+        # Initialize robot states for gripper components
+        self._setup_robot_states()
+
+    def _setup_robot_states(self):
+        """
+        Initialize robot states for gripper components that can be used in predicates
+        """
+        # Define the gripper geom names we want to track
+        robot_geom_names = {
+            "gripper0_finger1": "gripper0_finger1_collision",
+            "gripper0_finger2": "gripper0_finger2_collision", 
+            "gripper0_hand": "gripper0_hand_collision"
+        }
+        
+        # Check if these geoms exist in the simulation and create robot states for them
+        for name, geom_name in robot_geom_names.items():
+            try:
+                # Try to get the geom id to verify it exists
+                geom_id = self.sim.model.geom_name2id(geom_name)
+                # If successful, create a robot state for this geom
+                self.robot_states_dict[name] = RobotObjectState(self, geom_name)
+            except Exception as e:
+                # If the geom doesn't exist, skip it (some robots might not have these exact names)
+                print(f"Warning: Geom '{name}' not found in simulation: {e}")
+                continue
 
     def _setup_observables(self):
         """
@@ -928,6 +958,7 @@ class BDDLBaseDomain(SingleArmEnv):
             self.fixtures_dict,
             self.objects_dict,
             self.object_sites_dict,
+            self.robot_states_dict,
         ]:
             if object_name in query_dict:
                 return query_dict[object_name]

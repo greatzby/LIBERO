@@ -45,11 +45,16 @@ VALIDATE_PREDICATE_FN_DICT = {
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
     "orientedatdegree": OrientedAtDegree(),
+<<<<<<< task/zilong-10
     "lrordering": LROrdering(),
     "posisamewith": PosiSameWith(),
     "orderalongaxis": OrderAlongAxis(),
     "midbetween": MidBetween(),
     "relaxedmidbetween": RelaxedMidBetween(),
+=======
+    "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
+    "istouchingsideaxis": IsTouchingSideAxis(),
+>>>>>>> master
 }
 
 
