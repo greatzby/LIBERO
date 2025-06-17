@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene9"
-    language = "Turn the burner off and place the bowl upside down on the stove button"
+    language = "Turn the burner off and place the bowl upside down on the stove"
     
     register_task_info(
         language,
