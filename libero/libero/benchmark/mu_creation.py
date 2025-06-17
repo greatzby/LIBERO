@@ -6,6 +6,10 @@ from libero.libero.utils.object_utils import get_affordance_regions
 
 from libero.libero.utils.mu_utils import register_mu, InitialSceneTemplates
 
+KITCHEN_TABLE_HEIGHT = 0.875
+LIVING_ROOM_TABLE_HEIGHT = 0.41
+STUDY_TABLE_HEIGHT = 0.67
+TABLE_HEIGHT = 0.895
 
 @register_mu(scene_type="kitchen")
 class KitchenScene1(InitialSceneTemplates):
