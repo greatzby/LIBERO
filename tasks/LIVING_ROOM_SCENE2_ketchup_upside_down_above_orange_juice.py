@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Lift the ketchup bottle up and position it upside down above the orange juice"
+    language = "Lift the ketchup bottle up and position it upside down above the upright orange juice"
     
     register_task_info(
         language,
@@ -25,6 +25,7 @@ def main():
         goal_states=[
             ("InAir", "ketchup_1", 0.6),
             ("Above", "ketchup_1", "orange_juice_1"),
+            ("AxisAlignedWithin", "orange_juice_1", "y", 0, 5),
             ("AxisAlignedWithin", "ketchup_1", "y", 175, 180),
         ]
     )
