@@ -1221,6 +1221,9 @@ class PosiSameWith(BinaryAtomic):
         axis_index = {"x": 0, "y": 1, "z": 2}[axis]
         
         return abs(pos1[axis_index] - pos2[axis_index]) <= threshold
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, str, float]
 
 class IsTouchingSideAxis(BinaryAtomic):
     """

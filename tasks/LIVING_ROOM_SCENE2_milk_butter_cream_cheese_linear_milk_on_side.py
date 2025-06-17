@@ -23,8 +23,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["milk_1", "butter_1", "cream_cheese_1"],
         goal_states=[
-            ("OrderAlongAxis", "x", "milk_1", "butter_1", "cream_cheese_1"),
-            ("Linear", "milk_1", "butter_1", "cream_cheese_1", 0.02),
+            ("OrderAlongAxis", "y", "milk_1", "butter_1", "cream_cheese_1"),
             ("PosiSameWith", "milk_1", "butter_1", 'x', 0.02),
             ("PosiSameWith", "butter_1", "cream_cheese_1", 'x', 0.02),
             ("AxisAlignedWithin", "milk_1", "y", 80, 100),
