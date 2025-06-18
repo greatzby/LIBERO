@@ -30,11 +30,11 @@ def main():
             "plate_1",
         ],
         goal_states=[
-            ("RelaxedOn", "cream_cheese_1", "flat_stove_1"),
+            ("On", "cream_cheese_1", "flat_stove_1_cook_region"),
             ("TurnOn", "flat_stove_1"),
-            ("Not", ("RelaxedOn", "akita_black_bowl_1", "flat_stove_1")),
-            ("Not", ("RelaxedOn", "wine_bottle_1", "flat_stove_1")),
-            ("Not", ("RelaxedOn", "plate_1", "flat_stove_1")),
+            ("Not", ("On", "akita_black_bowl_1", "flat_stove_1_cook_region")),
+            ("Not", ("On", "wine_bottle_1", "flat_stove_1_cook_region")),
+            ("Not", ("On", "plate_1", "flat_stove_1_cook_region")),
         ],
     )
 
