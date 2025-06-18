@@ -135,8 +135,7 @@ class LLMJudge:
     def __init__(
         self, 
         provider="openai",  # or "anthropic"
-        openai_model="o4-mini",
-        claude_model="us.anthropic.claude-sonnet-4-20250514-v1:0"
+        model_name="o4-mini",
     ):
         """
         Initialize the LLMJudge.
@@ -150,8 +149,7 @@ class LLMJudge:
             aws_region="us-east-1"
         )
         self.provider = provider
-        self.openai_model = openai_model
-        self.claude_model = claude_model
+        self.model_name = model_name
 
     def judge_directory(
         self,
@@ -256,7 +254,7 @@ Begin your answer with **Yes** or **No**, followed by a brief statement of the k
             })
 
             response = self.openai_client.responses.create(
-                model=self.openai_model,
+                model=self.model_name,
                 reasoning={
                     "effort": "high",
                     "summary": "auto"
@@ -288,7 +286,7 @@ Begin your answer with **Yes** or **No**, followed by a brief statement of the k
                 "content": f"Task description: {task_description}"
             })
             response = self.claude_client.messages.create(
-                model=self.claude_model,
+                model=self.model_name,
                 max_tokens=max_tokens,
                 system=system_prompt,
                 thinking={

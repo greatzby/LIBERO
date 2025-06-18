@@ -22,6 +22,7 @@ from scripts.llm_judge import LLMJudge
 
 llm_judge = LLMJudge(
     provider="openai",  # or "openai"
+    model_name="o4-mini",  # or "us.anthropic.claude-sonnet-4-20250514-v1:0"
 )
 
 def collect_human_trajectory(
