@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene5"
-    language = "Place the porcelain mug upside down on the left plate"
+    language = "Place the porcelain mug upside down on the right plate"
     
     register_task_info(
         language,

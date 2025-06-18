@@ -16,15 +16,15 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene5"
-    language = "Place the red coffee mug on the left plate with the mug lying on its side"
+    language = "Position the porcelain mug on the left plate lying on its side"
     
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["red_coffee_mug_1", "plate_1"],
+        objects_of_interest=["porcelain_mug_1", "plate_2"],
         goal_states=[
-            ("RelaxedOn", "red_coffee_mug_1", "plate_1"),
-            ("AxisAlignedWithIn", "red_coffee_mug_1", "z", 80, 100),
+            ("RelaxedOn", "porcelain_mug_1", "plate_2"),
+            ("AxisAlignedWithIn", "porcelain_mug_1", "z", 80, 100),
         ]
     )
 
