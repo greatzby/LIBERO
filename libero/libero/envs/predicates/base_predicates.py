@@ -1011,6 +1011,33 @@ class LROrdering(MultiarayAtomic):
         return [BaseObjectState, BaseObjectState, BaseObjectState]
 
 
+class OrderAlongAxis(MultiarayAtomic):
+    """
+    Check if a sequence of objects is ordered along a specified axis (x, y, or z).
+    
+    Usage: OrderAlongAxis()(axis, object1, object2, ..., objectN)
+    Args:
+        axis: A string indicating the axis ('x', 'y', or 'z') to check for ordering.
+        *args: A variable number of BaseObjectState objects to be checked for ordering along the specified axis.
+    Returns:
+        bool: True if the objects are ordered along the specified axis, False otherwise.
+    """
+    
+    def __call__(self, axis, *args):
+        assert axis in {"x", "y", "z"}, "Axis must be one of 'x', 'y', or 'z'"
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        
+        for i in range(len(args) - 1):
+            pos1 = args[i].get_geom_state()["pos"]
+            pos2 = args[i + 1].get_geom_state()["pos"]
+            if pos1[axis_index] >= pos2[axis_index]:
+                return False
+        return True
+    
+    def expected_arg_types(self):
+        return [str] + [BaseObjectState] * 3  # Adjust the number of BaseObjectState as needed
+
+
 class DistanceBetween(BinaryAtomic):
     """
     Check whether an object is close to another object with a user-defined margin of error for x,y,z separately.
@@ -1173,6 +1200,31 @@ class PositionWithinObjectAnnulus(UnaryAtomic):
 #     def expected_arg_types(self):
 #         return [BaseObjectState, BaseObjectState]
 
+class PosiSameWith(BinaryAtomic):
+    """
+    Check if the position of an object is the same as another object within a specified threshold.
+    Usage: PosiSameWith()(arg1, arg2, axis, threshold)
+    Args:
+        arg1: The first object whose position is being checked.
+        arg2: The second object to compare against.
+        axis: A string indicating the axis ('x', 'y', or 'z') to check.
+        threshold: A float value representing the maximum allowable difference in position along the specified axis.
+    Returns:
+        bool: True if the position of arg1 along the specified axis is within the threshold of arg2's position, False otherwise.
+    """
+    def __call__(self, arg1, arg2, axis, threshold):
+        if axis not in {"x", "y", "z"}:
+            raise ValueError("Axis must be one of 'x', 'y', or 'z'")
+
+        pos1 = arg1.get_geom_state()["pos"]
+        pos2 = arg2.get_geom_state()["pos"]
+        axis_index = {"x": 0, "y": 1, "z": 2}[axis]
+        
+        return abs(pos1[axis_index] - pos2[axis_index]) <= threshold
+    
+    def expected_arg_types(self):
+        return [BaseObjectState, BaseObjectState, str, float]
+
 class IsTouchingSideAxis(BinaryAtomic):
     """
     Checks if one object (arg1) is touching another object (arg2) along a specified local axis ('x', 'y', or 'z').
@@ -1227,6 +1279,7 @@ class IsTouchingSideAxis(BinaryAtomic):
         # print(f"Dot product for {axis}-axis: {dot_product:.4f} (Threshold: {doc_product_threshold})")
 
         return abs(dot_product) >= doc_product_threshold
+
 
     def expected_arg_types(self):
         return [BaseObjectState, BaseObjectState, str, float]
