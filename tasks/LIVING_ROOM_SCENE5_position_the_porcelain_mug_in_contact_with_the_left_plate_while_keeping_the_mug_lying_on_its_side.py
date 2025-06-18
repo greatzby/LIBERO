@@ -1,4 +1,4 @@
-"""This is a standalone file for creating a task in libero."""
+"""This is a standalone file for create a task in libero."""
 import numpy as np
 
 from libero.libero.utils.bddl_generation_utils import (
@@ -15,21 +15,19 @@ from libero.libero.benchmark.mu_creation import LivingRoomScene5
 
 
 def main():
-
-    # Write your reward code here
+    # living_room_scene_5
     scene_name = "living_room_scene5"
-    language = "Place the porcelain mug upside down on the left plate and stack the other two mugs on the right plate"
+    language = "Position the porcelain mug in contact with the left plate while keeping the mug lying on its side"
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["porcelain_mug_1", "plate_1", "red_coffee_mug_1", "white_yellow_mug_1"],
+        objects_of_interest=["porcelain_mug_1", "plate_2"],
         goal_states=[
-            ("On", "porcelain_mug_1", "plate_1"),
-            ("UpsideDown", "porcelain_mug_1"),
-            ("Or", ("RelaxedOn", "red_coffee_mug_1", "white_yellow_mug_1"), ("RelaxedOn", "white_yellow_mug_1", "red_coffee_mug_1")),
-            ("Or", ("On", "red_coffee_mug_1", "plate_2"), ("On", "white_yellow_mug_1", "plate_2")),
+            ('InContact', 'porcelain_mug_1', 'plate_2'), 
+            ("AxisAlignedWithin", "porcelain_mug_1", "z", "85", "95"),
         ],
     )
+
 
     bddl_file_names, failures = generate_bddl_from_task_info()
     print(bddl_file_names)

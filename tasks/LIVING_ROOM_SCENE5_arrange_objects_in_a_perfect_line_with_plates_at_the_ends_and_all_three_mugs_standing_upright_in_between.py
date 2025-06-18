@@ -23,9 +23,24 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["plate_1", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1", "plate_2"],
         goal_states=[
-            ("Linear", "plate_1", "porcelain_mug_1", "red_coffee_mug_1", 0.005),
-            ("Linear", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1", 0.005),
-            ("Linear", "red_coffee_mug_1", "white_yellow_mug_1", "plate_2", 0.005),
+            ("Or",
+             ("All", (
+                ("Linear", "plate_1", "porcelain_mug_1", "red_coffee_mug_1", 0.005),
+                ("Linear", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1", 0.005),
+                ("Linear", "red_coffee_mug_1", "white_yellow_mug_1", "plate_2", 0.005),
+                ("Ordering", "plate_1", "porcelain_mug_1", "red_coffee_mug_1"),
+                ("Ordering", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1"),
+                ("Ordering", "red_coffee_mug_1", "white_yellow_mug_1", "plate_2")
+             )), 
+             ("All", (
+                ("Linear", "plate_2", "porcelain_mug_1", "red_coffee_mug_1", 0.005),
+                ("Linear", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1", 0.005),
+                ("Linear", "red_coffee_mug_1", "white_yellow_mug_1", "plate_1", 0.005),
+                ("Ordering", "plate_2", "porcelain_mug_1", "red_coffee_mug_1"),
+                ("Ordering", "porcelain_mug_1", "red_coffee_mug_1", "white_yellow_mug_1"),
+                ("Ordering", "red_coffee_mug_1", "white_yellow_mug_1", "plate_1")
+             ))
+            ),
             ("Upright", "porcelain_mug_1"),
             ("Upright", "red_coffee_mug_1"),
             ("Upright", "white_yellow_mug_1"),

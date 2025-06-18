@@ -18,7 +18,7 @@ def main():
 
     # Write your reward code here
     scene_name = "living_room_scene5"
-    language = "Place the white-yellow mug upright on the left plate and position the red coffee mug in contact with it"
+    language = "Place the white-yellow mug upright on the right plate and position the red coffee mug in contact with it"
     register_task_info(
         language,
         scene_name=scene_name,

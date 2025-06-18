@@ -188,15 +188,14 @@ class Equal(BinaryAtomic):
     def expected_arg_types(self):
         return [float, float, float]
 
-class Difference(BinaryAtomic):
+class Minus(BinaryAtomic):
     """
-    Computes the difference between two float values.
-    
+    Subtracts the second float value from the first float value.
     Args:
         arg1: First float value.
         arg2: Second float value.
     Returns:
-        float: The difference between arg1 and arg2.
+        float: The result of arg1 - arg2.    
     """
     def __call__(self, arg1, arg2):
         return arg1 - arg2
@@ -1064,9 +1063,9 @@ class LROrdering(MultiarayAtomic):
     """
     This predicate checks if a sequence of objects is ordered from left to right based on their y-coordinates.
     
-    Usage: LROrdering()(object1, object2, ..., objectN)
+    Usage: LROrdering()(object1, object2, object3)
     Args:
-        *args: A variable number of BaseObjectState objects to be checked for left-to-right ordering.
+        *args: Three BaseObjectState objects to be checked for left-to-right ordering.
     Returns:
         bool: True if the objects are ordered from left to right based on their y-coordinates, False otherwise.
     """

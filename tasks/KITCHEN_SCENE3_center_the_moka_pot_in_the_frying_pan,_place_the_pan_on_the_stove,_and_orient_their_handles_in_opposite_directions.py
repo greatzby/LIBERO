@@ -25,7 +25,7 @@ def main():
             ("On", "moka_pot_1", "chefmate_8_frypan_1"),
             ("On", "chefmate_8_frypan_1", "flat_stove_1_cook_region"),
             ("Equal",
-                ("Difference", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
+                ("Minus", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
                 90,
                 8
             )

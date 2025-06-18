@@ -18,7 +18,7 @@ def main():
 
     # Write your reward code here
     scene_name = "living_room_scene5"
-    language = "Position the red coffee mug upright on the right plate with the porcelain mug lying sideways in contact with it"
+    language = "Position the red coffee mug upright on the left plate with the porcelain mug lying sideways in contact with it"
     register_task_info(
         language,
         scene_name=scene_name,
@@ -27,8 +27,7 @@ def main():
             ('On', 'red_coffee_mug_1', 'plate_2'), 
             ('Upright', 'red_coffee_mug_1'), 
             ('InContact', 'porcelain_mug_1', 'red_coffee_mug_1'), 
-            ('Not', ('Upright', 'porcelain_mug_1')), 
-            ('Not', ('UpsideDown', 'porcelain_mug_1'))
+            ("AxisAlignedWithin", "porcelain_mug_1", "z", "70", "95"),
         ],
     )
 

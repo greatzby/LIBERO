@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene3"
-    language = "Position the frypan on the stove with its handle pointing toward the left side of the table"
+    language = "Position the frypan on the stove with its handle pointing toward the right side of the table"
     register_task_info(
         language,
         scene_name=scene_name,

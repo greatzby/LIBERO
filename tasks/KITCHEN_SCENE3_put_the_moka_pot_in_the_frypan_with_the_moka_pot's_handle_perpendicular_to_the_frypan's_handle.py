@@ -23,17 +23,24 @@ def main():
         objects_of_interest=["moka_pot_1", "chefmate_8_frypan_1"],
         goal_states=[
             ("On", "moka_pot_1", "chefmate_8_frypan_1"),
-            ("Or",
+            ("Any",
+             (
                 ("Equal",
-                    ("Difference", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
+                    ("Minus", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
                     0,
                     8
                 ), 
                 ("Equal",
-                    ("Difference", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
+                    ("Minus", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
                     -180,
                     8
                 ),
+                ("Equal",
+                    ("Minus", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
+                    180,
+                    8
+                )   
+             )
             )
         ]
     )

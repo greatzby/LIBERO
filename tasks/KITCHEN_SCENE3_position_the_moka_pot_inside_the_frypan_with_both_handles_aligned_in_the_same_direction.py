@@ -24,7 +24,7 @@ def main():
         goal_states=[
             ("On", "moka_pot_1", "chefmate_8_frypan_1"),
             ("Equal",
-                ("Difference", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
+                ("Minus", ("GetOrientation", "moka_pot_1", "yaw"), ("GetOrientation", "chefmate_8_frypan_1", "yaw")),
                 -90,
                 8
             )

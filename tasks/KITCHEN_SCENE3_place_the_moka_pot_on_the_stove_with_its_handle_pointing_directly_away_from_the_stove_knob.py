@@ -23,7 +23,6 @@ def main():
         objects_of_interest=["moka_pot_1"],
         goal_states=[
             ("OrientedAtDegree", "moka_pot_1", 0, 0, -90, 5, 5, 5),
-            ("Upright", "moka_pot_1"),
             ("On", "moka_pot_1", "flat_stove_1_cook_region")
         ]
     )
