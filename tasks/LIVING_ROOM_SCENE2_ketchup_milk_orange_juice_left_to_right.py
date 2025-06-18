@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene2"
-    language = "Arrange the ketchup, milk, and orange juice from left to right in that order"
+    language = "Arrange the ketchup, milk, and orange juice from right to left in that order"
     
     register_task_info(
         language,
