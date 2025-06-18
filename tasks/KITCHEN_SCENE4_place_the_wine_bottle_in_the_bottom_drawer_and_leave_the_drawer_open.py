@@ -13,21 +13,15 @@ from libero.libero.benchmark.mu_creation import KitchenScene4
 
 def main():
     scene_name = "kitchen_scene4"
-    language = "Make the wine bottle and bowl touch each other with both on the table"
+    language = "Place the wine bottle in the bottom drawer and leave the drawer open"
 
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "wine_bottle_1"],
+        objects_of_interest=["white_cabinet_1", "wine_bottle_1"],
         goal_states=[
-            ("incontact",   "wine_bottle_1", "akita_black_bowl_1"),
-            # both on the table                 
-            ("posilessthan", "wine_bottle_1", "z", 1.50), 
-            ("posilessthan", "akita_black_bowl_1","z", 1.50),
-            ("not",("in",   "wine_bottle_1", "akita_black_bowl_1")),
-            ("not",("in",    "akita_black_bowl_1","wine_bottle_1")),
-            ("not",("on",   "wine_bottle_1", "akita_black_bowl_1")),
-            ("not",("on",    "akita_black_bowl_1","wine_bottle_1")),
+            ("in",   "wine_bottle_1", "white_cabinet_1_bottom_region"),   
+            ("open", "white_cabinet_1_bottom_region"),
         ],
     )
 
