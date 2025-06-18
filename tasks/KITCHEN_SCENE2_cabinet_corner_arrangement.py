@@ -37,6 +37,32 @@ def main():
             ("Close", "wooden_cabinet_1_top_region"),
             ("Close", "wooden_cabinet_1_middle_region"),
             ("Close", "wooden_cabinet_1_bottom_region"),
+            (
+                "Any",
+                (
+                    (
+                        "RightAngle",
+                        "akita_black_bowl_1",
+                        "akita_black_bowl_2",
+                        "akita_black_bowl_3",
+                        10.0,
+                    ),
+                    (
+                        "RightAngle",
+                        "akita_black_bowl_2",
+                        "akita_black_bowl_1",
+                        "akita_black_bowl_3",
+                        10.0,
+                    ),
+                    (
+                        "RightAngle",
+                        "akita_black_bowl_3",
+                        "akita_black_bowl_1",
+                        "akita_black_bowl_2",
+                        10.0,
+                    ),
+                ),
+            ),
         ],
     )
 
