@@ -18,7 +18,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "living_room_scene6"
-    language = "arrange three items in a straight line on the plate with the pudding in the center"
+    language = "arrange chocolate pudding, red coffee mug and porcelain mug in a straight line on the plate with the pudding in the center"
     register_task_info(
         language,
         scene_name=scene_name,

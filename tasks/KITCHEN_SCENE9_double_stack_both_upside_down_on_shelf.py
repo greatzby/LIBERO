@@ -16,7 +16,7 @@ from libero.libero.benchmark.mu_creation import *
 def main():
 
     scene_name = "kitchen_scene9"
-    language = "create a double-stacked configuration on the top shelf with both items upright"
+    language = "create a double-stacked configuration use the bowl and teh frypan on the top shelf with both items upright"
     register_task_info(
         language,
         scene_name=scene_name,
