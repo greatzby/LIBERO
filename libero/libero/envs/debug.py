@@ -3,7 +3,6 @@ import robosuite.utils.transform_utils as transform_utils
 import os
 
 DEBUG = os.getenv("LIBERO_DEBUG", "0") in ["1", "true", "True", "TRUE"]
-DEBUG=True
 
 def print_states(goal_state, results, object_states_dict, debug_time):
     if not DEBUG:
