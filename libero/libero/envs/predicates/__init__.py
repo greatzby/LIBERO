@@ -48,6 +48,13 @@ VALIDATE_PREDICATE_FN_DICT = {
     "yawanglealigned": YawAngleAligned(),
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "midbetweenanydirection": MidBetweenAnyDirection(),
+    "lrordering": LROrdering(),
+    "posisamewith": PosiSameWith(),
+    "orderalongaxis": OrderAlongAxis(),
+    "midbetween": MidBetween(),
+    "relaxedmidbetween": RelaxedMidBetween(),
+    "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
+    "istouchingsideaxis": IsTouchingSideAxis(),
 }
 
 
