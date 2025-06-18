@@ -22,7 +22,7 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["akita_black_bowl_1", "flat_stove_1", "cream_cheese_1", "wine_bottle_1", "plate_1"],
         goal_states=[
-            ("RelaxedOn", "akita_black_bowl_1", "flat_stove_1"),
+            ("On", "akita_black_bowl_1", "flat_stove_1_cook_region"),
             ("Upright", "akita_black_bowl_1"),
         ]
     )

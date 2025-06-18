@@ -25,10 +25,10 @@ def main():
         objects_of_interest=["flat_stove_1", "white_bowl_1", "chefmate_8_frypan_1"],
         goal_states=[
             ("TurnOn", "flat_stove_1"),
-            ("RelaxedOn", "white_bowl_1", "flat_stove_1"),
+            ("On", "white_bowl_1", "flat_stove_1_cook_region"),
             ("Upright", "white_bowl_1"),
             ("Not", ("RelaxedOn", "white_bowl_1", "chefmate_8_frypan_1")),
-            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "flat_stove_1")),
+            ("Not", ("On", "chefmate_8_frypan_1", "flat_stove_1_cook_region")),
             ("Not", ("InContact", "white_bowl_1", "chefmate_8_frypan_1")),
         ],
     )

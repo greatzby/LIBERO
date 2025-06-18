@@ -29,13 +29,13 @@ def main():
             "wooden_two_layer_shelf_1",
         ],
         goal_states=[
-            ("RelaxedOn", "chefmate_8_frypan_1", "flat_stove_1"),
+            ("On", "chefmate_8_frypan_1", "flat_stove_1_cook_region"),
             ("Upright", "chefmate_8_frypan_1"),
             ("InAir", "white_bowl_1", 0.95),
             ("Upright", "white_bowl_1"),
             ("InContact", "white_bowl_1", "chefmate_8_frypan_1"),
             ("Under", "chefmate_8_frypan_1", "white_bowl_1"),
-            ("Not", ("RelaxedOn", "white_bowl_1", "flat_stove_1")),
+            ("Not", ("On", "white_bowl_1", "flat_stove_1_cook_region")),
             ("Not", ("RelaxedOn", "white_bowl_1", "wooden_two_layer_shelf_1")),
         ],
     )
