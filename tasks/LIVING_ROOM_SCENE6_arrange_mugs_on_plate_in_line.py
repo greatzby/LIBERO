@@ -31,7 +31,7 @@ def main():
         goal_states=[
             ("FlexibleOn", "porcelain_mug_1", "plate_1", 0.075, 0.075),
             ("FlexibleOn", "red_coffee_mug_1", "plate_1", 0.075, 0.075),
-            ("Ordering", "red_coffee_mug_1", "plate_1", "porcelain_mug_1"),
+            ("LROrdering", "red_coffee_mug_1", "plate_1", "porcelain_mug_1"),
         ],
     )
 
