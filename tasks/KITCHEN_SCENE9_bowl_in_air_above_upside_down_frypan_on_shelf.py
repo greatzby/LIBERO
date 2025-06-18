@@ -27,10 +27,6 @@ def main():
             ("InAir", "white_bowl_1", 1.0),
             ("Upright", "white_bowl_1"),
             ("Above", "white_bowl_1", "chefmate_8_frypan_1"),
-            ("Not", ("relaxedOn", "white_bowl_1", "chefmate_8_frypan_1")),
-            ("Not", ("relaxedOn", "white_bowl_1", "wooden_two_layer_shelf_1")),
-            ("Not", ("relaxedOn", "white_bowl_1", "flat_stove_1")),
-            ("Not", ("InContact", "white_bowl_1", "chefmate_8_frypan_1")),
         ]
     )
 

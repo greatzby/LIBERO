@@ -27,8 +27,8 @@ def main():
             ("TurnOn", "flat_stove_1"),
             ("RelaxedOn", "white_bowl_1", "flat_stove_1"),
             ("Upright", "white_bowl_1"),
-            ("Not", ("On", "white_bowl_1", "chefmate_8_frypan_1")),
-            ("Not", ("On", "chefmate_8_frypan_1", "flat_stove_1")),
+            ("Not", ("RelaxedOn", "white_bowl_1", "chefmate_8_frypan_1")),
+            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "flat_stove_1")),
             ("Not", ("InContact", "white_bowl_1", "chefmate_8_frypan_1")),
         ],
     )

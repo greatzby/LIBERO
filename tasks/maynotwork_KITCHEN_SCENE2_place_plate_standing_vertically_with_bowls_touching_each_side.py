@@ -89,9 +89,9 @@ def main():
             ("Not", ("StackBowl", "akita_black_bowl_1", "akita_black_bowl_3")),
             ("Not", ("StackBowl", "akita_black_bowl_2", "akita_black_bowl_3")),
             # Prevent bowls from being placed on top of plate
-            ("Not", ("On", "akita_black_bowl_1", "plate_1")),
-            ("Not", ("On", "akita_black_bowl_2", "plate_1")),
-            ("Not", ("On", "akita_black_bowl_3", "plate_1")),
+            ("Not", ("RelaxedOn", "akita_black_bowl_1", "plate_1")),
+            ("Not", ("RelaxedOn", "akita_black_bowl_2", "plate_1")),
+            ("Not", ("RelaxedOn", "akita_black_bowl_3", "plate_1")),
         ],
     )
 

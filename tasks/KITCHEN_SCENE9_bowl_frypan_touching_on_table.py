@@ -31,12 +31,12 @@ def main():
             ("InContact", "white_bowl_1", "chefmate_8_frypan_1"),
             ("Upright", "white_bowl_1"),
             ("UpsideDown", "chefmate_8_frypan_1"),
-            ("Not", ("On", "white_bowl_1", "wooden_two_layer_shelf_1")),
-            ("Not", ("On", "chefmate_8_frypan_1", "wooden_two_layer_shelf_1")),
-            ("Not", ("On", "white_bowl_1", "flat_stove_1")),
-            ("Not", ("On", "chefmate_8_frypan_1", "flat_stove_1")),
-            ("Not", ("On", "white_bowl_1", "chefmate_8_frypan_1")),
-            ("Not", ("On", "chefmate_8_frypan_1", "white_bowl_1")),
+            ("Not", ("RelaxedOn", "white_bowl_1", "wooden_two_layer_shelf_1")),
+            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "wooden_two_layer_shelf_1")),
+            ("Not", ("RelaxedOn", "white_bowl_1", "flat_stove_1")),
+            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "flat_stove_1")),
+            ("Not", ("RelaxedOn", "white_bowl_1", "chefmate_8_frypan_1")),
+            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "white_bowl_1")),
         ],
     )
 

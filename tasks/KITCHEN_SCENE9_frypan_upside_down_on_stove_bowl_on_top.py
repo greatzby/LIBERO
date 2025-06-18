@@ -28,7 +28,7 @@ def main():
             ("Upright", "white_bowl_1"),
             ("Not", ("relaxedOn", "white_bowl_1", "flat_stove_1")),
             ("Not", ("relaxedOn", "white_bowl_1", "wooden_two_layer_shelf_1")),
-            ("Not", ("On", "chefmate_8_frypan_1", "wooden_two_layer_shelf_1")),
+            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "wooden_two_layer_shelf_1")),
         ]
     )
 
