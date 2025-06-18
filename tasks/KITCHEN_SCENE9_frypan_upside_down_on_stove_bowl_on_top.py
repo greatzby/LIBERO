@@ -22,13 +22,11 @@ def main():
         scene_name=scene_name,
         objects_of_interest=["chefmate_8_frypan_1", "flat_stove_1", "white_bowl_1", "wooden_two_layer_shelf_1"],
         goal_states=[
-            ("relaxedOn", "chefmate_8_frypan_1", "flat_stove_1"),
+            ("On", "chefmate_8_frypan_1", "flat_stove_1_cook_region"),
             ("UpsideDown", "chefmate_8_frypan_1"),
             ("relaxedOn", "white_bowl_1", "chefmate_8_frypan_1"),
             ("Upright", "white_bowl_1"),
-            ("Not", ("relaxedOn", "white_bowl_1", "flat_stove_1")),
-            ("Not", ("relaxedOn", "white_bowl_1", "wooden_two_layer_shelf_1")),
-            ("Not", ("RelaxedOn", "chefmate_8_frypan_1", "wooden_two_layer_shelf_1")),
+            ("Not", ("On", "white_bowl_1", "flat_stove_1_cook_region")),
         ]
     )
 
