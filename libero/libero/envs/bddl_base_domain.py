@@ -13,6 +13,7 @@ import robosuite.macros as macros
 import mujoco
 
 import libero.libero.envs.bddl_utils as BDDLUtils
+from libero.libero.envs.predicates.predicate_wrapper import Constraint
 from libero.libero.envs.robots import *
 from libero.libero.envs.utils import *
 from libero.libero.envs.object_states import *
@@ -144,7 +145,8 @@ class BDDLBaseDomain(SingleArmEnv):
 
         self.debug_time = 0
 
-        self.constraint_satisfied = {}
+        # deep copy VALIDATE_PREDICATE_FN_DICT
+        self.VALIDATE_PREDICATE_FN_DICT = deepcopy(VALIDATE_PREDICATE_FN_DICT)
 
         super().__init__(
             robots=robots,
@@ -195,9 +197,6 @@ class BDDLBaseDomain(SingleArmEnv):
         # sparse completion reward
         if self._check_success():
             reward = 1.0
-        
-        if all(self.constraint_satisfied.values()):
-            reward += 1.0
 
         # Scale reward if requested
         if self.reward_scale is not None:
@@ -806,7 +805,7 @@ class BDDLBaseDomain(SingleArmEnv):
         super()._reset_internal()
         self.debug_time = 0
 
-        self.constraint_satisfied = {}
+        self.VALIDATE_PREDICATE_FN_DICT = deepcopy(VALIDATE_PREDICATE_FN_DICT)
 
         # Reset all object positions using initializer sampler if we're not directly loading from an xml
         if not self.deterministic_reset:
@@ -925,15 +924,11 @@ class BDDLBaseDomain(SingleArmEnv):
             else:                                     # a literal (string, float, int, etc.)
                 return state
         
-        if isinstance(state[0], str):
-            if state[0].lower().startswith("constraint"):
-                return self._check_constraint(state)
-            
         predicate_fn_name, *arg_exprs = state
-        if predicate_fn_name not in VALIDATE_PREDICATE_FN_DICT:
+        if predicate_fn_name not in self.VALIDATE_PREDICATE_FN_DICT:
             raise ValueError(f"Unknown predicate: {predicate_fn_name}")
         
-        predicate_fn = VALIDATE_PREDICATE_FN_DICT[predicate_fn_name]
+        predicate_fn = self.VALIDATE_PREDICATE_FN_DICT[predicate_fn_name]
         expected_types = predicate_fn.expected_arg_types()
 
         # print(predicate_fn_name, expected_types, arg_exprs)
@@ -965,6 +960,10 @@ class BDDLBaseDomain(SingleArmEnv):
         # wrap results back into one tuple for variable-length truth predicates
         if variable_len_predicate:
             evaluated_args = (tuple(evaluated_args),)
+
+        if isinstance(predicate_fn, Constraint):
+            predicate_str = f"{str(state)}"
+            return predicate_fn(predicate_str, *evaluated_args)
         
         return predicate_fn(*evaluated_args)
         
