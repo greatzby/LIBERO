@@ -244,7 +244,9 @@ If you encounter a "long path" issue on Windows, you can try the following steps
 The following robot components are automatically registered and available for use in predicates:
 
 - `gripper0_finger1` - First gripper finger
-- `gripper0_finger2` - Second gripper finger  
+- `gripper0_finger2` - Second gripper finger
+- `gripper0_finger1_pad` - First gripper finger pad
+- `gripper0_finger2_pad` - Second gripper finger pad
 - `gripper0_hand` - Gripper hand/palm
 
 #### Usage in Predicates

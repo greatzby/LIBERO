@@ -447,7 +447,9 @@ class BDDLBaseDomain(SingleArmEnv):
         # Define the gripper geom names we want to track
         robot_geom_names = {
             "gripper0_finger1": "gripper0_finger1_collision",
-            "gripper0_finger2": "gripper0_finger2_collision", 
+            "gripper0_finger2": "gripper0_finger2_collision",
+            "gripper0_finger1_pad": "gripper0_finger1_pad_collision",
+            "gripper0_finger2_pad": "gripper0_finger2_pad_collision",
             "gripper0_hand": "gripper0_hand_collision"
         }
         
