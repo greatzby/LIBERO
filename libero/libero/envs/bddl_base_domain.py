@@ -136,6 +136,8 @@ class BDDLBaseDomain(SingleArmEnv):
 
         self.debug_time = 0
 
+        self.constraint_satisfied = {}
+
         super().__init__(
             robots=robots,
             env_configuration=env_configuration,
@@ -185,6 +187,9 @@ class BDDLBaseDomain(SingleArmEnv):
         # sparse completion reward
         if self._check_success():
             reward = 1.0
+        
+        if all(self.constraint_satisfied.values()):
+            reward += 1.0
 
         # Scale reward if requested
         if self.reward_scale is not None:
@@ -442,7 +447,9 @@ class BDDLBaseDomain(SingleArmEnv):
         # Define the gripper geom names we want to track
         robot_geom_names = {
             "gripper0_finger1": "gripper0_finger1_collision",
-            "gripper0_finger2": "gripper0_finger2_collision", 
+            "gripper0_finger2": "gripper0_finger2_collision",
+            "gripper0_finger1_pad": "gripper0_finger1_pad_collision",
+            "gripper0_finger2_pad": "gripper0_finger2_pad_collision",
             "gripper0_hand": "gripper0_hand_collision"
         }
         
@@ -791,6 +798,8 @@ class BDDLBaseDomain(SingleArmEnv):
         super()._reset_internal()
         self.debug_time = 0
 
+        self.constraint_satisfied = {}
+
         # Reset all object positions using initializer sampler if we're not directly loading from an xml
         if not self.deterministic_reset:
 
@@ -847,6 +856,43 @@ class BDDLBaseDomain(SingleArmEnv):
         self.debug_time += 1
 
         return all(results)
+    
+    def _check_constraint(self, constraint):
+        """
+        Check if the constraint is satisfied. Consider conjunction constraints at the moment
+        """
+        predicate = constraint[1]
+        result = self._eval_predicate(predicate)
+        predicate_str = "_".join(predicate) if isinstance(predicate, list) else predicate
+
+        if constraint[0] == "constraintalways":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = True
+
+            self.constraint_satisfied[predicate_str] = (
+                result and self.constraint_satisfied[predicate_str]
+            )
+        elif constraint[0] == "constraintonce":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = False
+
+            self.constraint_satisfied[predicate_str] = (
+                result or self.constraint_satisfied[predicate_str]
+            )
+        elif constraint[0] == "constraintnever":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = True
+
+            self.constraint_satisfied[predicate_str] = (
+                not result and self.constraint_satisfied[predicate_str]
+            )
+        else:
+            raise ValueError(f"Unknown constraint type: {constraint[0]}")
+        
+        return self.constraint_satisfied[predicate_str]
 
     def _eval_predicate(self, state):
         
@@ -855,6 +901,10 @@ class BDDLBaseDomain(SingleArmEnv):
                 return self.object_states_dict[state]
             else:                                     # a literal (string, float, int, etc.)
                 return state
+        
+        if isinstance(state[0], str):
+            if state[0].lower().startswith("constraint"):
+                return self._check_constraint(state)
             
         predicate_fn_name, *arg_exprs = state
         if predicate_fn_name not in VALIDATE_PREDICATE_FN_DICT:
