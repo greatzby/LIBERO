@@ -24,10 +24,9 @@ class PredicateWrapper(Expression):
 class Constraint(PredicateWrapper):
     def __init__(self):
         super().__init__()
-        if not hasattr(self, 'constraint_satisfied'):
-            raise NotImplementedError("Subclasses must define 'constraint_satisfied' attribute.")
+        self.constraint_satisfied = {}
         
-    def __call__(self, arg):
+    def __call__(self, name, arg):
         raise NotImplementedError("Subclasses should implement this method.")
     
     def expected_arg_types(self):
@@ -35,30 +34,24 @@ class Constraint(PredicateWrapper):
 
 
 class ConstraintAlways(Constraint):
-    def __init__(self):
-        self.constraint_satisfied = True
-        super().__init__()
-    
-    def __call__(self, arg):
-        self.constraint_satisfied = arg and self.constraint_satisfied
-        return self.constraint_satisfied
+    def __call__(self, name, arg):
+        if name not in self.constraint_satisfied:
+            self.constraint_satisfied[name] = True
+        self.constraint_satisfied[name] = arg and self.constraint_satisfied[name]
+        return self.constraint_satisfied[name]
 
 
 class ConstraintNever(Constraint):
-    def __init__(self):
-        self.constraint_satisfied = True
-        super().__init__()
-    
-    def __call__(self, arg):
-        self.constraint_satisfied = not arg and self.constraint_satisfied
-        return self.constraint_satisfied
+    def __call__(self, name, arg):
+        if name not in self.constraint_satisfied:
+            self.constraint_satisfied[name] = True
+        self.constraint_satisfied[name] = not arg and self.constraint_satisfied[name]
+        return self.constraint_satisfied[name]
 
 
 class ConstraintOnce(Constraint):
-    def __init__(self):
-        self.constraint_satisfied = False
-        super().__init__()
-    
-    def __call__(self, arg):
-        self.constraint_satisfied = arg or self.constraint_satisfied
-        return self.constraint_satisfied
+    def __call__(self, name, arg):
+        if name not in self.constraint_satisfied:
+            self.constraint_satisfied[name] = False
+        self.constraint_satisfied[name] = arg or self.constraint_satisfied[name]
+        return self.constraint_satisfied[name]
