@@ -1389,7 +1389,6 @@ class OppositeSides(MultiarayAtomic):
         return [BaseObjectState, BaseObjectState, BaseObjectState]
 
 
-
 class NeuralJudge(MultiarayAtomic):
     def __init__(self):
         super().__init__()
@@ -1398,7 +1397,8 @@ class NeuralJudge(MultiarayAtomic):
         return False
 
     def expected_arg_types(self):
-        return []
+        return [str]
+
     
 class PosiSameWith(BinaryAtomic):
     """

@@ -126,6 +126,14 @@ class BDDLBaseDomain(SingleArmEnv):
         self.bddl_file_name = bddl_file_name
         self.parsed_problem = BDDLUtils.robosuite_parse_problem(self.bddl_file_name)
 
+        for item in self.parsed_problem["goal_state"]:
+            if isinstance(item, list) and item and item[0] == "neuraljudge":
+                sample = True
+                item[1:] = ["_".join(item[1:])]
+                break
+        
+        # print(self.parsed_problem["goal_state"])
+
         self.obj_of_interest = self.parsed_problem["obj_of_interest"]
 
         self._assert_problem_name()
@@ -856,6 +864,21 @@ class BDDLBaseDomain(SingleArmEnv):
         self.debug_time += 1
 
         return all(results)
+    
+    def _check_success_without_neuraljudge(self):
+        """
+        Check if the goal is achieved without considering neuraljudge predicates.
+        """
+        goal_state = self.parsed_problem["goal_state"]
+        results = []
+        for state in goal_state:
+            if state[0] == "neuraljudge":
+                continue
+            result = self._eval_predicate(state)
+            results.append(result)
+        
+        return all(results)
+
     
     def _check_constraint(self, constraint):
         """
