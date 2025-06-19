@@ -93,6 +93,7 @@ def collect_human_trajectory(
         else:
             task_completion_hold_count = -1  # null the counter if there's no success
 
+    print("Reward:", env.reward())
     print(count)
     # cleanup for end of data collection episodes
     if not saving:
