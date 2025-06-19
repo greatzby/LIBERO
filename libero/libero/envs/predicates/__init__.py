@@ -45,12 +45,15 @@ VALIDATE_PREDICATE_FN_DICT = {
     "between": MidBetween(),
     "relaxedbetween": RelaxedMidBetween(),
     "linear": Linear(),
-    "ordering": LROrdering(),
+    "ordering": LROrdering(), # for sake of compatibility
+    "lrordering": LROrdering(), 
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
     "orientedatdegree": OrientedAtDegree(),
+
+    "rightangle": RightAngle(),
+    "oppositesides": OppositeSides(),
     "getorientation": GetOrientation(),
-    "lrordering": LROrdering(),
     "posisamewith": PosiSameWith(),
     "orderalongaxis": OrderAlongAxis(),
     "midbetween": MidBetween(),
@@ -58,6 +61,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "istouchingsideaxis": IsTouchingSideAxis(),
     "neuraljudge": NeuralJudge(),
+
 }
 
 
