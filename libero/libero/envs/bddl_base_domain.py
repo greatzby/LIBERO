@@ -857,16 +857,41 @@ class BDDLBaseDomain(SingleArmEnv):
 
         return all(results)
     
-    def _check_constraint(self, predicate):
+    def _check_constraint(self, constraint):
         """
         Check if the constraint is satisfied. Consider conjunction constraints at the moment
         """
+        predicate = constraint[1]
         result = self._eval_predicate(predicate)
         predicate_str = "_".join(predicate) if isinstance(predicate, list) else predicate
-        if self.constraint_satisfied.get(predicate_str) is None:
-            # If the predicate is not in the constraint_satisfied dict, initialize it to True
-            self.constraint_satisfied[predicate_str] = True
-        self.constraint_satisfied[predicate_str] = result and self.constraint_satisfied[predicate_str]
+
+        if constraint[0] == "constraintalways":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = True
+
+            self.constraint_satisfied[predicate_str] = (
+                result and self.constraint_satisfied[predicate_str]
+            )
+        elif constraint[0] == "constraintonce":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = False
+
+            self.constraint_satisfied[predicate_str] = (
+                result or self.constraint_satisfied[predicate_str]
+            )
+        elif constraint[0] == "constraintnever":
+            if self.constraint_satisfied.get(predicate_str) is None:
+                # If the predicate is not in the constraint_satisfied dict, initialize it to True
+                self.constraint_satisfied[predicate_str] = True
+
+            self.constraint_satisfied[predicate_str] = (
+                not result and self.constraint_satisfied[predicate_str]
+            )
+        else:
+            raise ValueError(f"Unknown constraint type: {constraint[0]}")
+        
         return self.constraint_satisfied[predicate_str]
 
     def _eval_predicate(self, state):
@@ -878,8 +903,8 @@ class BDDLBaseDomain(SingleArmEnv):
                 return state
         
         if isinstance(state[0], str):
-            if state[0].lower() == "constraint":
-                return self._check_constraint(state[1])
+            if state[0].lower().startswith("constraint"):
+                return self._check_constraint(state)
             
         predicate_fn_name, *arg_exprs = state
         if predicate_fn_name not in VALIDATE_PREDICATE_FN_DICT:
