@@ -11,7 +11,11 @@ VALIDATE_PREDICATE_FN_DICT = {
     "all": All(),
     "in": In(),
     "equal": Equal(),
+    "minus": Minus(),
+    "greaterthan": GreaterThan(),
+    "lessthan": LessThan(),
     "distance": Distance(),
+    "planardistance": PlanarDistance(),
     "incontact": InContact(),
     "on": On(),
     "relaxedon": RelaxedOn(),
@@ -45,6 +49,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "distancebetween": DistanceBetween(),
     "flexibleon": FlexibleOn(),
     "orientedatdegree": OrientedAtDegree(),
+    "getorientation": GetOrientation(),
     "yawanglealigned": YawAngleAligned(),
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "midbetweenanydirection": MidBetweenAnyDirection(),
@@ -55,6 +60,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "relaxedmidbetween": RelaxedMidBetween(),
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "istouchingsideaxis": IsTouchingSideAxis(),
+    "neuraljudge": NeuralJudge(),
 }
 
 
