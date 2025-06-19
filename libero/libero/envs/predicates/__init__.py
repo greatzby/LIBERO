@@ -1,4 +1,5 @@
 from .base_predicates import *
+from .predicate_wrapper import *
 
 
 VALIDATE_PREDICATE_FN_DICT = {
@@ -61,8 +62,14 @@ VALIDATE_PREDICATE_FN_DICT = {
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "istouchingsideaxis": IsTouchingSideAxis(),
     "neuraljudge": NeuralJudge(),
-
 }
+
+# wrapper predicates
+VALIDATE_PREDICATE_FN_DICT.update({
+    "constraintalways": ConstraintAlways(),
+    "constraintnever": ConstraintNever(),
+    "constraintonce": ConstraintOnce(),
+})
 
 
 def update_predicate_fn_dict(fn_key, fn_name):
