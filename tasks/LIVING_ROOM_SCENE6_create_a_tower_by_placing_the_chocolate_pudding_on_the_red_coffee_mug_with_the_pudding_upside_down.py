@@ -14,7 +14,7 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
     scene_name = "living_room_scene6"
-    language = "Create a tower by placing the chocolate pudding on the red coffee mug, with the pudding upside down"
+    language = "Place the chocolate pudding upside down on the red coffee mug stably"
     register_task_info(
         language,
         scene_name=scene_name,

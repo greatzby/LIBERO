@@ -25,6 +25,7 @@ def main():
                 ("AxisAlignedWithin", "milk_1", "x", 0, 10),
                 ("AxisAlignedWithin", "milk_1", "x", 170, 180),
             ),
+            ("PosiLessThan", "milk_1", "z", 0.49),
         ],
     )
 

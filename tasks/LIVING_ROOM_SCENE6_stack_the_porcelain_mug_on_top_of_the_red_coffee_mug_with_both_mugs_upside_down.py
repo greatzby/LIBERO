@@ -21,6 +21,7 @@ def main():
         objects_of_interest=["red_coffee_mug_1", "porcelain_mug_1"],
         goal_states=[
             ("RelaxedOn", "porcelain_mug_1", "red_coffee_mug_1"),
+            ("PosiLessThan", "porcelain_mug_1", "z", 0.67),
             ("UpsideDown", "red_coffee_mug_1"),
             ("UpsideDown", "porcelain_mug_1"),
         ],

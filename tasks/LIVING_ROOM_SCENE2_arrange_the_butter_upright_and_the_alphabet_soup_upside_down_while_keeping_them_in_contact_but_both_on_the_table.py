@@ -14,7 +14,7 @@ from libero.libero.benchmark.mu_creation import *
 
 def main():
     scene_name = "living_room_scene2"
-    language = "Arrange the butter upright and the alphabet soup upside down while keeping them in contact but both on the table"
+    language = "Arrange the butter standing on its thinnest side and the alphabet soup upside down while keeping them in contact but both on the table"
     register_task_info(
         language,
         scene_name=scene_name,
