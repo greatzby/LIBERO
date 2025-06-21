@@ -64,6 +64,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "relaxedmidbetween": RelaxedMidBetween(),
     "axisalignedwithinworldaxis": AxisAlignedWithinWorldAxis(),
     "istouchingsideaxis": IsTouchingSideAxis(),
+    "axisalignedwithinobjectaxis": AxisAlignedWithinObjectAxis(),
     "neuraljudge": NeuralJudge(),
 }
 
