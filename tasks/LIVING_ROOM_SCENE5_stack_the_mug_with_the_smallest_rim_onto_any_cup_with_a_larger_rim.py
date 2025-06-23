@@ -13,19 +13,18 @@ from libero.libero.benchmark.mu_creation import LivingRoomScene5
 
 def main():
     scene_name = "living_room_scene5"
-    language = "Knock over the mug that has only one color"
+    language = "Stack the mug with the smallest rim onto any cup with a larger rim"
 
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["porcelain_mug_1"],
+        objects_of_interest=["porcelain_mug_1","red_coffee_mug_1","white_yellow_mug_1"],
         goal_states=[
             
-            ("axisalignedwithin",
-                "porcelain_mug_1",  
-                "z",                
-                80.0, 100.0),       
-
+            ("or",
+            ("relaxedon", "red_coffee_mug_1", "porcelain_mug_1"),
+            ("relaxedon", "red_coffee_mug_1", "white_yellow_mug_1"),    
+            )
             
                 
         ],
