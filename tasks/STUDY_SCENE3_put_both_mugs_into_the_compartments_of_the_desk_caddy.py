@@ -21,11 +21,11 @@ def main():
         objects_of_interest=["porcelain_mug_1","black_book_1"],
         goal_states=[
             "or",
-            (
+            ("and",
             ("In", "porcelain_mug_1", "desk_caddy_1_left_contain_region"),
             ("In", "red_coffee_mug_1", "desk_caddy_1_right_contain_region"),
             ),    
-            (
+            ("and",
             ("In","red_coffee_mug_1",  "desk_caddy_1_left_contain_region"),
             ("In", "porcelain_mug_1", "desk_caddy_1_right_contain_region"),
             )        
