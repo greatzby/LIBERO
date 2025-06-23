@@ -13,20 +13,20 @@ from libero.libero.benchmark.mu_creation import StudyScene4
 
 def main():
     scene_name = "study_scene4"
-    language = "Arrange two yellow books so that their spines face each other"
+    language = "Place the black book on the top shelf layer with its spine facing outward of the shelf"
 
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["yellow_book_1", "yellow_book_2"],
+        objects_of_interest=["black_book_1","wooden_two_layer_shelf_1"],
         goal_states=[
             
-             ("yawanglealigned",
-                "yellow_book_1",    
-                "yellow_book_2",     
-                10.0,                
-                180.0),
-                
+            ("yawanglealigned",
+                "black_book_1", "wooden_two_layer_shelf_1",
+                10.0,      
+                180.0),   
+            ("on",
+            "black_book_1", "wooden_two_layer_shelf_1_top_side"),    
                 
                 
         ],
