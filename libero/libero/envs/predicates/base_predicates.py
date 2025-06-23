@@ -1211,7 +1211,7 @@ class FlexibleAbove(BinaryAtomic):
         )
 
     def expected_arg_types(self):
-        return [BaseObjectState, BaseObjectState, float, float]
+        return [BaseObjectState, BaseObjectState, float]
 
 class MidBetween(MultiarayAtomic):
     """
