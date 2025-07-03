@@ -349,6 +349,12 @@ The `Watch` predicate allows you to monitor a specific predicate condition throu
 ("Watch", ("InContact", "gripper0_finger1", "akita_black_bowl_1"))
 ```
 
+### RememberState
+The `RememberState` predicate allows you to store the state of an object at a initial point.
+```python
+("Under", "akita_black_bowl_1", ("RememberState", "gripper0_hand")),
+```
+
 ## Task Dimension Diversity
 
 ### Task Design Guidelines for Object Manipulation with Rich Dimensions
@@ -438,3 +444,4 @@ Please use these examples as reference to explore **new types of interactions**,
 | Break linear arrangement | Make the center of butter, tomato sauce and milk no longer on a straight line |
 
 ---
+

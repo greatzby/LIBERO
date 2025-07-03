@@ -1,5 +1,7 @@
 from .base_predicates import Expression
+from libero.libero.envs.object_states.base_object_states import BaseObjectState
 from typing import List
+import copy
 
 class PredicateWrapper(Expression):
     """
@@ -57,7 +59,28 @@ class StatefulWrapper(PredicateWrapper):
     
     def expected_arg_types(self):
         raise NotImplementedError("Subclasses should implement this method.")
-    
+
+class FakeObejctState(BaseObjectState):
+    def __init__(self, object_state):
+        self._geom_state = copy.deepcopy(object_state.get_geom_state())
+
+    def get_geom_state(self):
+        return self._geom_state    
+
+class RememberState(StatefulWrapper):
+    """
+    A wrapper for predicates that remembers the initial State of a object.
+    The state will be fixed and always return the same value.
+    """
+    def __call__(self, name, *arg):
+        if len(arg) != 1:
+            raise ValueError("RememberState expects exactly one argument.")
+        if name not in self.state:
+            self.state[name] = FakeObejctState(arg[0])
+        return self.state[name]
+
+    def expected_arg_types(self):
+        return [BaseObjectState]
 
 class Constraint(StatefulWrapper):
     def expected_arg_types(self):
