@@ -80,6 +80,8 @@ VALIDATE_PREDICATE_FN_DICT.update({
     "constraintonce": ConstraintOnce(),
     "constraintafteruntil": ConstraintAfterUntil(),
 
+    "rememberstate": RememberState(),
+
     "sequential": Sequential(),
     "watch": Watch(),
     "interval": Interval(),
