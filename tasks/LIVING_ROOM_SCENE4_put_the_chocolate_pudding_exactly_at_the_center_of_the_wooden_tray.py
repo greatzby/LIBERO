@@ -13,19 +13,20 @@ from libero.libero.benchmark.mu_creation import LivingRoomScene4
 
 def main():
     scene_name = "living_room_scene4"
-    language = "Stack the left bowl onto the right bowl with both bowls upright and their rims aligned"
+    language = "Put the chocolate pudding exactly at the center of the wooden tray"
 
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "akita_black_bowl_2"],
+        objects_of_interest=["chocolate_pudding_1", "wooden_tray_1"],
         goal_states=[
             
-             # Make sure that 1 is on 2 and contacts and is concentric horizontally
-            ("on", "akita_black_bowl_1", "akita_black_bowl_2"),
-            
-            ("upright", "akita_black_bowl_1"),
-            ("upright", "akita_black_bowl_2"),               
+            # Position error ± 2cm
+            ("positionwithinobject", "chocolate_pudding_1", "wooden_tray_1",
+             -0.02, -0.02, -0.05, 0.02, 0.02, 0.05),
+            ("incontact","chocolate_pudding_1", "wooden_tray_1"),
+            # Constraint: keep the pallet level throughout the whole process (to prevent users from tilting the pallet to cheat)
+            ("constraintalways", ("upright", "wooden_tray_1")),            
             
                 
         ],
