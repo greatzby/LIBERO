@@ -9,24 +9,6 @@ from libero.libero.utils.task_generation_utils import (
 )
 import numpy as np
 
-<<<<<<< HEAD
-from libero.libero.benchmark.mu_creation import LivingRoomScene2
-
-def main():
-    scene_name = "living_room_scene2"
-    language = "Arrange the ketchup, alphabet soup, and orange juice in a straight line with the ketchup upside down and the other two upright"
-
-    register_task_info(
-        language,
-        scene_name=scene_name,
-        objects_of_interest=["ketchup_1", "alphabet_soup_1", "orange_juice_1"],
-        goal_states=[
-            ("upsidedown", "ketchup_1"),
-            ("upright", "alphabet_soup_1"),
-            ("upright", "orange_juice_1"),
-            ("linear", "ketchup_1", "alphabet_soup_1", "orange_juice_1", 0.05),
-        ],
-=======
 
 @register_mu(scene_type="kitchen")
 class KitchenScene2(InitialSceneTemplates):
@@ -157,7 +139,6 @@ def main():
             ("Upright", "akita_black_bowl_3"),
             # ("Close", "wooden_cabinet_1_top_region"),
         ]
->>>>>>> upstream/master
     )
 
     bddl_file_names, failures = generate_bddl_from_task_info()
