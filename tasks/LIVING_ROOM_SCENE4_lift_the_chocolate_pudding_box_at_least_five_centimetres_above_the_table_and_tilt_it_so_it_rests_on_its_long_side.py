@@ -13,23 +13,22 @@ from libero.libero.benchmark.mu_creation import LivingRoomScene4
 
 def main():
     scene_name = "living_room_scene4"
-    language = "Stack the left bowl onto the right bowl and stand the salad dressing bottle on the bowls with its front facing the robot"
+    language = "Lift the chocolate pudding box at least five centimetres above the table and tilt it so it rests on its long side"
 
     register_task_info(
         language,
         scene_name=scene_name,
-        objects_of_interest=["akita_black_bowl_1", "akita_black_bowl_2", "new_salad_dressing_1"],
+        objects_of_interest=["chocolate_pudding_1"],
         goal_states=[
             
-            ("on", "akita_black_bowl_1", "akita_black_bowl_2"),
-            ("upright", "akita_black_bowl_1"),
-            ("upright", "akita_black_bowl_2"),
+            # 1) The long side of the box is vertical: the angle between the local z-axis and the world Z+is 80 to 100 °
+            ("axisalignedwithin", "chocolate_pudding_1", "z", 80, 100),
 
-            ("on", "new_salad_dressing_1", "akita_black_bowl_1"),
+            # 2) z ≥ 0.46 m ⇒ At least 5 cm away from the desktop
+            ("posigreaterthan",  "chocolate_pudding_1", "z", 0.46),
+
             
-
-            ("axisalignedwithinworldaxis",
-                "new_salad_dressing_1", "z", 0, 15, "x"), 
+            
             
                 
         ],
