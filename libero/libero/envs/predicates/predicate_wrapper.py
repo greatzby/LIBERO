@@ -1,5 +1,7 @@
 from .base_predicates import Expression
+from libero.libero.envs.object_states.base_object_states import BaseObjectState
 from typing import List
+import copy
 
 class PredicateWrapper(Expression):
     """
@@ -27,7 +29,10 @@ class BoolResultWrapper:
         self.print_result = print_result
     
     def __bool__(self):
-        return self.result
+        try:
+            return bool(self.result)
+        except Exception as e:
+            raise ValueError(f"Result is not a boolean: {self.result}. Error: {e}")
 
     def __str__(self):
         return f"{self.print_result}"
@@ -54,7 +59,28 @@ class StatefulWrapper(PredicateWrapper):
     
     def expected_arg_types(self):
         raise NotImplementedError("Subclasses should implement this method.")
-    
+
+class FakeObejctState(BaseObjectState):
+    def __init__(self, object_state):
+        self._geom_state = copy.deepcopy(object_state.get_geom_state())
+
+    def get_geom_state(self):
+        return self._geom_state    
+
+class RememberState(StatefulWrapper):
+    """
+    A wrapper for predicates that remembers the initial State of a object.
+    The state will be fixed and always return the same value.
+    """
+    def __call__(self, name, *arg):
+        if len(arg) != 1:
+            raise ValueError("RememberState expects exactly one argument.")
+        if name not in self.state:
+            self.state[name] = FakeObejctState(arg[0])
+        return self.state[name]
+
+    def expected_arg_types(self):
+        return [BaseObjectState]
 
 class Constraint(StatefulWrapper):
     def expected_arg_types(self):
@@ -95,6 +121,44 @@ class ConstraintAlwaysAfter(Constraint):
     
     def expected_arg_types(self):
         return [bool, bool]  # Expecting a tuple of (name, arg)
+
+class ConstraintAfterUntil(Constraint):
+    def __init__(self):
+        super().__init__()
+        self.state = {} 
+
+    def __call__(self, name, *arg):
+        if len(arg) != 2:
+            raise ValueError("ConstraintAfterUntil expects exactly two arguments.")
+        if name not in self.state:
+            self.state[name] = {
+                'started': False,          # Has the first condition been met
+                'until_satisfied': False,  # Has the until condition been met
+                'violated': False          # Has the constraint been violated
+            }
+        
+        trigger_condition, until_condition = arg[0], arg[1]
+        
+        # If we haven't started and trigger condition is true, start monitoring
+        if not self.state[name]['started'] and trigger_condition:
+            self.state[name]['started'] = True
+        
+        # If we've started but haven't been satisfied yet, trigger must remain true
+        if self.state[name]['started'] and not self.state[name]['until_satisfied']:
+            if not trigger_condition:
+                self.state[name]['violated'] = True
+        res = False
+        
+        # If we've started and until condition becomes true, we're satisfied forever
+        if self.state[name]['started'] and (until_condition or self.state[name]['until_satisfied']):
+            self.state[name]['until_satisfied'] = True
+            res = True if not self.state[name]['violated'] else False
+
+        return BoolResultWrapper(res, f"result: {res}; started: {self.state[name]['started']}; violated: {self.state[name]['violated']}")
+
+
+    def expected_arg_types(self):
+        return [bool, bool]  # Expecting two boolean arguments
 
 class ConstraintOnce(Constraint):
     def __call__(self, name, *arg):
@@ -156,3 +220,63 @@ class Sequential(StatefulWrapper):
 
     def expected_arg_types(self):
         return [tuple]
+
+class Interval(StatefulWrapper):
+    """
+    A wrapper that evaluates an object/predicate at specified intervals and returns True/False based on 
+    whether the percentage of True states exceeds a specified threshold.
+    
+    Usage: Interval()(name, interval, threshold, arg)
+    Args:
+        name: Unique identifier for this predicate instance
+        interval: The size of the sliding window to consider. (240 predicate calls are made every second)
+        threshold: Float between 0 and 1 representing the required percentage of True states (e.g. 0.7 for 70%)
+        arg: The object or predicate result to evaluate
+    Returns:
+        True if percentage of True states exceeds threshold, False otherwise
+    """
+    def init_by_name(self, name):
+        """Initialize state tracking for a new predicate instance"""
+        if name not in self.state:
+            self.state[name] = {
+                "history": []  # Store evaluation history
+            }
+
+    def __call__(self, name, interval, threshold, arg):
+        """
+        Evaluate at specified intervals with threshold.
+        
+        Args:
+            name (str): Unique identifier for this predicate instance
+            interval (int): Number of recent states to consider
+            threshold (float): Required percentage of True states (0.0 to 1.0)
+            arg: The object/predicate to evaluate
+        Returns:
+            BoolResultWrapper with threshold-based result and history info
+        """
+        if not 0 <= threshold <= 1:
+            raise ValueError("Threshold must be between 0 and 1")
+            
+        self.init_by_name(name)
+        
+        # Add current state to history
+        self.state[name]["history"].append(bool(arg))
+        
+        # Keep only the latest interval states
+        if len(self.state[name]["history"]) > interval:
+            self.state[name]["history"] = self.state[name]["history"][-interval:]
+            
+        # Calculate percentage of True states
+        true_count = sum(1 for x in self.state[name]["history"] if x)
+        total_count = len(self.state[name]["history"])
+        true_percentage = true_count / total_count
+        exceeds_threshold = true_percentage >= threshold
+        
+        return BoolResultWrapper(
+            exceeds_threshold,
+            f"True percentage: {true_percentage:.2%}) "
+        )
+
+    def expected_arg_types(self) -> List[type]:
+        """Define expected argument types"""
+        return [int, float, bool]  # The input arg should be a boolean value

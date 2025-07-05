@@ -70,6 +70,7 @@ VALIDATE_PREDICATE_FN_DICT = {
     "istouchingsideaxis": IsTouchingSideAxis(),
     "axisalignedwithinobjectaxis": AxisAlignedWithinObjectAxis(),
     "neuraljudge": NeuralJudge(),
+    "flexibleabove":FlexibleAbove(),
 }
 
 # wrapper predicates
@@ -77,9 +78,13 @@ VALIDATE_PREDICATE_FN_DICT.update({
     "constraintalways": ConstraintAlways(),
     "constraintnever": ConstraintNever(),
     "constraintonce": ConstraintOnce(),
+    "constraintafteruntil": ConstraintAfterUntil(),
+
+    "rememberstate": RememberState(),
 
     "sequential": Sequential(),
     "watch": Watch(),
+    "interval": Interval(),
 })
 
 
